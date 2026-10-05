@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Sequência Didática — História · Revisa Goiás · 3ª Série</title><style>
+:root{--navy:#12304a;--navy2:#1c4a6b;--teal:#1f6f78;--teal-bg:#e6f1f1;--gold:#b8842b;--gold-bg:#f8efdc;--terra:#a8472a;--ink:#1d2731;--muted:#5d6a74;--line:#dcd6c8;--paper:#fcfbf7;--stone:#efece4;--serif:Georgia,"Times New Roman",serif;--sans:Inter,Arial,sans-serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--stone);color:var(--ink);font:18px/1.65 var(--serif)}#progress{position:fixed;top:0;left:0;height:4px;background:var(--gold);z-index:99}.top{background:linear-gradient(145deg,var(--navy),#0c2236);color:white;padding:70px max(28px,calc((100vw - 900px)/2)) 55px}.k{font:700 12px var(--sans);letter-spacing:.18em;text-transform:uppercase;color:#e3b45a}.top h1{font-size:clamp(42px,7vw,72px);line-height:1.02;margin:12px 0}.top p{max-width:760px;font-size:20px;color:#dce7ed}.nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);display:flex;gap:8px;overflow:auto;padding:10px calc((100vw - 900px)/2)}.nav a{font:700 13px var(--sans);text-decoration:none;color:var(--navy);padding:8px 12px;border-radius:99px;white-space:nowrap}.nav a:hover{background:var(--gold-bg)}section.chapter{background:var(--paper);margin:28px auto;max-width:980px;box-shadow:0 18px 44px -26px #1d27314d}.ch-head{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:end;padding:50px 64px 28px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#f4f1e8,var(--paper))}.ch-num{font:800 82px/1 var(--sans);color:var(--navy);opacity:.14}.eyebrow{font:700 11px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--teal)}h2{font-size:40px;line-height:1.1;color:var(--navy);margin:5px 0}.deck{color:var(--muted);margin:8px 0}.body{padding:34px 64px 50px}.body p{margin:12px 0}.body h3{font-size:25px;color:var(--navy);margin:34px 0 10px}.body h4{font:800 13px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin:26px 0 8px}.theme{background:var(--navy);color:#fff;border-left:6px solid var(--gold);padding:14px 18px;margin:8px 0 24px;font:700 18px var(--sans)}.act-title{margin:34px 0 12px;background:var(--gold);color:white;padding:10px 18px;border-radius:10px 10px 0 0;font:800 12px var(--sans);letter-spacing:.15em}.q{background:#fffdf6;border-left:4px solid var(--gold);padding:12px 16px;margin:10px 0}.teacher{background:#f2f5f7;border:1px solid #d7e0e5;padding:10px 14px;margin:8px 0;font-size:16px}.skill{background:var(--teal-bg);border-left:4px solid var(--teal);padding:9px 14px;margin:8px 0;font:600 14px/1.5 var(--sans)}.tb{width:100%;border-collapse:collapse;background:#fff;font:14px/1.5 var(--sans)}.tb th{background:var(--navy);color:#fff;text-align:left;padding:12px}.tb td{vertical-align:top;border:1px solid var(--line);padding:12px}.scroll{overflow:auto}.callout{border-radius:12px;padding:18px 22px;margin:26px 0;border:1px solid #c4dede;background:var(--teal-bg);font-size:16px}.lab{font:800 10px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:#14565d;display:block}.ch-end{display:flex;justify-content:space-between;padding:14px 64px;background:#f4f1e8;border-top:1px solid var(--line);font:600 12px var(--sans);color:var(--muted)}@media(max-width:700px){.ch-head{padding:35px 22px 20px;grid-template-columns:1fr}.ch-num{font-size:52px}.body{padding:24px 22px}.nav{padding:8px 12px}.ch-end{padding:12px 22px}}@media print{.nav,#progress{display:none}.top{padding:20mm 15mm}.chapter{box-shadow:none!important;page-break-before:always}.body{padding:10mm 12mm}.ch-head{padding:10mm 12mm}.teacher,.q,.skill,.tb{break-inside:avoid}}
+
+.cover-img{background:#fff;line-height:0}.cover-img img{display:block;width:100%;height:auto;max-width:100%}
+@media print{.cover-img{page-break-after:always}}
+
+/* ---------- sumário lateral ---------- */
+.toc-tab{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:60;background:var(--navy);color:#fff;border:0;border-radius:12px 0 0 12px;padding:14px 11px;cursor:pointer;font:700 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;writing-mode:vertical-rl;box-shadow:-4px 4px 18px #0004;display:flex;align-items:center;gap:8px}
+.toc-tab:hover{background:var(--navy2)}.toc-tab b{font-size:16px;writing-mode:horizontal-tb;color:#e3b45a}
+.toc-ov{position:fixed;inset:0;background:#0b1a2988;opacity:0;pointer-events:none;transition:opacity .25s;z-index:70}.toc-ov.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(400px,92vw);background:var(--navy);color:#e9eef2;z-index:80;transform:translateX(102%);transition:transform .28s ease;display:flex;flex-direction:column;font-family:var(--sans);box-shadow:-10px 0 40px #0006}.drawer.open{transform:none}
+.dr-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:22px;border-bottom:1px solid #ffffff1f}.dr-head .k{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#e3b45a;font-weight:700}.dr-head .t{font-weight:700;font-size:19px;line-height:1.2;margin-top:5px;color:#fff}
+.dr-close{background:#ffffff14;border:1px solid #ffffff33;color:#fff;width:36px;height:36px;border-radius:9px;font-size:20px;cursor:pointer;flex:none}
+.dr-body{flex:1;overflow:auto;padding:12px}.dr-link{display:flex;gap:10px;align-items:center;padding:12px;border-radius:8px;color:#dce6ed;text-decoration:none;font-size:14px;line-height:1.35}.dr-link:hover,.dr-link.on{background:#ffffff18;color:#fff}.dr-link b{color:#e3b45a;min-width:24px}
+@media print{.toc-tab,.drawer,.toc-ov{display:none!important}}
+
+
+.body p{max-width:100%; text-wrap:pretty}
+.body h3{line-height:1.25}
+.teacher,.skill,.q{line-height:1.55}
+
+.pdf-photo{margin:1.4rem auto 1.6rem;max-width:900px}
+.pdf-photo img{display:block;width:100%;height:auto;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.14)}
+.pdf-photo figcaption{margin-top:.55rem;font-size:.88rem;line-height:1.4;color:#5b6470;text-align:center;font-style:italic}
+.text-title{margin-top:.4rem}
+.source{font-size:.92rem}
+
+/* Texto corrido justificado */
+.body > p,
+.body .text-content p{
+  text-align:justify;
+  text-justify:inter-word;
+  hyphens:auto;
+}
+
+/* Botão da imagem complementar do Texto I */
+.text-i-heading-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  margin-top:34px;
+}
+.text-i-heading-row h3{margin:0}
+.t1-view-btn{
+  flex:none;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 14px;
+  border-radius:999px;
+  background:var(--navy);
+  color:#fff;
+  text-decoration:none;
+  font:700 12px var(--sans);
+  box-shadow:0 5px 14px rgba(18,48,74,.18);
+}
+.t1-view-btn:hover{background:var(--navy2);transform:translateY(-1px)}
+.t1-view-btn .ico{font-size:17px}
+
+/* Visualizador em nova aba */
+@media(max-width:700px){
+  .text-i-heading-row{align-items:flex-start;flex-direction:column}
+}
+
+/* Visualizador da imagem t1.webp dentro do próprio index */
+.img-modal{position:fixed;inset:0;z-index:120;background:rgba(7,18,28,.92);
+display:none;align-items:center;justify-content:center;padding:22px}
+.img-modal.open{display:flex}
+.img-modal-panel{position:relative;width:min(1180px,96vw);height:min(92vh,900px);
+background:#111820;border-radius:16px;overflow:hidden;box-shadow:0 24px 70px #000a}
+.img-modal-toolbar{height:56px;display:flex;align-items:center;justify-content:space-between;
+gap:12px;padding:8px 12px;background:var(--navy);color:#fff;font:700 13px var(--sans)}
+.img-modal-tools{display:flex;align-items:center;gap:7px}
+.img-modal-toolbar button{border:1px solid #ffffff35;background:#ffffff12;color:#fff;
+border-radius:8px;padding:7px 11px;cursor:pointer;font-weight:700}
+.img-modal-toolbar button:hover{background:#ffffff25}
+.img-modal-stage{height:calc(100% - 56px);overflow:auto;text-align:center;padding:20px}
+.img-modal-stage img{display:inline-block;width:min(900px,90%);max-width:none;height:auto;
+transform-origin:top center;transition:transform .15s ease;box-shadow:0 12px 40px #0009}
+#t1Pct{min-width:48px;text-align:center}
+body.modal-open{overflow:hidden}
+@media print{.img-modal,.t1-view-btn{display:none!important}}
+
+/* Botão Texto I — mesmo padrão funcional da página-modelo */
+.t1-view-btn{cursor:pointer}
+
+/* Botão compacto — apenas ícone */
+.t1-view-btn{
+  width:44px!important;height:44px!important;padding:0!important;
+  border-radius:11px!important;display:inline-flex!important;
+  align-items:center!important;justify-content:center!important;
+  background:var(--navy)!important;color:#e3a536!important;
+  box-shadow:0 8px 18px rgba(18,48,74,.22)!important;
+  text-decoration:none!important;
+}
+.t1-view-btn .ico{font:800 22px/1 var(--sans)!important;color:#e3a536!important}
+.t1-view-btn:hover{background:var(--navy2)!important;transform:translateY(-1px)}
+
+/* Ações do Texto I: imagem + slides PDF */
+.text-i-actions{display:flex;flex-direction:row;align-items:center;gap:8px}
+.slides-pdf-btn .ico{font-size:20px!important}
+</style><style id="paragrafacao">
+/* ===== Paragrafação e justificação ===== */
+.body p,.body .q,.body .teacher,.body .skill,.body .tlist li,.body .alts div{text-align:justify;text-justify:inter-word;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word}
+.body p.par{text-indent:1.25cm;margin:0 0 .5em;line-height:1.7}
+.body p.stem{text-indent:0;margin:8px 0}
+.body p.cit{margin:10px 0 4px 2.2em;font-size:.94em;text-indent:0}
+.body p.ell{text-align:center;text-indent:0;margin:0 0 .5em;color:var(--muted)}
+.body p.credit,.body p.cls{text-indent:0;text-align:left;hyphens:manual;font:600 14px/1.5 var(--sans);color:var(--muted);margin:6px 0}
+.body p.cls{color:var(--teal)}
+.body p.note{text-indent:0;font:15px/1.55 var(--sans);color:var(--muted);background:var(--stone);border-left:4px solid var(--gold);padding:10px 14px;margin:10px 0}
+.body p.source,.body p.cap{text-indent:0;text-align:left;hyphens:manual;-webkit-hyphens:manual;overflow-wrap:anywhere;font:13.5px/1.5 var(--sans);color:var(--muted);margin:6px 0 20px}
+.body p.cap{font-style:italic;text-align:center;margin:10px 0 14px}
+.body h4.tsub{font:700 21px/1.25 var(--serif);text-transform:none;letter-spacing:0;color:var(--navy);margin:28px 0 8px}
+.body ul.tlist{margin:6px 0 14px;padding-left:2.4em}
+.body ul.tlist li{margin:.4em 0;line-height:1.6}
+.body .alts{margin:8px 0 0}
+.body .alts div{margin:5px 0;padding-left:1.9em;text-indent:-1.9em;font-weight:400}
+@media print{.body p.par{text-indent:1.25cm}.body p,.body .alts div,.body .tlist li{orphans:2;widows:2}}
+</style>
+</head><body><div id="progress"></div>
+<button aria-expanded="false" aria-label="Abrir sumário" class="toc-tab" id="tocTab" type="button"><b>☰</b> Sumário</button>
+<div class="toc-ov" id="tocOv"></div>
+<aside aria-hidden="true" aria-label="Sumário" class="drawer" id="tocDrawer">
+<div class="dr-head">
+<div><div class="k">Revisa Goiás · História</div><div class="t">Sumário</div></div>
+<button aria-label="Fechar sumário" class="dr-close" id="tocClose" type="button">×</button>
+</div>
+<div class="dr-body">
+<a class="dr-link" href="#matriz"><span>Matriz curricular</span></a>
+<a class="dr-link" href="#constituicao"><b>01</b><span>Constituição de 1988</span></a>
+<a class="dr-link" href="#direitos"><b>02</b><span>Direitos Humanos</span></a>
+<a class="dr-link" href="#desigualdades"><b>03</b><span>Desigualdades sociais no Brasil</span></a>
+</div>
+</aside>
+<header class="cover-img"><img alt="Revisa Goiás — 3ª Série — 4º Bimestre de 2026: Constituição de 1988, Direitos Humanos e Desigualdades sociais no Brasil" src="img/capa.webp"/></header><nav class="nav"><a href="#matriz">Matriz curricular</a><a href="#constituicao">1. Constituição de 1988</a><a href="#direitos">2. Direitos Humanos</a><a href="#desigualdades">3. Desigualdades sociais</a></nav><main><section class="chapter" id="matriz"><div class="ch-head"><div class="ch-num"></div><div><div class="eyebrow">Planejamento curricular</div><h2>Matriz da sequência didática</h2><p class="deck">Objetos de conhecimento, objetivos de aprendizagem (DC-GOEM) e habilidades de recomposição / eixos cognitivos.</p></div></div><div class="body"><div class="scroll"><table class="tb"><thead><tr><th>Objeto de conhecimento / conteúdo</th><th>Objetivos de aprendizagem (DC-GOEM)</th><th>Habilidades de recomposição / eixos cognitivos</th></tr></thead><tbody>
+<tr><td><b>Constituição de 1988</b></td><td>(EM13CHS605) Analisar os princípios da declaração dos Direitos Humanos, recorrendo às noções de justiça, igualdade e fraternidade, identificar os progressos e entraves à concretização desses direitos nas diversas sociedades contemporâneas e promover ações concretas diante da desigualdade e das violações desses direitos em diferentes espaços de vivência, respeitando a identidade de cada grupo e de cada pessoa.</td><td><b>A1</b> – Identificar o processo de consolidação da democracia no Brasil.<br/><br/><b>B1</b> – Compreender a importância da Constituição Federal de 1988 como marco da redemocratização no Brasil, destacando a consolidação dos direitos humanos, sociais e políticos, e sua vigência nos governos democráticos subsequentes.</td></tr>
+<tr><td><b>Direitos Humanos</b></td><td>(GO-EMCH605D) Avaliar como o conjunto de valores dos Direitos Humanos (direito à vida e à liberdade, à liberdade de opinião e de expressão, o direito ao trabalho e à educação, entre outros) se manifestam concretamente para o indivíduo, através do estudo do cotidiano, de documentários sobre violação de direitos fundamentais em guerras e da filosofia humanista sobre os valores éticos universais para perceber que a defesa de tais direitos faz parte indispensável de uma sociedade justa e inclusiva.</td><td><b>C1</b> – Avaliar os princípios da Declaração Universal dos Direitos Humanos e sua efetivação na contemporaneidade.</td></tr>
+<tr><td><b>Desigualdades sociais no Brasil</b></td><td>(GO-EMCH605D) Avaliar como o conjunto de valores dos Direitos Humanos (direito à vida e à liberdade, à liberdade de opinião e de expressão, o direito ao trabalho e à educação, entre outros) se manifestam concretamente para o indivíduo, através do estudo do cotidiano, de documentários sobre violação de direitos fundamentais em guerras e da filosofia humanista sobre os valores éticos universais para perceber que a defesa de tais direitos faz parte indispensável de uma sociedade justa e inclusiva.</td><td><b>C1</b> – Avaliar o contexto histórico de construção das desigualdades no Brasil.<br/><br/><b>B2</b> – Analisar como as desigualdades afetam diferentes identidades (étnicos, culturais, de gênero, socioeconômicas).</td></tr>
+</tbody></table></div><div class="callout teal"><span class="lab">Eixos cognitivos</span><b>A</b> – Reconhecimento e Recuperação   ·   <b>B</b> – Compreensão e Análise   ·   <b>C</b> – Avaliação e Proposição</div></div></section><section class="chapter" id="constituicao"><div class="ch-head"><div class="ch-num">01</div><div><div class="eyebrow">Sequência didática · História</div><h2>Constituição de 1988</h2><p class="deck">Redemocratização no Brasil</p></div></div><div class="body"><div class="theme">TEMÁTICA: Redemocratização no Brasil</div>
+<h4>Matriz de Habilidades Essenciais DC-GOEM:</h4>
+<p>(EM13CHS605) Analisar os princípios da declaração dos Direitos Humanos, recorrendo às noções de justiça, igualdade e fraternidade, identificar os progressos e entraves à concretização desses direitos nas diversas sociedades contemporâneas e promover ações concretas diante da desigualdade e das violações desses direitos em diferentes espaços de vivência, respeitando a identidade de cada grupo e de cada pessoa.</p>
+<h4>Objeto de Conhecimento:</h4>
+<p>• Constituição de 1988</p><p><strong>Leia o texto.</strong></p>
+<div class="text-i-heading-row"><h3>Texto I</h3><div class="text-i-actions"><a aria-label="Abrir Texto I como imagem" class="t1-view-btn" href="#" onclick="openTextoIImagem(event)" rel="noopener noreferrer" title="Abrir imagem"><span aria-hidden="true" class="ico">↗</span></a><a aria-label="Abrir Slides em PDF" class="t1-view-btn slides-pdf-btn" href="https://drive.google.com/file/d/1BnXvhbVmD1-v6BMzD_zKuti1VxLR1pTP/view?usp=drive_link" target="_blank" rel="noopener noreferrer" title="Abrir Slides (PDF)"><span aria-hidden="true" class="ico">▣</span></a></div></div>
+<h3 class="text-title">Direitos fundamentais e humanos marcam o texto constitucional de 1988</h3><p class="par">No Brasil, o período militar foi conturbado para os direitos humanos. O desrespeito a eles foi determinante para a inclusão das garantias individuais e sociais presentes na Constituição federal de 1988. O ex-ministro chefe da Controladoria-Geral da União (CGU) Jorge Hage, que participou da Assembleia Nacional Constituinte, recorda que o momento de elaboração da Carta “foi a de recuperação de direitos, sobretudo.”</p><p class="par">Hager diz que não houve na história do país momento de maior entrosamento entre o parlamento e a sociedade. Estabeleceu-se uma relação direta importantíssima e inédita. Desconheço outro momento histórico em que isso tenha funcionado igual”, afirmou o ex-ministro-chefe da CGU, que também ressaltou que os direitos humanos e fundamentais inseridos no texto constitucional foram construídos pelo próprio povo, que ocupavam o parlamento, junto com os constituintes.</p><figure class="pdf-photo"><img alt="Populares acompanham votação da Constituição Federal no plenário da Câmara, em 1988." loading="lazy" src="img/01.webp"/><figcaption>Populares acompanham votação da Constituição Federal no plenário da Câmara, em 1988. Foto: Arquivo/Agência Câmara</figcaption></figure><p class="par">Pela Constituição de 1988, o homem se sobrepõe ao Estado. As garantias e os direitos fundamentais do cidadão aparecem logo nos primeiros artigos. No primeiro, por exemplo, é estabelecido o princípio da cidadania, da dignidade da pessoa humana e os valores sociais do trabalho. Direitos civis, políticos, econômicos, sociais e culturais dos cidadãos estão no texto constitucional. Resguardado pela Carta Magna, os direitos fundamentais colocam o Brasil como um dos países com o mais completo ordenamento jurídico em relação aos direitos humanos.</p><p class="par">Além das garantias fundamentais expostas na Constituição, que asseguram direitos aos cidadãos, as prerrogativas também são resguardadas pelos direitos humanos. Ambos possuem a mesma essência e finalidade, que é compor um conjunto de leis inerentes à dignidade da pessoa humana. Juntas, as legislações proporcionam, aos cidadãos, o direito à vida, ao trabalho, à educação e à liberdade de opinião e expressão. Todos, sem distinção, merecem as proteções.</p><p class="par">Os direitos humanos são universais e resultam de lutas contra injustiças, sendo garantidos por tratados internacionais. Já os direitos fundamentais são aqueles reconhecidos e assegurados pela Constituição Federal de 1988.</p><p class="par">O constitucionalista Cristiano Paixão, professor de Direito da Universidade de Brasília (UnB), explica que os direitos humanos e fundamentais possuem o mesmo status, a mesma hierarquia e a mesma força normativa. “São previstos em documentos internacionais e constituições e protegem o ser humano em diversas áreas”. Afirma. Paixão ressalta ainda que os direitos garantem a democracia no país ao permitir que ideias de igualdade, liberdade, reconhecimento e justiça ganhem concretude. “Sem essa capacidade de garantir direitos de forma recíproca, individual e coletiva, nenhuma sociedade poderá se considerar democrática”.</p><p class="source">Fonte: Governo do Brasil, com informações da ONU. Disponível em: <a href="https://abre.ai/nxKF" rel="noopener noreferrer" target="_blank">https://abre.ai/nxKF</a>. Acesso em: 11 set. 2025.</p>
+<div class="activity-box" style="margin:30px 0;padding:22px 24px;border:1px solid #dcd6c8;border-left:6px solid #b8842b;border-radius:12px;background:#fffdf6;box-shadow:0 8px 22px rgba(29,39,49,.08);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+  <div>
+    <span style="font:800 10px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--teal);">Atividade · Texto I</span>
+    <h3 style="margin:4px 0 5px;color:var(--navy);">Direitos Fundamentais e Humanos</h3>
+    <p style="margin:0;color:var(--muted);font:15px/1.5 var(--sans);">Responda à atividade de leitura e interpretação sobre a Constituição de 1988.</p>
+  </div>
+  <a href="atv/atv1.html" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:9px;background:var(--navy);color:#fff;text-decoration:none;font:700 13px var(--sans);white-space:nowrap;">Fazer atividade ↗</a>
+</div>
+<div class="activity-box" style="margin:18px 0 30px;padding:22px 24px;border:1px solid #c4dede;border-left:6px solid var(--teal);border-radius:12px;background:var(--teal-bg);box-shadow:0 8px 22px rgba(29,39,49,.08);">
+  <div style="margin-bottom:16px;">
+    <span style="font:800 10px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--teal);">Atividades complementares · Texto I</span>
+    <h3 style="margin:4px 0 5px;color:var(--navy);">SAEGO e ENEM</h3>
+    <p style="margin:0;color:var(--muted);font:15px/1.5 var(--sans);">Aprofunde o estudo do Texto I com as duas atividades abaixo.</p>
+  </div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;">
+    <a href="atv/atvsaego1.html" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:9px;background:var(--navy);color:#fff;text-decoration:none;font:700 13px var(--sans);white-space:nowrap;">Atividade SAEGO ↗</a>
+    <a href="atv/atvenem1.html" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:9px;background:var(--gold);color:#fff;text-decoration:none;font:700 13px var(--sans);white-space:nowrap;">Atividade ENEM ↗</a>
+  </div>
+</div>
+<p class="stem"><b>Leia o texto.</b></p>
+<h3>Texto II</h3>
+<h3 class="text-title">A Nova República</h3>
+<p class="par">A Nova República no Brasil, que se inicia a partir de 1985 com o fim do regime militar, marcou o retorno do Brasil à democracia e a busca pela reconstrução das instituições políticas, econômicas e sociais. Cada governo, tinha o grande desafio da consolidação da democracia e a efetivação dos direitos estabelecidos pela Constituição de 1988, visto que o país, nos anos anteriores, foi responsavel por grandes violações de direitos fundamentais para toda a sociedade. Ao fim da Ditadura militar, o Brasil estava imerso num grande contexto de crise econômica com a hiperinflação, o que afetou diretamente toda a socidade nos anos que se sucederam.</p>
+<h4 class="tsub">Governo José Sarney</h4>
+<p class="par">José Sarney foi o primeiro governo civil após anos de ditadura militar, o que vai marcar o início da chamada Nova República. Sarney chega à presidência de maneira indireta após a vitória da chapa de Tancredo e Sarney. Com o falecimento de Tancredo Neves, Sarney assumiu o mandato num processo de reconstrução democrática do país.</p>
+<p class="par">Seu governo foi marcado por grande instabilidade política e econômica. Na política, o maior marco de seu governo foi a apromulgação da Constituiçao de 1988.</p>
+<p class="par">Já no campo econômico, Sarney enfrentou o grave problema da hiperinflação. Para tentar controlar a crise, foi lançado o Plano Cruzado em 1986, que instituiu uma nova moeda, congelou preços e salários e aumentou a esperança de estabilidade. Inicialmente, o plano teve sucesso, mas logo a inflação voltou a suibir, o que o obrigou o governo a adotar outros programas, que também não foram bem-sucedidos. O final do seu governo foi marcado por extrema impopularidade e por grande crise econômica, o que contribuiu para que não elegesse um sucessor nas eleições de 1989.</p>
+<p class="source">Disponível em: https://abre.ai/nzw4. Acesso em: 15 set. 2025.</p>
+<h4 class="tsub">Governo Fernando Collor de Mello</h4>
+<p class="par">Fernando Collor foi o primeiro presidente eleito por voto direto após anos de ditadura militar. Seu governo teve como prioridade o combate à grave crise econômica que o Brasil enfrentava no início da década de 1990. Para isso, Collor implementou um conjunto de medidas que ficaram conhecidas como Plano Collor, cujas ações tiveram grande impacto sobre a economia e a vida da população brasileira.</p>
+<p class="par">Nesse sentido, as principais medidas do plano foram:</p>
+<ul class="tlist"><li>A troca da moeda brasileira: de cruzado-novo para cruzeiro, mas sem corte de zero; os cruzados-novos bloqueados poderiam ser usados por 60 dias para o pagamento de impostos, taxas, contribuições e obrigações previdenciárias e, por 180 dias, podiam ser transferidos entre pessoas físicas e jurídicas;</li><li>Confisco da poupança: bloqueio de valores acima de 50 mil cruzeiros por 18 meses;</li><li>Remoção de mecanismos que ajustavam automaticamente os preços à inflação com o objetivo de reduzir a inércia inflacionária;</li><li>Abertura comercial: redução de tarifas de importação;</li><li>Criação do IOF (Imposto sobre Operações Financeiras): com pagamento de 8%;</li><li>Privatizações: início do programa de desestatização.</li></ul>
+<p class="par">Apesar de todo o discurso de modernização e controle inflacionário, algumas medidas adotadas por Collor, principalmente o confisco da poupança, geraram grande insatisfação popular. Além disso as denúncias de corrupção contra seu governo minaram ainda mais o seu apoio popular.</p>
+<h4 class="tsub">Movimento Caras-Pintadas</h4>
+<p class="cap">Manifestantes em frente ao congresso Nacional, em Brasília, setembro de 1992. Foto de Sergio Lima, da Agência Brasil. Disponível em: https://abre.ai/nymz . Acesso em:12 set. 2025. Disponivel em: https://abre.ai/nynH. Acesso em:12 set. 2025.</p>
+<p class="par">Com todo o Escândalo, o governo Collor se tornou insustentável. Diversas mobilizações e protestos contrários a Collor, já em andamento, tiveram seu ápice nos meses de agosto e setembro de 1992. No dia 16 de agosto, preocupado, o presidente discursou pedindo para que a população saísse e apoiasse a manutenção do governo dele, utilizando as cores da bandeira do Brasil. Contudo, em vez disso, as pessoas protestaram contra a permanência de Collor na presidência. No mesmo dia do discurso de Collor, 16 de agosto, registrou-se protestos em diversas cidades do país. Nelas, os milhares que protestaram, saíram às ruas com os rostos pintados de preto, verde e amarelo e deram a simbologia e o nome da mobilização: Movimento Caras-Pintadas. Essas manifestações tiveram continuidade por todo o mês de setembro até que, em 2 de outubro de 1992, Collor finalmente foi colocado frente à abertura de um processo de impeachment no Senado. Em dezembro do mesmo ano, Collor renunciou na tentativa de evitar a cassação de seus direitos políticos. No entanto, o Senado decidiu seguir com o julgamento e o declarou inelegível por oito anos, por crime de responsabilidade, uma infração cometida por autoridades públicas.</p>
+<p class="par">O movimento dos caras-pintadas, teve grande importância política e symbolics para o Brasil, pois ele respresentou a força da mobilização popular, especialmente da juventude, na defesa da consolidação da democracia e contra a corrupção.</p>
+<p class="par">Além das políticas econômicas, foi também na Nova República, em especial durante o governo Collor, que foram criadas leis importantes para o Brasil. Algumas delas:</p>
+<ul class="tlist"><li>Código de Defesa do Comsumidor (CDC) – Criado em 1990, estabeleceu direitos básicos aos consumidores e regulamentou relações de consumo.</li><li>Estatuto da Criança e do Adolescente (ECA) – Também de 1990, é a principal lei que assegura os direitos das crianças e adolescentes no Brasil.</li><li>Lei do Sistema Único de Saúde (SUS) – Em 1990, foi a lei que regulamentou o SUS, garantindo o acesso universal e integral à Saúde.</li><li>Lei Rouanet – Sancionada em 1991, instituiu mecanismos para o incentive à produção e ao consumo de bens culturais, como espetáculos e exposições.</li><li>Lei de Improbidade Administrativa – Promulgada em 1992, estabeleceu normas para combater a corrupção e a má conduta de agentes públicos.</li></ul>
+<h4 class="tsub">Governo Itamar Franco e Fernando Henrique Cardoso</h4>
+<p class="par">Itamar Franco assume a presidência após o impeachment de Fernando Collor de Mello em 1992, num contexto de forte crise política. Esse cenário exigiu de Itamar grande habilidade para restabelecer a estabilidade política e a confiança da sociedade nas instituições democráticas. Itamar adotou um modelo de governo conciliador, buscou dialogar com diferentes partidos e compor um governo de unidade nacional, o que ajudou a reduzir as tensões após o período turbulento que levou à queda de Collor. Essa postura foi fundamental para garantir a governabilidade e preservar a jovem democracia brasileira.</p>
+<p class="par">Na área econômica, Itamar enfrentou o grande desafio da hiperinflação, que corroía o poder de compra da população. Sua principal medida foi a criação do Plano Real (1994), elaborado por sua equipe econômica liderada por Fernando Henrique Cardoso, então ministro da Fazenda. O plano introduziu uma nova moeda, o Real, e estabeleceu mecanismos de controle da inflação. Foi um marco na história econômica do país, garantindo estabilidade monetária e abrindo caminho para um novo ciclo de desenvolvimento.</p>
+<p class="par">No campo social, o governo de Itamar buscou fortalecer políticas públicas voltadas à redução das desigualdades. Houve avanços em programas de combate à fome e à pobreza, bem como investimentos em áreas como educação e saúde, ainda que de forma limitada devido à prioridade dada ao controle da inflação.</p>
+<p class="par">O governo de Itamar Franco, foi sucedido por Fernando Henrique Cardoso, que marcou um dos períodos mais importantes da Nova República, especialmente pela consolidação da estabilidade econômica alcançada com o Plano Real.</p>
+<p class="par">No campo político, seu governo aprovou uma emenda constitucional que permitiu a reeleição para cargos executivos, fazendo seu governo se estender por dois mandatos (1995 – 2002). Essa articulação, só foi possível a partir das alianças construídas no seu governo, que garantiram governabilidade.</p>
+<p class="par">Na economia, a manutenção do Plano real, conseguiu controlar a hiperinflação e trazer estabilidade monetária. Além disso, FHC promoveu uma política de privatizações, vendendo empresas estatais em setores como telecomunicações, energia e mineração, com o objetivo de reduzir gastos públicos e atrair investimentos.</p>
+<p class="par">Sua gestão também buscou alinhar o Brasil às práticas do mercado internacional, adotando políticas de abertura econômica e incentivo à globalização. No entanto, essas políticas enfrentou fortes críticas da população e de setores políticos, principalmente pelo aumento da dívida pública e pela dependência de empréstimos internacionais. Essas políticas contribuíram para acentuar ainda mais as desigualdades sociais.</p>
+<p class="par">FHC criou alguns programas de combate à pobreza, que serviu de base para políticas nos governos posteriores. Entre eles, destacam-se o Bolsa Escola, o Bolsa Alimentação e o Auxílio Gás, que mais tarde seriam unificados no Bolsa Família. Na educação, implementou o Fundo de Manutenção e Desenvolvimento do Ensino Fundamental (Fundef), que ampliou o financiamento da educação básica e contribuiu para o aumento da escolarização no país.</p>
+<p class="par">O governo de Fernando Henrique marcou um período importante de estabilidade política e econômica. Sua gestão foi fundamental para a consolidação da democracia. Porém, houve também um aprofundamento das desigualdades e o aumento da dívida, esses pontos forma temas centrais dos governos posteriores.</p>
+<h4 class="tsub">Governo Lula e Dilma</h4>
+<p class="par">O primero mandato do governo Lula (2003-2006) marcou uma nova fase a política brasileira, caracterizada pelo equilíbrio entre crescimento econômico, inclusão social e responsabilidade fiscal.</p>
+<p class="par">No campo econômico, Lula manteve a estabilidade herdada do governo anterior, preservando o tripé macroeconômico baseado no câmbio flutuante, no superávit primário e no controle da inflação por meio da taxa de juros. Essa postura transmitiu confiança ao mercado e atraiu investimentos. Ao mesmo tempo, o governo apostou em políticas de desenvolvimento, como o fortalecimento da agricultura familiar, o incentivo às exportações e o programa de aceleração da infraestrutura.</p>
+<p class="par">Na área social, as políticas de combate à pobreza e à fome ganharam destaque. O Bolsa Família, criado em 2003, unificou programas de transferência de renda já existentes, garantindo auxílio financeiro a famílias de baixa renda, desde que cumprissem compromissos como manter os filhos na escola e com a vacinação em dia. Outro destaque foi o Fome Zero, iniciativa voltada a enfrentar a insegurança alimentar, além de programas de valorização do salário mínimo, que aumentaram o poder de compra das camadas mais pobres.</p>
+<p class="par">Lula adotou políticas na educação, como o ProUNi (Programa Universidade para Todos) e a ampliação do FIES (Fundo de Financiamento Estudantil), aumentou o acesso da população mais pobre ao ensino superior. Na saúde com a ampliação do SUS e o acesso a medicamentos, o que resultou em avanços significativos onde milhões de brasileiros saíram da linha da pobreza. Muitas dessa política só foram possíveis a partir do perfil político conciliatórios com alianças com diversos partidos de centro. Assim, o primeiro governo Lula consolidou a imagem do Brasil como um país em processo de crescimento econômico com maior justiça social.</p>
+<p class="par">Porém, seu governo também foi palco em um dos maiores escândalos de corrupção, o Mensalão. O esquema consistia no pagamento regular de mesadas a parlamentares de diferentes partidos em troca de apoio político no Congresso Nacional. O escândalo gerou uma forte crise política, abalou a imagem do governo e colocou em xeque a confiança da população dos representantes eleitos. Em 2012, o Supremo Tribunal Federal (STF) julgou o caso condenando dirigentes políticos, empresários e figuras importantes do PT. Esse julgamento marcou a história política e jurídica do país por ser um dos primeiros a responsabilizar e punir autoridades de alto escalão por corrupção.</p>
+<p class="par">Mesmo com o escândalo envolvendo seu governo, o presidente Lula conseguiu se manter no cargo e foi reeleito em 2006 e elegeu a sua candidata Dilma Rousseff.</p>
+<p class="par">Primeira mulher a ser eleita presidenta da República do Brasil, governo de Dilma Rousseff representou continuidade do projeto político de Lula. Se primeiro mandato iniciou em 2011 com a promessa de manter os avanços sociais e econômicos obtidos nos anos anteriores, mas enfrentou um cenário mais instável, tanto interno quanto externo.</p>
+<p class="par">No campo econômico, Dilma deu continuidade ao Programa Bolsa Família e ao Programa de Aceleração do Crescimento (PAC), além de lançar programas de destaque, como o Minha Casa Minha Vida, voltado para habitação popular, e o Ciência sem Fronteiras, que ofereceu bolsas de estudo no exterior para estudantes brasileiros. Outro ponto importante foi o Programa Mais Médicos, criado em 2013 para ampliar o atendimento de saúde em regiões carentes, muitas vezes com a participação de médicos estrangeiros.</p>
+<p class="par">Apesar desses avanços, a economia começou a apresentar sinais de enfraquecimento a partir de 2012, agravados pela crise internacional e por dificuldades estruturais do país. A partir de 2014, o Brasil entrou em uma profunda recessão econômica, com queda do PIB, aumento do desemprego e inflação em alta.</p>
+<p class="par">Em 2013, grandes manifestações populares tomaram as ruas do país, inicialmente contra o aumento das tarifas de transporte, mas que rapidamente se ampliaram para críticas à corrupção, aos serviços públicos precários e aos altos gastos com a Copa do Mundo e a Operação Lava Jato, que revelou um amplo esquema de corrupção envolvendo a Petrobras, partidos políticos e grandes empreiteiras. Embora Dilma não tenha sido acusada diretamente de envolvimento, sua imagem e a de seu governo foram profundamente atingidas pelas denúncias. Essas manifestações revelaram um clima de insatisfação que se intensificou nos anos seguintes.</p>
+<p class="par">Reeleita em 2014 em uma disputa acirrada, Dilma enfrentou um Congresso hostil e crescentes pressões políticas. Em 2016, após acusações de crime de responsabilidade por manobras fiscais conhecidas como “pedaladas fiscais”, ela sofreu um processo de impeachment, sendo afastada do cargo. Seu vice, Michel Temer, assumiu a Presidência.</p>
+<p class="par">Mesmo garantida pela Constituição de 1988, a nossa democracia ainda é muito frágil e enfrenta muitos desafios. O impeachment de Dilma Rousseff, em 2016, mostrou bem essa fragilidade. Embora o processo esteja previsto em lei, muitos especialistas e parte da sociedade questionaram se realmente havia crime de responsabilidade ou se tudo foi resultado de disputas políticas e de interesses no Congresso. Esse episódio revelou que, no Brasil, a estabilidade de um governo pode depender mais de acordos políticos do que do respeito total às regras democráticas e à vontade do povo expressa nas eleições. Além disso, aumentou a desconfiança nas instituições e aprofundou a divisão na sociedade.</p>
+<h4 class="tsub">Polarização Política</h4>
+<p class="par">Com o impeachment da presidenta Dilma Rousseff e a ascensão de seu vice, Michel Temer, à presidência, a polarização política no Brasil se intensificou de forma significativa. O embate entre as ideologias de esquerda e direita ganhou força e levou milhares de pessoas às ruas para defender seus projetos. As eleições de 2018 representaram o auge dessa disputa, com a candidatura de Jair Messias Bolsonaro e de Fernando Haddad, apoiado pelo ex-presidente Luiz Inácio Lula da Silva.</p>
+<p class="par">Marcado por escândalos e pela disseminação de fake news, esse processo eleitoral evidenciou o papel central das redes sociais e da internet na formação de opiniões e no resultado das urnas, isso revelou um novo contexto político da sociedade brasileira, com a inserção das tecnologias e o uso das redes sociais por diferentes públicos.</p>
+<p class="par">O pleito de 2018 foi vencido por Jair Bolsonaro, que teve um governo marcado por forte polarização política e por debates intensos sobre os rumos do país. Na economia, seu governo retomou à agenda liberal dos governos de Collor e FHC, com foco em privatizações, reformas e redução do papel do Estado, sob a liderança do ministro da Economia, Paulo Guedes. A reforma da Previdência (2019) foi a principal medida aprovada nesse campo.</p>
+<p class="par">No campo social e político, o governo enfrentou muitas críticas pela condução da pandemia da Covid-19. As divergências em relação à vacinação, ao uso de máscaras, o incentivo do uso de medicações sem a devida comprovação científica e às medidas de isolamento geraram forte repercussão no Brasil e no exterior.</p>
+<p class="source">Texto elaborado para fins didáticos. NUREDI. Fonte: &lt;http://cadpromuspp.each.webhostusp.sti.usp.br/V3n3/pdf/301.pdf&gt; &lt;https: https://www1.folha.uol.com.br/poder/2025/06/mensalao-20-abalou-primeiro-governo-de-lula-e-levou-a-julgamento-historico-no-stf-entenda.shtml&gt; &lt;https://www12.senado.leg.br/noticias/materias/2016/08/29/dilma-rousseff-a-primeira-mulher-a-presidir-o-brasil &gt;&lt;https://www.historiadomundo.com.br/idade-contemporanea/fernando-henrique-cardoso.htm&gt; &lt;https://www.politize.com. br/movimento-caras-pintadas/&gt; &lt;https://pt.wikipedia.org/wiki/Fernando_Collor#:~:text=Dentre%20as%20principais%20leis%20sancionadas,de%20Improbidade%20Administrativa%20(1992)&gt; &lt;https://dex.descomplica.com.br/enem/historia/ enem-extensivo-a-nova-republica/explicacao/1&gt; &lt;https://pt.ird.fr/que-efeito-teve-gestao-do-presidente-bolsonaro-na-mor-talidade-por-covid-19-no-brasil&gt; &lt;https://abre.ai/nzwy&gt;.</p>
+<h4 class="tsub">O Terceiro governo Lula (2023-2026)</h4>
+<p class="source">Disponível em: https://abre.ai/s26X. Acesso em: 22 set. 2026.</p>
+<p class="par">Luiz Inácio Lula da Silva iniciou seu terceiro mandato como presidente da República em 1º de janeiro de 2023, após vencer as eleições de 2022 em uma disputa marcada por forte polarização política. Sua eleição ocorreu em um contexto de profundas divisões na sociedade brasileira, intensificadas durante os anos anteriores, especialmente em torno de diferentes concepções sobre democracia, economia, políticas sociais e papel do Estado. O novo governo assumiu também após os acontecimentos de 8 de janeiro de 2023, quando grupos que contestavam o resultado eleitoral invadiram e depredaram as sedes dos Três Poderes, em Brasília.</p>
+<p class="par">No campo político, o terceiro governo Lula teve como uma de suas principais características a tentativa de reconstruir o diálogo entre o governo federal, o Congresso Nacional, os governos estaduais, os municípios e diferentes setores da sociedade.</p>
+<p class="par">Diferentemente dos dois primeiros mandatos de Lula, realizados em um período de maior predominância política do Partido dos Trabalhadores, o terceiro mandato ocorre em um cenário de maior fragmentação partidária e forte presença de forças políticas de oposição no Congresso. A necessidade de construir uma ampla base de apoio levou o governo a estabelecer alianças com diferentes partidos e grupos políticos. Essa composição ampliou a capacidade de negociação do Executivo, mas também tornou a relação com o Congresso um dos principais desafios do mandato. A aprovação de projetos e reformas passou a depender de negociações constantes entre o governo e diferentes forças políticas.</p>
+<p class="par">Na política externa, o governo retomou uma atuação mais ativa do Brasil em organismos multilaterais, buscando ampliar relações com diferentes países e defender pautas relacionadas ao desenvolvimento sustentável, combate à fome, redução das desigualdades e reforma da governança internacional. Em 2026, a defesa da soberania nacional e dos interesses brasileiros em áreas estratégicas, como petróleo e minerais, também passou a ocupar espaço importante no discurso presidencial.</p>
+<p class="par">A política do governo combina investimentos públicos (Novo PAC), transferência de renda, reformas estruturais (Reforma Tributária com cashback e ajustes na cesta básica) e foco no crescimento com responsabilidade fiscal.</p>
+<p class="par">Economicamente, registram-se avanços como PIB de R$ 12,7 trilhões em 2025, crescimento acumulado do PIB de 1,9% (2º tri/2026), desemprego em 5,4% e inflação (IPCA) em 4,22% em 12 meses até agosto de 2026. No entanto, persistem desafios fiscais no controle da dívida, juros e gastos públicos.</p>
+<p class="par">Na área social, o governo reestruturou e ampliou programas para combate à pobreza e inclusão, destacando-se a recriação do Bolsa Família e a retomada do Minha Casa, Minha Vida, além de novas iniciativas em educação e saúde. A despeito dos avanços apontados pela gestão pública, pesquisas como a Ipsos-Ipec (setembro/2026) revelam que a avaliação popular ainda é predominantemente crítica em setores como gastos públicos, inflação, saúde e segurança.</p>
+<p class="par">Em setembro de 2026, o Brasil vive um novo período de intensa disputa política em razão das eleições gerais previstas para outubro. O cenário permanece marcado pela polarização entre diferentes projetos políticos para o país.</p>
+<p class="source">Texto elaborado para fins didáticos. NUREDI. Disponível: &lt;https://g1.globo.com/politica/noticia/2023/01/01/lula-toma-posse-diante-de-centenas-de-milhares-em-brasilia-re-afirma-compromissos-de-combate-a-pobreza-e-defende-a-democracia.ghtml&gt; &lt;https://www.scielo.br/j/ccrh/a/SbtzYkB8xtPDcmSgpLC9LgN/?format=html&amp;lang=pt&gt; &lt;https://relacoesexteriores.com.br/2-anos-3o-governo-lula-marcos-desafios/&gt;.</p>
+<h3>SINOPSE</h3>
+<p class="cls"><b>Classificação:</b> Não recomendado para menores de 12 anos</p>
+<p class="par">Documentário sobre o processo de impeachment da ex-presidente do Brasil, Dilma Rousseff, que foi considerado como um dos reflexos da polarização política e da ascensão da extrema-direita para o poder. O filme conta com imagens internas e exclusivas dos bastidores do Sindicato dos Metalúrgicos do ABC e do Palácio da Alvorada, enquanto ocorria a votação para a queda de Dilma.</p>
+<h3>SUGESTÕES DE FILMES PARA CONTEXTUALIZAÇÃO COM O PERÍODO ESTUDADO E PARA CONTRIBUIR COM O TEMA:</h3>
+<div class="q"><b>1. Democracia em Vertigem</b></div>
+<div class="q"><b>2. Real – o plano por Trás da história</b></div>
+<h3>SINOPSE</h3>
+<p class="cls"><b>Classificação:</b> Não recomendado para menores de 12 anos</p>
+<div class="q"><b>1993. Arrogante e inflexível, Gustavo Franco é um crítico feroz da política econômica adotada pelo governo brasileiro nos últimos anos, que resultou em um cenário de hiperinflação. Opositor de políticas de cunho social, ele é adepto de um choque fiscal de forma que seja criada uma moeda forte, que devolva a dignidade aos cidadãos. Quando o presidente Itamar Franco nomeia Fernando Henrique Cardoso como o novo Ministro da Fazenda, Gustavo é convidado a integrar uma verdadeira força-tarefa, cujo objetivo é criar um novo plano econômico.</b></div>
+<h3>SINOPSE</h3>
+<p class="cls"><b>Classificação:</b> Livre</p>
+<p class="par">O documentário denuncia como, nos anos 1990, a política de privatizações enfraqueceu a soberania nacional ao transferir parte significativa do patrimônio público para o setor privado internacional. Critica a visão de que o Estado seria o entrave ao desenvolvimento, destacando seu papel histórico na industrialização. Mostra que o neoliberalismo não eliminou o Estado, mas o submeteu às exigências do mercado, transformando direitos sociais, como moradia, transporte, educação e saúde, em mercadorias que beneficiam o sistema financeiro.</p>
+<div class="q"><b>3. Privatizações: a distopia do capital.</b></div>
+<div class="q"><b>4. Alvorada</b></div>
+<h3>SINOPSE</h3>
+<p class="cls"><b>Classificação:</b> Livre</p>
+<p class="par">O documentário mostra o cotidiano da presidente Dilma Rousseff, primeira e única mulher a governar o Brasil, durante o desenrolar dramático do impeachment. Rodado entre julho e setembro de 2016, o documentário testemunha a tensão e a perplexidade que imperavam no círculo da presidente, em reuniões, telefonemas intermináveis e sussurros ouvidos do Palácio do Planalto. Ao mesmo tempo, revela uma personalidade surpreendente nas conversas informais em que Dilma fala de política, história, literatura – e de si própria.</p>
+<div class="q"><b>5. Apocalipse nos Trópicos</b></div>
+<h3>SINOPSE</h3>
+<p class="cls"><b>Classificação:</b> Não recomendado para menores de 14 anos</p>
+<p class="par">A cineasta Petra Costa mergulha na interseção alarmante entre religião e política no Brasil. O documentário revela como o movimento evangélico, com sua ideologia apocalíptica, desempenhou um papel crucial na ascensão de Jair Bolsonaro à presidência e levanta questões sobre a ameaça de uma teocracia nacional. O filme oferece uma visão inédita dos bastidores do poder, acompanhando figuras proeminentes como o presidente Lula, o ex-presidente Bolsonaro e o influente televangelista Silas Malafaia. A cineasta expõe a crescente influência dos líderes religiosos na política brasileira e revela como sua visão do fim dos tempos molda suas estratégias e decisões.</p></div><div class="ch-end"><span>Revisa Goiás · CHSA · 3ª Série</span><span>4º bimestre</span></div></section><section class="chapter" id="direitos"><div class="ch-head"><div class="ch-num">02</div><div><div class="eyebrow">Sequência didática · História</div><h2>Direitos Humanos</h2><p class="deck">Direitos Humanos</p></div></div><div class="body"><div class="theme">TEMÁTICA: Direitos Humanos</div>
+<h4>Matriz de Habilidades Essenciais DC-GOEM:</h4>
+<p>(GO-EMCH605D) Avaliar como o conjunto de valores dos Direitos Humanos (direito à vida e à liberdade, à liberdade de opinião e de expressão, o direito ao trabalho e à educação, entre outros) se manifestam concretamente para o indivíduo, através do estudo do cotidiano, de documentários sobre violação de direitos fundamentais em guerras e da filosofia humanista sobre os valores éticos universais para perceber que a defesa de tais direitos faz parte indispensável de uma sociedade justa e inclusiva.</p>
+<h4>Objeto de Conhecimento:</h4>
+<p>• Direitos Humanos</p><p><strong>Leia o texto.</strong></p>
+<h3>Texto III</h3>
+<p class="credit">Prof.º Me. Wanderson Claudio da Silva — C.E. Gabriel José de Moura – CRE Jussaras</p>
+<p class="par">Leia abaixo a introdução e cinco artigos da Declaração dos Direitos do Homem e do Cidadão onde é possível identificar o “nascimento” dos direitos humanos.</p>
+<h3>DECLARAÇÃO DOS DIREITOS DO HOMEM E DO CIDADÃO DE 1789</h3>
+<p class="par">Os representantes do povo francês, constituídos em ASSEMBLEIA NACIONAL, considerando que a ignorância, o esquecimento ou o desprezo dos direitos do homem são as únicas causas das desgraças públicas e da corrupção dos Governos, resolveram expor em declaração solene os direitos naturais, inalienáveis e sagrados do Homem, a fim de que esta declaração, constantemente presente em todos os membros do corpo social, lhes lembre sem cessar os seus direitos e os seus deveres; a fim de que os actos do Poder legislativo e do Poder executivo, a instituição política, sejam por isso mais respeitados; a fim de que as reclamações dos cidadãos, doravante fundadas em princípios simples e incontestáveis, se dirijam sempre à conservação da Constituição e à felicidade geral.</p>
+<p class="par">Por consequência, a ASSEMBLEIA NACIONAL reconhece e declara, na presença e sob os auspícios do Ser Supremo, os seguintes direitos do Homem e do Cidadão:</p>
+<p class="par">Artigo 1º- Os homens nascem e são livres e iguais em direitos. As distinções sociais só podem fundar-se na utilidade comum.</p>
+<p class="par">Artigo 2º- O fim de toda a associação política é a conservação dos direitos naturais e imprescritíveis do homem. Esses Direitos são a liberdade. a propriedade, a segurança e a resistência à opressão.</p>
+<p class="ell">[...]</p>
+<p class="par">Artigo 4º- A liberdade consiste em poder fazer tudo aquilo que não prejudique outrem: assim, o exercício dos direitos naturais de cada homem não tem por limites senão os que asseguram aos outros membros da sociedade o gozo dos mesmos direitos. Estes limites apenas podem ser determinados pela Lei.</p>
+<p class="ell">[...]</p>
+<p class="par">Artigo 11º- A livre comunicação dos pensamentos e das opiniões é um dos mais preciosos direitos do Homem; todo o cidadão pode, portanto, falar, escrever, imprimir livremente, respondendo, todavia, pelos abusos desta liberdade nos termos previstos na Lei.</p>
+<p class="par">Artigo 12º- A garantia dos direitos do Homem e do Cidadão carece de uma força pública; esta força é, pois, instituída para vantagem de todos, e não para utilidade particular daqueles a quem é confiada.</p>
+<p class="source">Disponível em: https://abre.ai/sFvJ. Acesso em: 06 jun. 2026.</p>
+</div><div class="ch-end"><span>Revisa Goiás · CHSA · 3ª Série</span><span>4º bimestre</span></div></section><section class="chapter" id="desigualdades"><div class="ch-head"><div class="ch-num">03</div><div><div class="eyebrow">Sequência didática · História</div><h2>Desigualdades sociais no Brasil</h2><p class="deck">Desigualdades Sociais</p></div></div><div class="body"><div class="theme">TEMÁTICA: Desigualdades Sociais</div>
+<h4>Matriz de Habilidades Essenciais DC-GOEM:</h4>
+<p>(GO-EMCH605D) Avaliar como o conjunto de valores dos Direitos Humanos (direito à vida e à liberdade, à liberdade de opinião e de expressão, o direito ao trabalho e à educação, entre outros) se manifestam concretamente para o indivíduo, através do estudo do cotidiano, de documentários sobre violação de direitos fundamentais em guerras e da filosofia humanista sobre os valores éticos universais para perceber que a defesa de tais direitos faz parte indispensável de uma sociedade justa e inclusiva.</p>
+<h4>Objeto de Conhecimento:</h4>
+<p >• Desigualdades sociais nos Brasil</p>
+<p class="note">Prezado(a) Professor(a), o texto a seguir apresenta uma análise de como as desigualdades no Brasil impactam diferentes identidades sociais, abordando objetos de conhecimento previstas nos componentes curriculares de História e Sociologia.</p>
+<p><strong>Leia o texto.</strong></p>
+<h3>Texto IV</h3>
+<h3 class="text-title">Desigualdade racial no Brasil: uma realidade atual</h3>
+<p class="par">Você sabia que, segundo a Política Nacional de Saúde Integral da População Negra, de 2015, a renda média das pessoas pretas e partas (que configuram a população negra do país) equivale a apenas 59,2% da renda média das pessoas brancas? E, além disso, de acordo com o Fórum Brasileiro de Segurança Pública, o risco de um negro ser vítima de homicídio, é 2,7 vezes maior do que um branco. Esses números evidenciam a dura realidade brasileira: determinados grupos étnico-raciais ainda enfrentam discriminação e grandes obstáculos para conquistar igualdade de oportunidades e plena inserção na sociedade. Essa exclusão social é fruto de uma construção histórica baseada na escravização e marginalização desses grupos, que por muito tempo não tiveram acesso a direitos básicos.</p>
+<h4 class="tsub">As origens históricas da desigualdade racial.</h4>
+<p class="par">Para compreender a desigualdade racial no Brasil, é preciso considerar seu contexto histórico. Durante todo o período colonial brasileiro (1500 – 1822), a escravidão se fez presente como a base de sustentação do sistema econômico e social da época. A mão de obra escrava era composta por indígenas e negros, que eram explorados e submetidos a condições desumanas de vida por ordem dos colonizadores. A maioria dos colonizadores, vindos de Portugal e da Espanha, acreditava que os povos indígenas e africanos eram inferiores e que precisavam ser “educados” de acordo com os costumes europeus.</p>
+<p class="par">No Brasil, a primeira forma de exploração aconteceu com os povos indígenas, que já viviam aqui quando os colonizadores chegaram. A escravização negra se deu em um segundo momento, quando os africanos, que também sofriam com a colonização em seu continente, foram traficados e enviados em navios para o continente americano. Estima-se que ao longo desses três séculos, cerca de 4 milhões de africanos foram enviados ao Brasil para serem escravizados.</p>
+<p class="par">Em 1822, o Brasil conquistou sua independência, mas ainda assim, a escravidão continuou legitimada pelo Estado. Os indígenas por sua vez, por meio do estabelecimento do Diretório dos Indígenas de 1757, adquiriram certas liberdades com contrapartidas, como ter que seguir o modelo cultural de vida dos colonizadores.</p>
+<p class="par">A abolição da escravidão no Brasil aconteceu de forma lenta e gradual, por meio de leis aprovadas ao longo do tempo, até chegar à Lei Áurea, em 1888, que pôs fim definitivo à escravidão no país. Porém, apesar da “liberdade” formal , não lhes foi garantido diversos direitos fundamentais e não os reconhecia como cidadãos. Assim, a abolição não resultou na inserção da população negra na sociedade, que permaneceram sofrendo com a discriminação e os preconceitos sociais, fundamentados no racismo.</p>
+<h4 class="tsub">A evolução dos direitos antidiscriminatório e a promulgação da Constituição de 1988</h4>
+<p class="par">Como resultado da pressão dos movimentos e mobilizações, em 1951 foi promulgada a Lei Afonso Arinos (Lei nº 1.390/1951), que determinou o racismo como contravenção penal, isto é, uma infração penal de menor gravidade. Foi a primeira lei na legislação a condenar práticas discriminatórias em razão de raça, como negar emprego, impedir entrada em estabelecimento e recusar hospedagem em hotel, prevendo multa e até um ano de prisão.</p>
+<p class="par">Contudo, alguns anos depois com a ditadura militar (1964-1985), que foi marcada pela retirada de diversos direitos sociais, principalmente em relação às liberdades individuais e coletivas, tanto a população negra quando a indígena sofreram o aprofundamento das desigualdades socio racial no Brasil. O movimento negro, por exemplo, foi desmobilizado e desarticulado, vivendo numa espécie de semiclandestinidade, em que a discussão pública sobre questões raciais foi quase banida.</p>
+<p class="par">Assim, apenas com a redemocratização em 1985, que resultou na promulgação da Constituição Federal de 1988, que s direitos fundamentais, como saúde, educação, trabalho, segurança, igualdade e justiça passaram a ser garantidos a todos, sem discriminação de origem, raça, sexo, cor e idade. Além disso, o documento é o primeiro na história a reconhecer aos indígenas o direito de manter a sua própria cultura e, em seu art. 5º, determina que o racismo é um crime inafiançável e imprescritível. Porém, ainda com muitos avanços, o Brasil registra a difícil marca de ser um dos países mais desiguais para a população negra.</p>
+<h4 class="tsub">A realidade atual da desigualdade racial</h4>
+<p class="par">As conquistas por direitos que visam proteger os grupos étnico-raciais vulnerabilizados no país, apesar de representarem um grande avanço, são recentes e insuficientes para eliminar a desigualdade racial no Brasil. Todo o contexto histórico, produziu efeitos que são sentidos até os dias de hoje e evidenciam a vulnerabilidade socioeconômica desses grupos.</p>
+<p class="par">Olhando para a população negra (pretos e pardos), temos que ela compõe 75% das pessoas que vivem em situação de pobreza no país, mesmo sendo a maior parcela da população nacional (54,9%), segundo o IBGE. As mulheres negras, por exemplo, recebem em média menos da metade do salário de um homem branco, mesmo exercendo funções similares ou iguais. E, ainda de acordo com o IBGE, entre os 10% da população com os maiores rendimentos, apenas 27,7% são pretos ou pardos, sendo que estes também correspondem a 64% dos desempregados no Brasil.</p>
+<p class="par">Além de tudo, a desigualdade racial não é exclusiva aos aspectos econômicos e financeiros, mas também possui efeitos em áreas como saúde e segurança. De acordo com o anuário Brasileiro de Segurança Pública, no ano de 2019, 66,6% das mulheres que sofreram violência doméstica e sexual eram negras.</p>
+<p class="par">No aspecto da saúde, a desigualdade racial no Brasil se inicia ainda no útero. Dados de 2019 do Ministério da Saúde, indica que, 2 em cada 3 mortes maternas são de mulheres negras e a mortalidade no primeiro ano de vida é de 22,5% maior entre a população negra. A pandemia da COVID-19 acentuou ainda mais essas desigualdades no país. Segundo os dados do Ministério de Saúde, o vírus apresentou maior letalidade entre a população negra brasileira.</p>
+<p class="par">Importante ressaltar que a desigualdade racial não afeta apenas a população negra, mas também os indígenas e quilombolas no país. Estes, por exemplo, devido às distâncias e à dispersão dos seus povos, encontram dificuldades de acesso aos serviços de saúde. Negros, indígenas e quilombolas, viveram e ainda vivem situações de vulnerabilidade em diferentes áreas da sociedade brasileira.</p>
+<p class="par">Como diz o grupo de rap brasileiro Racionais Mc’s: “500 anos de Brasil e o Brasil aqui nada mudou”. É claro que retirando a licença poética da frase, vimos que muitos direitos foram previstos e avanços obtidos durante todo esse tempo, mas realmente algumas coisas ainda não mudaram, como as desvantagens e mazelas enfrentadas por determinados grupos étnico-raciais. Isso não é apenas fruto de um longo período de exploração e escravização, mas também de um preconceito social que acaba efetivando a desigualdade.</p>
+<p class="par">Por isso, hoje não há como falarmos em democracia no Brasil sem que o racismo, a discriminação e a igualdade não façam parte do debate público. Nós como cidadãos devemos ter consciência dessa realidade e solicitar ao Poder Público que políticas que visem combater a desigualdade racial sejam efetivadas. Além disso, individualmente podemos melhorar o nosso próprio comportamento, eliminando preconceitos e estereótipos que ainda se fazem presentes na sociedade de maneira estrutural.</p>
+<p class="source">Texto de Eduardo de Rê, Isabela Campos, Julia Reis, João Pedro e Leonardo Gabriel. Adaptado. Disponível em: https://www.politize.com.br/equidade/desigualdade-racial-no-brasil/.Acesso em: 21 set. 2025.</p>
+<h3>SINOPSE</h3>
+<p class="cls"><b>Classificação:</b> Não recomendado para menores de 14 anos</p>
+<p class="par">Em um futuro distópico, o governo brasileiro decreta uma medida provisória, em uma iniciativa de reparação pelo passado escravocrata. Essa medida obriga os cidadãos negros a migrarem para a África na intenção de retornar as suas origens. Sua aprovação afeta a vida do casal formado pela médica Capitú e pelo advogado Antônio, bem como seu primo, o jornalista André, que mora com eles. Juntos, os personagens debatem questões sociais e raciais e compartilham anseios e medos.</p>
+<h3>SUGESTÕES DE FILMES PARA CONTEXTUALIZAÇÃO COM O</h3>
+<h3>PERÍODO ESTUDADO E PARA CONTRIBUIR COM O TEMA:</h3>
+<div class="q"><b>1. Medida Provisória</b></div>
+<h3>SINOPSE</h3>
+<p class="cls"><b>Classificação:</b> Não recomendado para menores de 14 anos</p>
+<p class="par">Maurício acabou de ingressar na renomada Universidade Federal de Medicina. Na sua primeira aula de anatomia ele conhece M8, o cadáver que servirá de estudos para ele e os amigos. Durante o semestre Maurício tenta descobrir a identidade do corpo, enquanto enfrenta seus próprios medos e angústias. Tudo piora quando ele descobre que todos os corpos estudados no laboratório da instituição são de pessoas negras.</p>
+<div class="q"><b>2. M-8 Quando a Morte Socorre a Vida</b></div>
+<div class="q"><b>3. Cores e Botas</b></div>
+<h3>SINOPSE</h3>
+<p class="cls"><b>Classificação:</b> Livre</p>
+<p class="par">O curta metragem conta a história da pequena Joana, uma garota que, assim como muitas dos anos 80, sonha em se tornar uma paquita da Xuxa. Sua família é bem-sucedida e apoia seu sonho, no entanto, Joana é afrodescendente e nunca houve uma paquita negra. Por meio da narrativa, a obra apresenta ao público a importância da representatividade para crianças negras em um país com poucos personagens afrodescendentes.</p>
+<div class="q"><b>4. Que Horas Ela Volta</b></div>
+<h3>SINOPSE</h3>
+<p class="cls"><b>Classificação:</b> Não recomendado para menores de 12 anos</p>
+<p class="par">A Pernambucana Val se mudou para São Paulo a fim de dar melhores condições de vida para sua filha Jéssica. Com muito receio, ela deixou a menina no interior de Pernambuco para ser babá de Fabinho, morando integralmente na casa de seus patrões. Treze anos depois quando o menino vai prestar vestibular, Jéssica lhe telefona pedindo ajuda para ir à São Paulo, no intuito de prestar a mesma prova. Os chefes de Val recebem de “braços abertos”, mas quando ela deixa de seguir certos protocolos, a situação complica.</p>
+<div class="q"><b>5. Doutor Gama</b></div>
+<h3>SINOPSE</h3>
+<p class="cls"><b>Classificação:</b> Não recomendado para menores de 14 anos</p>
+<p class="par">Doutor Gama é um filme biográfico sobre a vida do escritor, advogado, jornalista e abolicionista Luiz Gama, uma das figuras mais relevantes da história brasileira. Ele utilizou todo seu conhecimento sobre as leis e os tribunais para libertar mais de 500 escravos durante sua vida. Nascido de ventre livre, Gama foi vendido como escravo aos 10 anos para pagar dívidas de jogo de seu pai, um homem branco. Mesmo escravizado, ele conseguiu se alfabetizar, assim conquistou sua liberdade, se tornando um dos mais respeitados advogados de sua época.</p>
+</div><div class="ch-end"><span>Revisa Goiás · CHSA · 3ª Série</span><span>4º bimestre</span></div></section></main><script>addEventListener('scroll',()=>{let d=document.documentElement;document.querySelector('#progress').style.width=(100*d.scrollTop/(d.scrollHeight-d.clientHeight))+'%'})</script>
+<script>
+(function(){
+  const tab=document.getElementById('tocTab');
+  const ov=document.getElementById('tocOv');
+  const dr=document.getElementById('tocDrawer');
+  const closeBtn=document.getElementById('tocClose');
+  if(!tab || !ov || !dr || !closeBtn) return;
+
+  function openToc(){
+    dr.classList.add('open'); ov.classList.add('open');
+    tab.setAttribute('aria-expanded','true'); dr.setAttribute('aria-hidden','false');
+  }
+  function closeToc(){
+    dr.classList.remove('open'); ov.classList.remove('open');
+    tab.setAttribute('aria-expanded','false'); dr.setAttribute('aria-hidden','true');
+  }
+  tab.addEventListener('click',openToc);
+  ov.addEventListener('click',closeToc);
+  closeBtn.addEventListener('click',closeToc);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeToc()});
+  dr.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeToc));
+
+  const sections=[...dr.querySelectorAll('a')].map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if('IntersectionObserver' in window){
+    const io=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          dr.querySelectorAll('a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id));
+        }
+      });
+    },{rootMargin:'-25% 0px -65% 0px'});
+    sections.forEach(s=>io.observe(s));
+  }
+})();
+</script>
+<script>
+function openTextoIImagem(e){
+  if(e) e.preventDefault();
+
+  const src = new URL('img/t1.webp', location.href).href;
+  const src2 = new URL('img/t1-2.webp', location.href).href;
+  const w = window.open('', '_blank');
+
+  if(!w){
+    alert('Permita pop-ups para abrir a imagem.');
+    return;
+  }
+
+  w.document.open();
+  w.document.write(`<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Texto I · Direitos fundamentais e humanos</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#08121c;color:#fff;font-family:Arial,sans-serif;overflow:hidden}
+.bar{height:64px;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#12304a;gap:12px}
+.title{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.controls{display:flex;align-items:center;gap:7px}
+.controls button{border:1px solid #ffffff55;background:#ffffff18;color:#fff;border-radius:9px;height:40px;min-width:42px;padding:0 12px;font-weight:700;cursor:pointer}
+.controls button:hover{background:#ffffff30}
+.pct{min-width:54px;text-align:center}
+.stage{height:calc(100% - 96px);overflow:auto;display:flex;align-items:flex-start;justify-content:flex-start;padding:16px;cursor:grab}
+.stage.drag{cursor:grabbing}
+.stage img{display:block;margin:auto;max-width:none;user-select:none;-webkit-user-drag:none;box-shadow:0 8px 28px #0008;background:#fff}
+.help{height:32px;display:flex;align-items:center;justify-content:center;background:#0d1d2b;color:#9fb3c3;font-size:12px}
+@media(max-width:700px){
+  .bar{height:auto;min-height:74px;align-items:flex-start;flex-direction:column}
+  .controls{width:100%;justify-content:center;flex-wrap:wrap}
+  .stage{height:calc(100% - 138px)}
+  .title{white-space:normal}
+}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="title">Texto I · Direitos fundamentais e humanos marcam o texto constitucional de 1988</div>
+  <div class="controls">
+    <button id="prev" title="Imagem anterior">❮</button>
+    <span id="slideCount">1 / 2</span>
+    <button id="next" title="Próxima imagem">❯</button>
+    <button id="minus" title="Diminuir">−</button>
+    <span class="pct" id="pct">100%</span>
+    <button id="plus" title="Aumentar">+</button>
+    <button id="fit" title="Ajustar à tela">Ajustar</button>
+    <button id="one" title="Tamanho original">1:1</button>
+  </div>
+</div>
+<div class="stage" id="stage">
+  <img id="pic" src="${src}" alt="Texto I — Direitos fundamentais e humanos marcam o texto constitucional de 1988">
+</div>
+<div class="help">Use +/− para ampliar · arraste a imagem quando estiver ampliada · duplo clique alterna o zoom</div>
+<script>
+let zoom=1;
+let current=0;
+const slides=["${src}","${src2}"];
+function showSlide(n){current=(n+slides.length)%slides.length;pic.src=slides[current];document.getElementById("slideCount").textContent=(current+1)+" / "+slides.length;stage.scrollTop=0;stage.scrollLeft=0;if(pic.complete)fit();}
+document.getElementById("prev").onclick=()=>showSlide(current-1);
+document.getElementById("next").onclick=()=>showSlide(current+1);
+window.addEventListener("keydown",e=>{if(e.key==="ArrowLeft")showSlide(current-1);if(e.key==="ArrowRight")showSlide(current+1)});
+const pic=document.getElementById('pic');
+const stage=document.getElementById('stage');
+const pct=document.getElementById('pct');
+
+function apply(){
+  pic.style.width=(pic.naturalWidth*zoom)+'px';
+  pic.style.height='auto';
+  pct.textContent=Math.round(zoom*100)+'%';
+}
+function fit(){
+  if(!pic.naturalWidth) return;
+  const zx=(stage.clientWidth-32)/pic.naturalWidth;
+  const zy=(stage.clientHeight-32)/pic.naturalHeight;
+  zoom=Math.min(1,zx,zy);
+  apply();
+}
+pic.onload=fit;
+document.getElementById('plus').onclick=()=>{zoom=Math.min(3,zoom+.15);apply()};
+document.getElementById('minus').onclick=()=>{zoom=Math.max(.25,zoom-.15);apply()};
+document.getElementById('fit').onclick=fit;
+document.getElementById('one').onclick=()=>{zoom=1;apply()};
+pic.ondblclick=()=>{zoom=zoom<1.5?2:1;apply()};
+
+let down=false,sx=0,sy=0,sl=0,st=0;
+stage.onpointerdown=e=>{
+  down=true;sx=e.clientX;sy=e.clientY;sl=stage.scrollLeft;st=stage.scrollTop;
+  stage.classList.add('drag');stage.setPointerCapture(e.pointerId);
+};
+stage.onpointermove=e=>{
+  if(down){
+    stage.scrollLeft=sl-(e.clientX-sx);
+    stage.scrollTop=st-(e.clientY-sy);
+  }
+};
+stage.onpointerup=()=>{
+  down=false;stage.classList.remove('drag');
+};
+window.addEventListener('resize',()=>{if(zoom<1)fit()});
+<\/script>
+</body>
+</html>`);
+  w.document.close();
+}
+</script></body></html>

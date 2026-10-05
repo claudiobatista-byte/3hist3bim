@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Direitos Fundamentais e Humanos na Constituição de 1988 | CERO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#eeefe6;
+    --bg-alt:#e3e5d6;
+    --paper:#fefffb;
+    --ink:#232618;
+    --ink-soft:#5a5f48;
+    --verde:#4a5a2e;
+    --verde-dark:#252f14;
+    --verde-2:#3f7a52;
+    --gold:#b4532a;
+    --gold-light:#efcfbd;
+    --line:#d0d3be;
+    --shadow:0 10px 30px rgba(37,47,20,.16);
+    --radius:14px;
+    --font-title:'Playfair Display', serif;
+    --font-body:'Source Serif 4', serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.7;
+    -webkit-touch-callout:none;
+    user-select:none;
+  }
+  .selecionavel, main{user-select:text;}
+  .campo-resposta{user-select:text;}
+
+  /* ===== CAPA / GATE ===== */
+  #capa{
+    min-height:100vh;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(to bottom, #1a2210, #4a5a2e, #8a9a5b);
+    padding:24px;
+  }
+  #capa .grade-centralizada{
+    position:absolute;
+    top:0; bottom:0; left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:896px;
+    pointer-events:none;
+    z-index:0;
+    opacity:.08;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px);
+    background-size:40px 40px;
+  }
+  .capa-card{
+    position:relative;
+    z-index:1;
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    max-width:480px;
+    width:100%;
+    padding:36px 32px;
+    text-align:center;
+  }
+  .capa-card .tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.7rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--verde-dark);
+    background:rgba(74,90,46,.12); padding:5px 12px; border-radius:999px; margin-bottom:14px;
+  }
+  .capa-card h1{font-family:var(--font-title); font-size:1.6rem; margin:0 0 10px; color:var(--verde-dark);}
+  .capa-card p.desc{color:var(--ink-soft); font-size:.94rem; margin:0 0 22px;}
+  .capa-card input{
+    width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    font-family:var(--font-body); font-size:1rem; margin-bottom:14px;
+  }
+  .capa-card button{
+    width:100%; padding:13px; border:none; border-radius:8px;
+    background:var(--verde); color:#fff; font-weight:600; font-size:1rem; cursor:pointer;
+    font-family:var(--font-body); transition:filter .15s ease;
+  }
+  .capa-card button:hover{filter:brightness(1.08);}
+  .capa-aviso{font-size:.78rem; color:#a33; margin-top:8px; display:none;}
+
+  /* ===== APP ===== */
+  #app{display:none;}
+  .sticky-header{
+    position:sticky; top:0; z-index:50;
+    background:var(--verde-dark); color:#e8f0f7;
+    padding:12px 20px; display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:8px;
+    font-family:var(--font-mono); font-size:.82rem;
+  }
+  .sticky-header .aluno{font-family:var(--font-body); font-weight:600; font-size:.92rem;}
+  .barra-progresso-trilho{
+    flex:1; min-width:120px; height:8px; background:rgba(255,255,255,.2); border-radius:6px; overflow:hidden; margin:0 14px;
+  }
+  .barra-progresso-fill{height:100%; background:var(--gold); width:0%; transition:width .3s ease;}
+
+  .wrap{max-width:800px; margin:0 auto; padding:32px 24px 60px;}
+
+  header.topo{margin-bottom:28px;}
+  header.topo .hero-tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.72rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--verde-dark);
+    background:rgba(74,90,46,.12); padding:5px 12px; border-radius:999px; margin-bottom:12px;
+  }
+  header.topo h1{font-family:var(--font-title); font-size:clamp(1.5rem,4vw,2rem); margin:0 0 8px; color:var(--ink);}
+  header.topo p.sub{color:var(--ink-soft); margin:0; font-size:.98rem;}
+  header.topo .aluno-info{
+    font-family:var(--font-mono); font-size:.82rem; color:var(--verde-dark);
+    background:var(--bg-alt); display:inline-block; padding:6px 12px; border-radius:8px; margin-top:12px;
+  }
+  .descritor-bar{
+    font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft);
+    background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:8px 14px; margin-bottom:14px; display:inline-block;
+  }
+  .ficha-id{
+    display:flex; flex-wrap:wrap; gap:10px 26px;
+    background:var(--paper); border:1px solid var(--line); border-radius:10px;
+    padding:12px 16px; margin-top:12px; font-family:var(--font-mono); font-size:.84rem; color:var(--ink);
+  }
+  .ficha-id span b{color:var(--verde-dark);}
+
+  /* ===== TEXTO DE APOIO ===== */
+  .texto-apoio{
+    background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:28px 30px; margin-bottom:30px;
+  }
+  .texto-apoio h2{font-family:var(--font-title); font-size:1.25rem; color:var(--verde-dark); margin:0 0 4px;}
+  .texto-apoio .fonte-tag{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-bottom:16px; display:block;}
+  .texto-apoio p{margin:0 0 14px; color:var(--ink);}
+  .texto-apoio p:last-of-type{margin-bottom:0;}
+
+  .referencia-box{
+    margin-top:20px; padding:14px 16px;
+    background:var(--bg-alt); border-left:3px solid var(--gold); border-radius:0 8px 8px 0;
+  }
+  .referencia-box .rot{
+    font-family:var(--font-mono); font-size:.7rem; text-transform:uppercase; letter-spacing:.08em;
+    color:var(--verde-dark); display:block; margin-bottom:6px;
+  }
+  .referencia-box p{margin:0 0 6px; font-size:.86rem; color:var(--ink-soft); font-family:var(--font-mono); line-height:1.6;}
+  .referencia-box p:last-child{margin-bottom:0;}
+
+  /* ===== IMAGEM / RECURSO VISUAL ===== */
+  .box-imagem-questao{
+    margin:14px 0 18px;
+    background:var(--bg-alt);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px;
+    text-align:center;
+  }
+  .box-imagem-questao img{
+    max-width:100%;
+    height:auto;
+    border-radius:6px;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+    display:block;
+    margin:0 auto;
+  }
+  .box-imagem-questao .legenda-img{
+    font-family:var(--font-mono);
+    font-size:.75rem;
+    color:var(--ink-soft);
+    margin-top:8px;
+    line-height:1.4;
+  }
+  .link-reportagem{
+    display:inline-flex; align-items:center; gap:6px;
+    margin-top:12px; padding:8px 14px;
+    background:var(--verde); color:#fff; text-decoration:none;
+    border-radius:8px; font-family:var(--font-mono); font-size:.76rem;
+    letter-spacing:.02em; transition:filter .15s ease;
+  }
+  .link-reportagem:hover{filter:brightness(1.1); text-decoration:underline;}
+
+  /* ===== SUBITENS (questões com múltiplos campos) ===== */
+  .subitem{margin-top:18px;}
+  .subitem:first-of-type{margin-top:16px;}
+  .subitem-label{display:block; font-weight:600; color:var(--ink); margin-bottom:8px; font-size:.94rem;}
+
+  /* ===== QUESTOES ===== */
+  .questoes-titulo{
+    font-family:var(--font-title); font-size:1.2rem; color:var(--verde-dark);
+    margin:0 0 18px; display:flex; align-items:center; gap:10px;
+  }
+  .questao{
+    background:var(--paper); border:1px solid var(--line); border-radius:12px;
+    padding:20px 22px; margin-bottom:18px;
+  }
+  .questao .num-q{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:50%; background:var(--verde);
+    color:#fff; font-family:var(--font-mono); font-size:.78rem; margin-right:8px; flex-shrink:0;
+  }
+  .questao .enunciado{font-weight:600; color:var(--ink); margin-bottom:12px; display:flex; align-items:flex-start;}
+  .questao textarea{
+    width:100%; min-height:120px; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    font-family:var(--font-body); font-size:.96rem; resize:vertical; color:var(--ink);
+  }
+  .questao textarea:focus{outline:2px solid var(--verde-2); outline-offset:1px;}
+  .contador-chars{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-top:6px; text-align:right;}
+
+  /* ===== OPCOES (OBJETIVAS) ===== */
+  .opcao{
+    display:flex; gap:12px; align-items:flex-start;
+    padding:12px 14px; border:1.5px solid var(--line); border-radius:8px;
+    margin-bottom:8px; cursor:pointer; transition:all .15s ease; background:var(--paper);
+  }
+  .opcao:hover{border-color:var(--verde); background:var(--bg-alt);}
+  .opcao.sel{border-color:var(--verde); background:var(--bg-alt);}
+  .opcao.correta{border-color:var(--verde-2); background:#e9f5ee;}
+  .opcao.errada{border-color:#c0392b; background:#fdeeee;}
+  .opcao.travada{cursor:default;}
+  .opcao-letra{
+    flex:0 0 auto; width:26px; height:26px; border-radius:50%;
+    background:var(--bg-alt); color:var(--ink-soft);
+    font-family:var(--font-mono); font-weight:700; font-size:.78rem;
+    display:flex; align-items:center; justify-content:center; transition:all .15s ease;
+  }
+  .opcao.sel .opcao-letra{background:var(--verde); color:#fff;}
+  .opcao.correta .opcao-letra{background:var(--verde-2); color:#fff;}
+  .opcao.errada .opcao-letra{background:#c0392b; color:#fff;}
+  .opcao-txt{font-size:.94rem; color:var(--ink); line-height:1.6; padding-top:2px;}
+  .opcao-marca{margin-left:auto; font-size:1rem; align-self:center; display:none; flex:0 0 auto;}
+  .gabarito-info{
+    display:none; margin-top:12px; padding:12px 16px;
+    background:#f6e6dc; border:1px solid var(--gold-light); border-radius:8px;
+    font-size:.88rem; color:#5e2c14;
+  }
+  .gabarito-info.show{display:block;}
+  .gabarito-info b{color:#8c3f1d;}
+  .questao .badge-resultado{
+    display:none; font-family:var(--font-mono); font-size:.68rem; font-weight:700;
+    padding:2px 10px; border-radius:20px; margin-left:8px; color:#fff;
+  }
+  .questao .badge-resultado.ok{display:inline-block; background:var(--verde-2);}
+  .questao .badge-resultado.no{display:inline-block; background:#c0392b;}
+
+  .comentario-prof{
+    display:none; margin-top:14px; padding:14px 16px;
+    background:#e6f2ea; border:1px solid #c9e0d1; border-radius:8px; font-size:.9rem; color:var(--verde-dark);
+  }
+  .comentario-prof.show{display:block;}
+  .comentario-prof b{display:block; margin-bottom:4px; font-family:var(--font-title); font-size:.92rem;}
+
+  /* ===== ALERTA / FINALIZAR ===== */
+  .alerta-incompleto{
+    display:none; background:#f5eddb; border:1px solid #d9c48a; color:#8a6a1a;
+    padding:12px 16px; border-radius:8px; font-size:.9rem; margin-bottom:16px;
+  }
+  .alerta-incompleto.show{display:block;}
+
+  .acoes-finais{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;}
+  .btn{
+    font-family:var(--font-body); font-weight:600; font-size:.94rem; padding:12px 22px;
+    border-radius:8px; border:none; cursor:pointer; transition:filter .15s ease;
+  }
+  .btn:hover{filter:brightness(1.08);}
+  .btn-primario{background:var(--verde); color:#fff;}
+  .btn-secundario{background:transparent; color:var(--ink); border:1px solid var(--line);}
+  .btn-pdf{background:var(--gold); color:#fff;}
+  .btn[disabled]{opacity:.5; cursor:not-allowed;}
+
+  /* ===== POPUP ===== */
+  .popup-overlay{
+    display:none; position:fixed; inset:0; background:rgba(20,30,24,.6);
+    align-items:center; justify-content:center; z-index:200; padding:20px;
+  }
+  .popup-overlay.show{display:flex;}
+  .popup-card{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    max-width:420px; width:100%; padding:32px 28px; text-align:center;
+  }
+  .popup-card .emoji{font-size:2.4rem; margin-bottom:10px;}
+  .popup-card h3{font-family:var(--font-title); margin:0 0 8px; color:var(--verde-dark);}
+  .popup-card p{color:var(--ink-soft); font-size:.94rem; margin:0 0 20px;}
+
+  footer.rodape{text-align:center; padding:24px; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;}
+
+  @media (max-width:600px){
+    .wrap{padding:24px 16px 50px;}
+    .texto-apoio, .questao{padding:18px 18px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== CAPA ===== -->
+<div id="capa">
+  <div class="grade-centralizada"></div>
+  <div class="capa-card">
+    <span class="tag">3ª Série · Ensino Médio · História · CERO</span>
+    <h1>Direitos Fundamentais e Humanos</h1>
+    <p class="desc">Constituição de 1988: leitura e interpretação de texto, 5 questões dissertativas e 5 questões objetivas. Preencha os dados para começar.</p>
+    <input type="text" id="nome-aluno" placeholder="Seu nome completo">
+    <input type="text" id="turma-aluno" placeholder="Turma (ex.: 3º A)">
+    <button onclick="iniciarAtividade()">Iniciar atividade</button>
+    <div class="capa-aviso" id="capa-aviso">Por favor, digite seu nome para continuar.</div>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="app">
+  <div class="sticky-header">
+    <span class="aluno" id="header-nome"></span>
+    <div class="barra-progresso-trilho"><div class="barra-progresso-fill" id="barra-fill"></div></div>
+    <span id="contador-geral">Respondidas: 0/11</span>
+  </div>
+
+  <div class="wrap">
+    <header class="topo selecionavel">
+      <span class="descritor-bar">História / 3ª Série do Ensino Médio &nbsp;|&nbsp; (EM13CHS605) – Direitos Humanos e Constituição de 1988</span>
+      <span class="hero-tag" style="display:block; margin-top:10px;">Leitura e Interpretação de Texto</span>
+      <h1>Direitos Fundamentais e Humanos na Constituição de 1988</h1>
+      <p class="sub">Leia o texto abaixo e responda às 5 questões dissertativas e às 5 questões objetivas.</p>
+      <div class="ficha-id" id="ficha-id">
+        <span><b>NOME:</b> <span id="ficha-nome"></span></span>
+        <span><b>DATA:</b> <span id="ficha-data"></span></span>
+        <span><b>TURMA:</b> <span id="ficha-turma"></span></span>
+      </div>
+    </header>
+
+    <main>
+      <h2 class="questoes-titulo">✍️ Leitura e Questões Dissertativas</h2>
+
+      <section class="texto-apoio selecionavel">
+        <h2>Direitos fundamentais e humanos marcam o texto constitucional de 1988</h2>
+        <span class="fonte-tag">Governo do Brasil, com informações da ONU</span>
+        <p>No Brasil, o período militar foi conturbado para os direitos humanos. O desrespeito a eles foi determinante para a inclusão das garantias individuais e sociais presentes na Constituição federal de 1988. O ex-ministro chefe da Controladoria-Geral da União (CGU) Jorge Hage, que participou da Assembleia Nacional Constituinte, recorda que o momento de elaboração da Carta “foi a de recuperação de direitos, sobretudo.”</p>
+        <p>Hage diz que não houve na história do país momento de maior entrosamento entre o parlamento e a sociedade. “Estabeleceu-se uma relação direta importantíssima e inédita. Desconheço outro momento histórico em que isso tenha funcionado igual”, afirmou o ex-ministro-chefe da CGU, que também ressaltou que os direitos humanos e fundamentais inseridos no texto constitucional foram construídos pelo próprio povo, que ocupava o parlamento, junto com os constituintes. <em>(Legenda da foto original: populares acompanham votação da Constituição Federal no plenário da Câmara, em 1988.)</em></p>
+        <p>Pela Constituição de 1988, o homem se sobrepõe ao Estado. As garantias e os direitos fundamentais do cidadão aparecem logo nos primeiros artigos. No primeiro, por exemplo, é estabelecido o princípio da cidadania, da dignidade da pessoa humana e os valores sociais do trabalho. Direitos civis, políticos, econômicos, sociais e culturais dos cidadãos estão no texto constitucional. Resguardado pela Carta Magna, os direitos fundamentais colocam o Brasil como um dos países com o mais completo ordenamento jurídico em relação aos direitos humanos.</p>
+        <p>Além das garantias fundamentais expostas na Constituição, que asseguram direitos aos cidadãos, as prerrogativas também são resguardadas pelos direitos humanos. Ambos possuem a mesma essência e finalidade, que é compor um conjunto de leis inerentes à dignidade da pessoa humana. Juntas, as legislações proporcionam, aos cidadãos, o direito à vida, ao trabalho, à educação e à liberdade de opinião e expressão. Todos, sem distinção, merecem as proteções.</p>
+        <p>Os direitos humanos são universais e resultam de lutas contra injustiças, sendo garantidos por tratados internacionais. Já os direitos fundamentais são aqueles reconhecidos e assegurados pela Constituição Federal de 1988.</p>
+        <p>O constitucionalista Cristiano Paixão, professor de Direito da Universidade de Brasília (UnB), explica que os direitos humanos e fundamentais possuem o mesmo status, a mesma hierarquia e a mesma força normativa. “São previstos em documentos internacionais e constituições e protegem o ser humano em diversas áreas”, afirma. Paixão ressalta ainda que os direitos garantem a democracia no país ao permitir que ideias de igualdade, liberdade, reconhecimento e justiça ganhem concretude. “Sem essa capacidade de garantir direitos de forma recíproca, individual e coletiva, nenhuma sociedade poderá se considerar democrática”.</p>
+        <div class="referencia-box">
+          <span class="rot">Fonte</span>
+          <p>Governo do Brasil, com informações da ONU. Disponível em: <a href="https://abre.ai/nxKF" target="_blank" rel="noopener" style="color:inherit;">https://abre.ai/nxKF</a>. Acesso em: 11 set. 2025.</p>
+        </div>
+      </section>
+
+      <div class="questao" data-questao="1">
+        <div class="enunciado"><span class="num-q">1</span> De acordo com o texto, quais os principais valores destacados na Constituição de 1988 e como eles se relacionam com a dignidade da pessoa humana?</div>
+        <textarea id="resp-1" class="campo-resposta dissertativa" data-min="80" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 80)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Espera-se que o aluno identifique, a partir do artigo 1º citado no texto, a cidadania, a dignidade da pessoa humana e os valores sociais do trabalho, além do conjunto de direitos civis, políticos, econômicos, sociais e culturais; e relacione esses valores à dignidade da pessoa humana, explicando que as garantias fundamentais e os direitos humanos formam um conjunto de normas inerentes a essa dignidade, assegurando vida, trabalho, educação e liberdade de opinião e expressão a todos, sem distinção — daí a ideia de que, na Constituição de 1988, "o homem se sobrepõe ao Estado".
+        </div>
+      </div>
+
+      <div class="questao" data-questao="2">
+        <div class="enunciado"><span class="num-q">2</span> Qual é a importância dos direitos humanos e fundamentais para a consolidação da democracia em uma sociedade, segundo Cristiano Paixão?</div>
+        <textarea id="resp-2" class="campo-resposta dissertativa" data-min="80" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 80)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Espera-se que o aluno explique que, para Paixão, os direitos garantem a democracia ao permitir que as ideias de igualdade, liberdade, reconhecimento e justiça ganhem concretude, isto é, saiam do plano abstrato e se realizem na vida das pessoas; e que a democracia depende da capacidade de garantir esses direitos de forma recíproca, individual e coletiva — sem ela, nenhuma sociedade pode se considerar democrática.
+        </div>
+      </div>
+
+      <div class="questao" data-questao="3">
+        <div class="enunciado"><span class="num-q">3</span> Jorge Hage afirma que a elaboração da Constituição foi um momento "de recuperação de direitos, sobretudo" e destaca a relação direta entre parlamento e sociedade. Explique, com base no texto, de que forma o desrespeito aos direitos humanos durante o período militar e a participação popular na Assembleia Constituinte ajudam a entender o conteúdo da Constituição de 1988.</div>
+        <textarea id="resp-3" class="campo-resposta dissertativa" data-min="80" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 80)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Espera-se que o aluno relacione o desrespeito aos direitos humanos no período militar à inclusão das garantias individuais e sociais na Constituição ("recuperação de direitos"), e explique que a participação do povo, que ocupou o parlamento junto com os constituintes, fez com que os direitos fossem construídos pela própria sociedade, e não apenas concedidos de cima para baixo — o que ajuda a explicar a amplitude de direitos presente na Carta de 1988.
+        </div>
+      </div>
+
+      <div class="questao" data-questao="4">
+        <div class="enunciado"><span class="num-q">4</span> O texto diferencia direitos humanos de direitos fundamentais, mas afirma que ambos possuem a mesma essência e finalidade. Explique em que consiste cada um deles, o que têm em comum e por que, segundo Cristiano Paixão, possuem o mesmo status, a mesma hierarquia e a mesma força normativa.</div>
+        <textarea id="resp-4" class="campo-resposta dissertativa" data-min="80" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 80)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Espera-se que o aluno explique que os direitos humanos são universais, resultam de lutas contra injustiças e são garantidos por tratados internacionais, enquanto os direitos fundamentais são os reconhecidos e assegurados pela Constituição Federal de 1988; que ambos têm a mesma essência e finalidade — compor um conjunto de normas inerentes à dignidade da pessoa humana; e que, para Paixão, ambos estão previstos em documentos internacionais e em constituições e protegem o ser humano em diversas áreas, razão pela qual não há hierarquia entre eles.
+        </div>
+      </div>
+
+      <div class="questao" data-questao="5">
+        <div class="enunciado"><span class="num-q">5</span> <span>O texto afirma que os direitos à vida, ao trabalho, à educação e à liberdade de opinião e expressão são assegurados a todos, sem distinção. A partir dessa afirmação, responda aos itens a seguir, relacionando o texto à sua vida.</span></div>
+
+        <div class="subitem">
+          <span class="subitem-label">a) Escolha um desses direitos e descreva uma situação do seu cotidiano (na escola, na família, no trabalho ou no bairro) em que ele se manifesta ou em que poderia ser ameaçado.</span>
+          <textarea id="resp-5a" class="campo-resposta dissertativa" data-min="60" placeholder="Escreva sua resposta aqui..."></textarea>
+          <div class="contador-chars">0 caracteres (mínimo 60)</div>
+        </div>
+
+        <div class="subitem">
+          <span class="subitem-label">b) Paixão afirma que os direitos precisam ser garantidos "de forma recíproca, individual e coletiva". Explique que atitude você pode adotar, como cidadão ou cidadã, para que o direito escolhido no item anterior seja respeitado também para as outras pessoas.</span>
+          <textarea id="resp-5b" class="campo-resposta dissertativa" data-min="60" placeholder="Escreva sua resposta aqui..."></textarea>
+          <div class="contador-chars">0 caracteres (mínimo 60)</div>
+        </div>
+
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Resposta pessoal, avaliada pela coerência com o texto:
+          <br>a) <strong>Direito e situação:</strong> o aluno deve escolher corretamente um dos direitos citados (vida, trabalho, educação ou liberdade de opinião e expressão) e apresentar uma situação concreta e plausível, mostrando compreensão do que o direito garante ou de como poderia ser violado.
+          <br>b) <strong>Reciprocidade:</strong> espera-se uma atitude que reconheça que o direito reivindicado para si vale igualmente para os outros (por exemplo, respeitar a opinião divergente, cobrar a oferta de educação de qualidade para todos, denunciar violações), articulando a dimensão individual e a coletiva a que Paixão se refere.
+        </div>
+      </div>
+
+      <h2 class="questoes-titulo">📝 Questões Objetivas</h2>
+      <p class="selecionavel" style="margin:-6px 0 18px; color:var(--ink-soft); font-size:.94rem;">As questões a seguir se baseiam no texto de apoio apresentado no início da atividade. Releia-o sempre que precisar.</p>
+
+      <div class="questao objetiva" data-questao="obj-1" data-correta="2">
+        <div class="enunciado"><span class="num-q">1</span> O texto afirma que, pela Constituição de 1988, "o homem se sobrepõe ao Estado". Essa ideia deve ser interpretada, corretamente, como: <span class="badge-resultado" id="badge-obj-1"></span></div>
+        <div class="opcao" data-idx="0" onclick="marcarOpcao(1,0)"><div class="opcao-letra">A</div><div class="opcao-txt">a transferência do poder de decisão sobre a vida coletiva aos cidadãos, que passam a dispensar as instituições estatais.</div><div class="opcao-marca" id="marca-1-0"></div></div>
+        <div class="opcao" data-idx="1" onclick="marcarOpcao(1,1)"><div class="opcao-letra">B</div><div class="opcao-txt">a retirada de qualquer obrigação do Estado com serviços sociais, cabendo a cada indivíduo garantir sozinho os próprios direitos, sem depender de políticas públicas.</div><div class="opcao-marca" id="marca-1-1"></div></div>
+        <div class="opcao" data-idx="2" onclick="marcarOpcao(1,2)"><div class="opcao-letra">C</div><div class="opcao-txt">o reconhecimento de que o Estado existe para proteger a pessoa, de modo que a dignidade e os direitos dela limitam o poder de quem governa.</div><div class="opcao-marca" id="marca-1-2"></div></div>
+        <div class="opcao" data-idx="3" onclick="marcarOpcao(1,3)"><div class="opcao-letra">D</div><div class="opcao-txt">a substituição dos direitos coletivos pelos individuais, já que somente o cidadão isolado passa a ser sujeito de direitos.</div><div class="opcao-marca" id="marca-1-3"></div></div>
+        <div class="opcao" data-idx="4" onclick="marcarOpcao(1,4)"><div class="opcao-letra">E</div><div class="opcao-txt">a prioridade das leis internacionais sobre a Constituição, que passa a ter papel meramente simbólico.</div><div class="opcao-marca" id="marca-1-4"></div></div>
+        <div class="gabarito-info" id="gab-1"><b>Gabarito: C.</b> O texto afirma que as garantias e os direitos fundamentais aparecem logo nos primeiros artigos, como a cidadania e a dignidade da pessoa humana — ou seja, a finalidade do Estado é proteger a pessoa, e o poder de quem governa encontra limite nesses direitos. Isso descarta A e B, que sugerem a dispensa ou a ausência do Estado (o texto, ao contrário, fala em ordenamento jurídico completo); D, pois a Constituição prevê direitos civis, políticos, econômicos, sociais e culturais, individuais e coletivos; e E, já que o texto atribui aos direitos fundamentais o mesmo status dos direitos humanos, e não a prevalência de um sobre a Constituição.</div>
+      </div>
+
+      <div class="questao objetiva" data-questao="obj-2" data-correta="4">
+        <div class="enunciado"><span class="num-q">2</span> Ao descrever a elaboração da Constituição como um momento "de recuperação de direitos, sobretudo" e destacar a presença do povo junto aos constituintes, o texto permite inferir que: <span class="badge-resultado" id="badge-obj-2"></span></div>
+        <div class="opcao" data-idx="0" onclick="marcarOpcao(2,0)"><div class="opcao-letra">A</div><div class="opcao-txt">a Constituinte foi conduzida exclusivamente por juristas, que reproduziram modelos estrangeiros sem consulta à sociedade.</div><div class="opcao-marca" id="marca-2-0"></div></div>
+        <div class="opcao" data-idx="1" onclick="marcarOpcao(2,1)"><div class="opcao-letra">B</div><div class="opcao-txt">as garantias individuais e sociais foram concedidas espontaneamente pelo regime militar antes de deixar o poder.</div><div class="opcao-marca" id="marca-2-1"></div></div>
+        <div class="opcao" data-idx="2" onclick="marcarOpcao(2,2)"><div class="opcao-letra">C</div><div class="opcao-txt">o texto de 1988 apenas restaurou regras anteriores a 1964, sem incluir nenhuma garantia nova para os cidadãos.</div><div class="opcao-marca" id="marca-2-2"></div></div>
+        <div class="opcao" data-idx="3" onclick="marcarOpcao(2,3)"><div class="opcao-letra">D</div><div class="opcao-txt">a participação popular foi apenas simbólica, pois as decisões sobre os direitos fundamentais ficaram restritas aos parlamentares.</div><div class="opcao-marca" id="marca-2-3"></div></div>
+        <div class="opcao" data-idx="4" onclick="marcarOpcao(2,4)"><div class="opcao-letra">E</div><div class="opcao-txt">a Carta respondeu ao desrespeito aos direitos no período militar e teve seu conteúdo moldado pela presença direta da população.</div><div class="opcao-marca" id="marca-2-4"></div></div>
+        <div class="gabarito-info" id="gab-2"><b>Gabarito: E.</b> O texto afirma que o desrespeito aos direitos humanos no período militar foi determinante para a inclusão das garantias individuais e sociais, e que Hage destaca uma relação direta e inédita entre parlamento e sociedade, com os direitos construídos pelo próprio povo ao lado dos constituintes. A alternativa A contradiz a participação social; B inverte a causalidade (foi o desrespeito, e não uma concessão do regime, que motivou as garantias); C ignora que o texto fala em <em>inclusão</em> de garantias na Carta de 1988; D é contrariada pela afirmação de que o povo ocupou o parlamento junto com os constituintes.</div>
+      </div>
+
+      <div class="questao objetiva" data-questao="obj-3" data-correta="1">
+        <div class="enunciado"><span class="num-q">3</span> Em uma escola pública, a direção proíbe um estudante de publicar no mural um texto crítico sobre a qualidade da merenda, alegando que "quem critica não colabora". À luz do texto, essa atitude: <span class="badge-resultado" id="badge-obj-3"></span></div>
+        <div class="opcao" data-idx="0" onclick="marcarOpcao(3,0)"><div class="opcao-letra">A</div><div class="opcao-txt">é legítima, pois a liberdade de opinião vale apenas para adultos, que respondem juridicamente pelo que expressam.</div><div class="opcao-marca" id="marca-3-0"></div></div>
+        <div class="opcao" data-idx="1" onclick="marcarOpcao(3,1)"><div class="opcao-letra">B</div><div class="opcao-txt">viola a liberdade de opinião e expressão, garantida a todos, sem distinção, e protegida tanto como direito humano quanto como direito fundamental.</div><div class="opcao-marca" id="marca-3-1"></div></div>
+        <div class="opcao" data-idx="2" onclick="marcarOpcao(3,2)"><div class="opcao-letra">C</div><div class="opcao-txt">só poderia ser questionada por meio de tratados internacionais, já que a Constituição de 1988 não trata da liberdade de expressão.</div><div class="opcao-marca" id="marca-3-2"></div></div>
+        <div class="opcao" data-idx="3" onclick="marcarOpcao(3,3)"><div class="opcao-letra">D</div><div class="opcao-txt">fere um direito humano, mas não um direito fundamental, já que este só se aplica às decisões tomadas por tribunais e não às de outras instituições, como a escola.</div><div class="opcao-marca" id="marca-3-3"></div></div>
+        <div class="opcao" data-idx="4" onclick="marcarOpcao(3,4)"><div class="opcao-letra">E</div><div class="opcao-txt">é compatível com a Constituição, pois o direito à educação prevalece sempre sobre a liberdade de opinião quando há conflito entre os dois.</div><div class="opcao-marca" id="marca-3-4"></div></div>
+        <div class="gabarito-info" id="gab-3"><b>Gabarito: B.</b> O texto lista a liberdade de opinião e expressão entre os direitos assegurados e afirma que "todos, sem distinção, merecem as proteções" — o que inclui estudantes. Além disso, direitos humanos e fundamentais têm o mesmo status e a mesma força normativa. Por isso A é incorreta (o texto não restringe o direito por idade); C erra ao dizer que a Constituição não trata do tema; D cria uma separação inexistente entre direitos humanos e fundamentais; E inventa uma hierarquia entre direitos que o texto não apresenta.</div>
+      </div>
+
+      <div class="questao objetiva" data-questao="obj-4" data-correta="0">
+        <div class="enunciado"><span class="num-q">4</span> Cristiano Paixão afirma que, "sem essa capacidade de garantir direitos de forma recíproca, individual e coletiva, nenhuma sociedade poderá se considerar democrática". No cotidiano de um estudante, a atitude mais coerente com a ideia de reciprocidade é: <span class="badge-resultado" id="badge-obj-4"></span></div>
+        <div class="opcao" data-idx="0" onclick="marcarOpcao(4,0)"><div class="opcao-letra">A</div><div class="opcao-txt">defender o direito de um colega de expressar opinião contrária à sua, mesmo discordando dele, pois o direito que cobro para mim vale também para ele.</div><div class="opcao-marca" id="marca-4-0"></div></div>
+        <div class="opcao" data-idx="1" onclick="marcarOpcao(4,1)"><div class="opcao-letra">B</div><div class="opcao-txt">exigir respeito às próprias opiniões, mas reservar-se o direito de silenciar quem pensa diferente sempre que a maioria da turma concordar com você.</div><div class="opcao-marca" id="marca-4-1"></div></div>
+        <div class="opcao" data-idx="2" onclick="marcarOpcao(4,2)"><div class="opcao-letra">C</div><div class="opcao-txt">reivindicar direitos apenas quando eles beneficiam diretamente o grupo de amigos, deixando que os demais resolvam sozinhos os seus problemas.</div><div class="opcao-marca" id="marca-4-2"></div></div>
+        <div class="opcao" data-idx="3" onclick="marcarOpcao(4,3)"><div class="opcao-letra">D</div><div class="opcao-txt">delegar à direção da escola a defesa de todos os direitos, por ser a única instância capaz de decidir o que é justo.</div><div class="opcao-marca" id="marca-4-3"></div></div>
+        <div class="opcao" data-idx="4" onclick="marcarOpcao(4,4)"><div class="opcao-letra">E</div><div class="opcao-txt">considerar que direitos coletivos, como o uso dos espaços comuns da escola, valem menos do que os direitos individuais.</div><div class="opcao-marca" id="marca-4-4"></div></div>
+        <div class="gabarito-info" id="gab-4"><b>Gabarito: A.</b> Reciprocidade significa que o direito reivindicado para si precisa valer igualmente para os outros, inclusive para quem pensa diferente — é isso que torna a garantia dos direitos individual e coletiva ao mesmo tempo. B e C negam a reciprocidade ao condicionar o direito à maioria ou ao próprio grupo; D transfere a responsabilidade para uma autoridade, quando Paixão fala de uma capacidade social de garantir direitos; E cria uma oposição entre o individual e o coletivo, quando o texto exige que ambos sejam garantidos.</div>
+      </div>
+
+      <div class="questao objetiva" data-questao="obj-5" data-correta="3">
+        <div class="enunciado"><span class="num-q">5</span> Imagine que você precise morar temporariamente em um país cuja Constituição não prevê a liberdade de opinião. Com base na distinção feita no texto entre direitos humanos e direitos fundamentais, é correto inferir que: <span class="badge-resultado" id="badge-obj-5"></span></div>
+        <div class="opcao" data-idx="0" onclick="marcarOpcao(5,0)"><div class="opcao-letra">A</div><div class="opcao-txt">você perderia seus direitos humanos, pois somente os direitos fundamentais acompanham a pessoa, enquanto os humanos dependem da Constituição de cada país.</div><div class="opcao-marca" id="marca-5-0"></div></div>
+        <div class="opcao" data-idx="1" onclick="marcarOpcao(5,1)"><div class="opcao-letra">B</div><div class="opcao-txt">você manteria apenas os direitos fundamentais da Constituição brasileira, que passariam a valer em qualquer lugar do mundo como se fossem tratados internacionais.</div><div class="opcao-marca" id="marca-5-1"></div></div>
+        <div class="opcao" data-idx="2" onclick="marcarOpcao(5,2)"><div class="opcao-letra">C</div><div class="opcao-txt">não haveria direito violado, já que os direitos humanos só existem quando o país os transforma em lei.</div><div class="opcao-marca" id="marca-5-2"></div></div>
+        <div class="opcao" data-idx="3" onclick="marcarOpcao(5,3)"><div class="opcao-letra">D</div><div class="opcao-txt">a liberdade de opinião continuaria sendo um direito humano seu, por ser universal e amparado por tratados internacionais, ainda que não fosse um direito fundamental naquele país.</div><div class="opcao-marca" id="marca-5-3"></div></div>
+        <div class="opcao" data-idx="4" onclick="marcarOpcao(5,4)"><div class="opcao-letra">E</div><div class="opcao-txt">sua situação seria idêntica à vivida no Brasil, pois direitos humanos e fundamentais são sempre sinônimos, qualquer que seja o ordenamento jurídico.</div><div class="opcao-marca" id="marca-5-4"></div></div>
+        <div class="gabarito-info" id="gab-5"><b>Gabarito: D.</b> Segundo o texto, os direitos humanos são universais e garantidos por tratados internacionais, enquanto os fundamentais são os reconhecidos pela Constituição de cada país (no caso, a de 1988). Assim, a falta de previsão constitucional no outro país não elimina o direito humano à liberdade de opinião. A alternativa A inverte os conceitos; B atribui às normas constitucionais brasileiras um alcance que elas não têm; C contraria a ideia de universalidade; E ignora a distinção apresentada pelo texto (essência e finalidade comuns, mas fontes de reconhecimento diferentes).</div>
+      </div>
+
+      <div class="alerta-incompleto" id="alerta-incompleto">
+        ⚠️ Ainda há questões incompletas (dissertativas com o mínimo de caracteres e todas as 5 objetivas marcadas). Revise antes de finalizar.
+      </div>
+
+      <div class="acoes-finais">
+        <button class="btn btn-primario" onclick="finalizarAtividade()">Finalizar e corrigir</button>
+        <button class="btn btn-secundario" onclick="refazerAtividade()">Refazer</button>
+        <button class="btn btn-pdf" onclick="exportarPDF()">Exportar em PDF</button>
+      </div>
+    </main>
+  </div>
+
+  <footer class="rodape">Colégio Estadual Rodolfo de Oliveira · CERO · 2026</footer>
+</div>
+
+<!-- ===== POPUP ===== -->
+<div class="popup-overlay" id="popup-overlay">
+  <div class="popup-card">
+    <div class="emoji">🎉</div>
+    <h3>Atividade concluída!</h3>
+    <p id="popup-nota" style="font-family:var(--font-mono); font-weight:700; color:var(--verde-dark); font-size:1rem; margin:0 0 12px;"></p>
+    <p>Suas respostas foram registradas. Os comentários do professor e o gabarito comentado já estão disponíveis abaixo de cada questão para você comparar com o que escreveu.</p>
+    <button class="btn btn-primario" onclick="fecharPopup()">Continuar</button>
+  </div>
+</div>
+
+<script>
+/* ===== GATE DE NOME ===== */
+function iniciarAtividade(){
+  const nome = document.getElementById('nome-aluno').value.trim();
+  const turma = document.getElementById('turma-aluno').value.trim();
+  const aviso = document.getElementById('capa-aviso');
+  if(!nome){
+    aviso.style.display = 'block';
+    return;
+  }
+  aviso.style.display = 'none';
+  const hoje = new Date();
+  const dataFormatada = String(hoje.getDate()).padStart(2,'0') + '/' + String(hoje.getMonth()+1).padStart(2,'0') + '/' + hoje.getFullYear();
+  document.getElementById('header-nome').textContent = nome;
+  document.getElementById('ficha-nome').textContent = nome;
+  document.getElementById('ficha-data').textContent = dataFormatada;
+  document.getElementById('ficha-turma').textContent = turma || '—';
+  document.getElementById('capa').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+/* ===== CONTADOR DE CARACTERES E PROGRESSO ===== */
+const textareas = document.querySelectorAll('textarea.dissertativa');
+const TOTAL_OBJ = 5;
+let respMC = {};
+let corrigido = false;
+
+function marcarOpcao(num, idx){
+  if (corrigido) return;
+  respMC[num] = idx;
+  const questaoEl = document.querySelector('.questao[data-questao="obj-' + num + '"]');
+  questaoEl.querySelectorAll('.opcao').forEach(function(op){
+    op.classList.toggle('sel', parseInt(op.dataset.idx,10) === idx);
+  });
+  atualizarProgresso();
+}
+
+function atualizarProgresso(){
+  let respondidas = 0;
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length >= min) respondidas++;
+  });
+  respondidas += Object.keys(respMC).length;
+  const total = textareas.length + TOTAL_OBJ;
+  document.getElementById('contador-geral').textContent = 'Respondidas: ' + respondidas + '/' + total;
+  document.getElementById('barra-fill').style.width = (respondidas / total * 100) + '%';
+}
+
+textareas.forEach(function(t){
+  const contadorEl = t.parentElement.querySelector('.contador-chars');
+  const min = parseInt(t.dataset.min, 10);
+  t.addEventListener('input', function(){
+    contadorEl.textContent = t.value.length + ' caracteres (mínimo ' + min + ')';
+    atualizarProgresso();
+  });
+});
+
+/* ===== FINALIZAR ===== */
+function finalizarAtividade(){
+  let completo = true;
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length < min) completo = false;
+  });
+  for(let n=1; n<=TOTAL_OBJ; n++){
+    if(respMC[n] === undefined) completo = false;
+  }
+
+  const alerta = document.getElementById('alerta-incompleto');
+  if(!completo){
+    alerta.classList.add('show');
+    alerta.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  alerta.classList.remove('show');
+
+  document.querySelectorAll('.comentario-prof').forEach(function(c){
+    c.classList.add('show');
+  });
+
+  corrigido = true;
+  let acertos = 0;
+  document.querySelectorAll('.questao.objetiva').forEach(function(qEl){
+    const num = qEl.dataset.questao.replace('obj-','');
+    const correta = parseInt(qEl.dataset.correta, 10);
+    const escolha = respMC[num];
+    const acertou = escolha === correta;
+    if(acertou) acertos++;
+    qEl.querySelectorAll('.opcao').forEach(function(op){
+      const idx = parseInt(op.dataset.idx, 10);
+      op.classList.add('travada');
+      if(idx === correta){ op.classList.add('correta'); document.getElementById('marca-'+num+'-'+idx).textContent='✓'; document.getElementById('marca-'+num+'-'+idx).style.display='block'; }
+      if(idx === escolha && !acertou){ op.classList.add('errada'); document.getElementById('marca-'+num+'-'+idx).textContent='✗'; document.getElementById('marca-'+num+'-'+idx).style.display='block'; }
+    });
+    document.getElementById('gab-'+num).classList.add('show');
+    const badge = document.getElementById('badge-obj-'+num);
+    badge.textContent = acertou ? '✓ Acertou' : '✗ Errou';
+    badge.className = 'badge-resultado ' + (acertou ? 'ok' : 'no');
+  });
+  window.__acertos = acertos;
+
+  const pct = Math.round(acertos/TOTAL_OBJ*100);
+  document.getElementById('popup-nota').textContent = acertos + '/' + TOTAL_OBJ + ' nas objetivas (' + pct + '%)';
+  document.getElementById('popup-overlay').classList.add('show');
+}
+
+function fecharPopup(){
+  document.getElementById('popup-overlay').classList.remove('show');
+}
+
+function refazerAtividade(){
+  textareas.forEach(function(t){
+    t.value = '';
+    t.parentElement.querySelector('.contador-chars').textContent = '0 caracteres (mínimo ' + t.dataset.min + ')';
+  });
+  document.querySelectorAll('.comentario-prof').forEach(function(c){
+    c.classList.remove('show');
+  });
+  document.querySelectorAll('.opcao').forEach(function(op){
+    op.classList.remove('sel','correta','errada','travada');
+  });
+  document.querySelectorAll('.opcao-marca').forEach(function(m){ m.style.display='none'; m.textContent=''; });
+  document.querySelectorAll('.gabarito-info').forEach(function(g){ g.classList.remove('show'); });
+  document.querySelectorAll('.badge-resultado').forEach(function(b){ b.textContent=''; b.className='badge-resultado'; });
+  respMC = {};
+  corrigido = false;
+  document.getElementById('alerta-incompleto').classList.remove('show');
+  atualizarProgresso();
+  window.scrollTo(0,0);
+}
+
+/* ===== EXPORTAR PDF ===== */
+function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+function esc(str){
+  const d = document.createElement('div');
+  d.textContent = str || '';
+  return d.innerHTML.replace(/\n/g, '<br>');
+}
+
+async function exportarPDF(){
+  const overlay = document.createElement('div');
+  overlay.id = 'pdf-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(20,30,24,.6);display:flex;align-items:center;justify-content:center;z-index:999;';
+  overlay.innerHTML =
+    '<div style="background:#fff;border-radius:14px;padding:32px 36px;text-align:center;max-width:300px;box-shadow:0 10px 30px rgba(37,47,20,.3);font-family:\'Source Serif 4\',serif;">' +
+      '<div style="font-size:2rem;margin-bottom:8px;">📄</div>' +
+      '<h4 style="margin:0 0 4px;color:#252f14;font-family:\'Playfair Display\',serif;">Gerando PDF…</h4>' +
+      '<p style="margin:0 0 14px;color:#5a5f48;font-size:.86rem;">Aguarde alguns instantes.</p>' +
+      '<div style="background:#e3e5d6;border-radius:6px;overflow:hidden;height:8px;">' +
+        '<div id="pdf-prog" style="height:100%;width:0%;background:#4a5a2e;transition:width .2s ease;"></div>' +
+      '</div>' +
+      '<div id="pdf-prog-txt" style="margin-top:8px;font-family:\'JetBrains Mono\',monospace;font-size:.74rem;color:#5a5f48;">0%</div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+  await sleep(80);
+  function setP(pct, msg){
+    const pp = document.getElementById('pdf-prog'), pt = document.getElementById('pdf-prog-txt');
+    if(pp) pp.style.width = pct + '%';
+    if(pt) pt.textContent = msg || (pct + '%');
+  }
+
+  try{
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({orientation:'portrait', unit:'px', format:'a4', hotfixes:['px_scaling']});
+    const PW = pdf.internal.pageSize.getWidth(), PH = pdf.internal.pageSize.getHeight();
+    const ML = 28, CW = PW - ML*2;
+    let y = ML;
+
+    async function addImg(el){
+      const canvas = await html2canvas(el, {scale:2, useCORS:true, logging:false, backgroundColor:'#ffffff', scrollX:0, scrollY:0, windowWidth:860});
+      const imgW = CW, imgH = (canvas.height / canvas.width) * imgW;
+      const dataUrl = canvas.toDataURL('image/jpeg', .92), avail = PH - ML*2;
+      if(imgH <= avail){
+        if(y + imgH > PH - ML){ pdf.addPage(); y = ML; }
+        pdf.addImage(dataUrl, 'JPEG', ML, y, imgW, imgH);
+        y += imgH + 8;
+      } else {
+        if(y > ML + 4){ pdf.addPage(); y = ML; }
+        const pxPerPdfPt = canvas.width / imgW;
+        const cx = canvas.getContext('2d');
+        const x0 = Math.round(canvas.width * 0.04), wRow = canvas.width - 2*x0;
+        function linhaVazia(row){
+          const d = cx.getImageData(x0, row, wRow, 1).data; let mn = 255, mx = 0;
+          for(let i=0; i<d.length; i+=4){ const l = (d[i]+d[i+1]+d[i+2])/3; if(l<mn) mn=l; if(l>mx) mx=l; }
+          return (mx - mn) < 14;
+        }
+        let srcY = 0;
+        while(srcY < canvas.height){
+          const availPt = PH - y - ML;
+          let sliceH_px = Math.min(Math.round(availPt * pxPerPdfPt), canvas.height - srcY);
+          if(srcY + sliceH_px < canvas.height){
+            let cut = srcY + sliceH_px; const lim = Math.max(srcY + 40, cut - 200);
+            for(let r = cut; r > lim; r--){ if(linhaVazia(r)){ cut = r; break; } }
+            sliceH_px = cut - srcY;
+          }
+          const actualH_px = sliceH_px;
+          const tmp = document.createElement('canvas');
+          tmp.width = canvas.width; tmp.height = actualH_px;
+          tmp.getContext('2d').drawImage(canvas, 0, srcY, canvas.width, actualH_px, 0, 0, canvas.width, actualH_px);
+          const sliceUrl = tmp.toDataURL('image/jpeg', .92), slicePt = (actualH_px / canvas.width) * imgW;
+          pdf.addImage(sliceUrl, 'JPEG', ML, y, imgW, slicePt);
+          srcY += actualH_px; y += slicePt;
+          if(srcY < canvas.height){ pdf.addPage(); y = ML; }
+        }
+        y += 8;
+      }
+    }
+
+    async function band(tag, txt){
+      if(y > PH - ML - 300){ pdf.addPage(); y = ML; }
+      const b = document.createElement('div');
+      b.style.cssText = 'width:860px;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      b.innerHTML = '<div style="background:linear-gradient(90deg,#4a5a2e,#252f14);border-radius:8px;padding:12px 22px;display:flex;align-items:center;gap:12px">' +
+        '<span style="background:rgba(255,255,255,.2);color:#fff;font-weight:700;font-size:12px;letter-spacing:1px;border-radius:20px;padding:3px 12px">' + tag + '</span>' +
+        '<span style="color:#fff;font-size:15px;font-weight:700">' + txt + '</span></div>';
+      document.body.appendChild(b);
+      await sleep(20);
+      await addImg(b);
+      document.body.removeChild(b);
+    }
+
+    const nome = document.getElementById('header-nome').textContent || 'Aluno(a)';
+    const turma = document.getElementById('ficha-turma').textContent || '—';
+    const acertos = window.__acertos !== undefined ? window.__acertos : '—';
+    const pct = window.__acertos !== undefined ? Math.round(window.__acertos/TOTAL_OBJ*100)+'%' : '—';
+    const now = new Date();
+    const dtStr = now.toLocaleDateString('pt-BR') + ' às ' + now.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+
+    setP(5, 'Preparando capa…'); await sleep(40);
+    const coverEl = document.createElement('div');
+    coverEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;overflow:hidden;position:absolute;left:-9999px;top:0';
+    coverEl.innerHTML =
+      '<div style="background:linear-gradient(135deg,#1a2210 0%,#4a5a2e 60%,#8a9a5b 100%);padding:32px 48px 28px;color:white">' +
+        '<div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;opacity:.7;font-weight:700;margin-bottom:6px">História · 3ª Série do Ensino Médio · EM13CHS605</div>' +
+        '<div style="font-size:26px;font-weight:900;line-height:1.2;margin-bottom:5px">Direitos Fundamentais e Humanos</div>' +
+        '<div style="font-size:13px;opacity:.8;font-style:italic">Constituição de 1988 · 5 dissertativas + 5 objetivas</div>' +
+      '</div>' +
+      '<div style="background:#eeefe6;padding:22px 48px 26px;border-bottom:3px solid #efcfbd">' +
+        '<div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#4a5a2e;font-weight:700;margin-bottom:5px">Aluno(a)</div>' +
+        '<div style="font-size:20px;font-weight:700;color:#232618;border-bottom:2.5px solid #4a5a2e;padding-bottom:6px;display:inline-block;margin-bottom:16px">' + esc(nome) + '</div>' +
+        '<div style="display:flex;gap:12px;flex-wrap:wrap">' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#4a5a2e">' + esc(turma) + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Turma</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#b4532a">5</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Dissertativas</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#4a5a2e">' + acertos + '/5</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Objetivas (' + pct + ')</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:140px">' +
+            '<div style="font-size:13px;font-weight:700;color:#333">' + dtStr + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Gerado em</div></div>' +
+        '</div>' +
+        '<div style="font-size:9px;color:#bbb;margin-top:14px">Colégio Estadual Rodolfo de Oliveira · Goiás · 2026</div>' +
+      '</div>';
+    document.body.appendChild(coverEl); await sleep(60); await addImg(coverEl); document.body.removeChild(coverEl);
+
+    // QUESTÕES DISSERTATIVAS
+    setP(15, 'Preparando questões…'); await sleep(20);
+    await band('DISSERTATIVAS', 'Questões Dissertativas — Respostas e Orientações');
+
+    const QUESTOES = [
+      { num:'1', enunc:'De acordo com o texto, quais os principais valores destacados na Constituição de 1988 e como eles se relacionam com a dignidade da pessoa humana?', id:'resp-1',
+        coment:'Cidadania, dignidade da pessoa humana e valores sociais do trabalho (art. 1º), além dos direitos civis, políticos, econômicos, sociais e culturais. Esses valores se relacionam à dignidade da pessoa humana porque garantias fundamentais e direitos humanos compõem um conjunto de normas inerentes a ela, assegurando vida, trabalho, educação e liberdade de opinião e expressão a todos, sem distinção.' },
+      { num:'2', enunc:'Qual é a importância dos direitos humanos e fundamentais para a consolidação da democracia em uma sociedade, segundo Cristiano Paixão?', id:'resp-2',
+        coment:'Para Paixão, os direitos garantem a democracia ao permitir que igualdade, liberdade, reconhecimento e justiça ganhem concretude; sem a capacidade de garanti-los de forma recíproca, individual e coletiva, nenhuma sociedade pode se considerar democrática.' },
+      { num:'3', enunc:'Explique, com base no texto, de que forma o desrespeito aos direitos humanos no período militar e a participação popular na Constituinte ajudam a entender o conteúdo da Constituição de 1988.', id:'resp-3',
+        coment:'O desrespeito aos direitos no período militar foi determinante para a inclusão das garantias individuais e sociais ("recuperação de direitos"); a participação do povo, que ocupou o parlamento junto com os constituintes, fez com que os direitos fossem construídos pela própria sociedade.' },
+      { num:'4', enunc:'Explique em que consiste cada um dos direitos (humanos e fundamentais), o que têm em comum e por que, segundo Cristiano Paixão, possuem o mesmo status e a mesma força normativa.', id:'resp-4',
+        coment:'Direitos humanos: universais, nascidos de lutas contra injustiças e garantidos por tratados internacionais. Direitos fundamentais: reconhecidos e assegurados pela Constituição de 1988. Ambos têm a mesma essência e finalidade (dignidade da pessoa humana) e, para Paixão, estão previstos em documentos internacionais e constituições, protegendo o ser humano em diversas áreas, sem hierarquia entre si.' },
+      { num:'5a', enunc:'Escolha um dos direitos citados no texto (vida, trabalho, educação ou liberdade de opinião e expressão) e descreva uma situação do seu cotidiano em que ele se manifesta ou poderia ser ameaçado.', id:'resp-5a',
+        coment:'Resposta pessoal: o aluno deve escolher corretamente um dos direitos citados e apresentar uma situação concreta e plausível, mostrando que compreende o que o direito garante ou como poderia ser violado.' },
+      { num:'5b', enunc:'Explique que atitude você pode adotar, como cidadão(ã), para que o direito escolhido seja respeitado também para as outras pessoas, considerando a ideia de direitos garantidos de forma recíproca, individual e coletiva.', id:'resp-5b',
+        coment:'Espera-se uma atitude que reconheça que o direito reivindicado para si vale igualmente para os outros (respeitar opinião divergente, cobrar educação de qualidade para todos, denunciar violações), articulando as dimensões individual e coletiva a que Paixão se refere.' }
+    ];
+
+    for(let i=0; i<QUESTOES.length; i++){
+      const q = QUESTOES[i];
+      setP(15 + Math.round(i/QUESTOES.length*38), 'Dissertativa ' + q.num + '/' + QUESTOES.length + '…'); await sleep(10);
+
+      const valor = document.getElementById(q.id) ? document.getElementById(q.id).value : '';
+      const respostaHTML =
+        '<div style="background:#eef0e4;border:1.5px solid #cbd0b6;border-radius:8px;padding:12px 15px;min-height:40px;box-sizing:border-box;max-width:100%;overflow:hidden">' +
+          '<div style="font-size:12px;color:#232618;line-height:1.75;white-space:normal;word-break:break-word;overflow-wrap:anywhere">' + (esc(valor) || '<span style="color:#aaa">(sem resposta)</span>') + '</div>' +
+        '</div>';
+
+      const qEl = document.createElement('div');
+      qEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #d0d3be;border-radius:10px;position:absolute;left:-9999px;top:0;box-sizing:border-box;word-break:break-word;overflow-wrap:anywhere;';
+      qEl.innerHTML =
+        '<div style="background:linear-gradient(90deg,#4a5a2e,#252f14);padding:10px 22px;display:flex;justify-content:space-between;align-items:center">' +
+          '<span style="color:white;font-weight:700;font-size:13px;letter-spacing:.8px">QUESTÃO ' + q.num + '</span>' +
+          '<span style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);font-size:11px;padding:3px 12px;border-radius:20px;font-weight:600">Dissertativa</span></div>' +
+        '<div style="padding:18px 24px 16px;background:#fcfdf7">' +
+          '<div style="font-size:13px;font-weight:700;color:#232618;line-height:1.6;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #eee">' + esc(q.enunc) + '</div>' +
+          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">' +
+            '<div style="width:4px;height:15px;background:#4a5a2e;border-radius:2px"></div>' +
+            '<div style="font-size:10px;font-weight:700;color:#4a5a2e;text-transform:uppercase;letter-spacing:1.5px">Resposta do Aluno(a)</div></div>' +
+          respostaHTML +
+          '<div style="display:flex;align-items:center;gap:8px;margin:12px 0 7px">' +
+            '<div style="width:4px;height:15px;background:#b4532a;border-radius:2px"></div>' +
+            '<div style="font-size:10px;font-weight:700;color:#8c3f1d;text-transform:uppercase;letter-spacing:1.5px">Comentário do Professor</div></div>' +
+          '<div style="background:#f6e6dc;border:1.5px solid #efcfbd;border-radius:8px;padding:13px 16px">' +
+            '<div style="font-size:12px;color:#5e2c14;line-height:1.8">' + esc(q.coment) + '</div></div>' +
+        '</div>';
+      document.body.appendChild(qEl); await sleep(10); await addImg(qEl); document.body.removeChild(qEl);
+    }
+
+    // QUESTÕES OBJETIVAS
+    setP(55, 'Preparando objetivas…'); await sleep(20);
+    await band('OBJETIVAS', 'Questões Objetivas — Gabarito Comentado');
+
+    const LETRAS_PDF = ['A','B','C','D','E'];
+    const objetivasEls = document.querySelectorAll('.questao.objetiva');
+    let oi = 0;
+    for(const qEl0 of objetivasEls){
+      const num = qEl0.dataset.questao.replace('obj-','');
+      const correta = parseInt(qEl0.dataset.correta, 10);
+      const escolha = respMC[num];
+      const acertou = escolha === correta;
+      const enuncClone = qEl0.querySelector('.enunciado').cloneNode(true);
+      const badgeInClone = enuncClone.querySelector('.badge-resultado');
+      if(badgeInClone) badgeInClone.remove();
+      const numQInClone = enuncClone.querySelector('.num-q');
+      if(numQInClone) numQInClone.remove();
+      const enunc = enuncClone.textContent.trim();
+      setP(55 + Math.round(oi/objetivasEls.length*35), 'Objetiva ' + num + '/5…'); await sleep(10);
+
+      let altsHTML = '';
+      qEl0.querySelectorAll('.opcao').forEach(function(op){
+        const idx = parseInt(op.dataset.idx, 10);
+        const txt = op.querySelector('.opcao-txt').textContent;
+        let bg='#fcfdf7', bd='#d9ddc8', cor='#2d2d20', tag='';
+        if(idx===correta){ bg='#e9f5ee'; bd='#9fc7ac'; cor='#16301f'; tag='<span style="color:#3a7350;font-weight:700"> ✓ correta</span>'; }
+        if(idx===escolha && !acertou){ bg='#fdeeee'; bd='#e3a3a3'; cor='#7a1f1f'; tag='<span style="color:#a83232;font-weight:700"> ✗ sua resposta</span>'; }
+        else if(idx===escolha && acertou){ tag='<span style="color:#3a7350;font-weight:700"> ← sua resposta</span>'; }
+        altsHTML += '<div style="display:flex;gap:9px;align-items:flex-start;background:'+bg+';border:1px solid '+bd+';border-radius:6px;padding:8px 12px;margin-bottom:6px"><div style="flex:0 0 auto;font-weight:700;color:#4a5a2e;font-size:12px">'+LETRAS_PDF[idx]+')</div><div style="min-width:0;font-size:12px;color:'+cor+';line-height:1.55">'+esc(txt)+tag+'</div></div>';
+      });
+
+      const headBg = acertou ? 'linear-gradient(90deg,#3a7350,#234a30)' : 'linear-gradient(90deg,#a83232,#7a1f1f)';
+      const gabTxt = qEl0.querySelector('.gabarito-info').textContent.trim();
+      const qEl = document.createElement('div');
+      qEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #d0d3be;border-radius:10px;position:absolute;left:-9999px;top:0;box-sizing:border-box;word-break:break-word;overflow-wrap:anywhere;';
+      qEl.innerHTML =
+        '<div style="background:'+headBg+';padding:10px 22px;display:flex;justify-content:space-between;align-items:center">' +
+          '<span style="color:white;font-weight:700;font-size:13px;letter-spacing:.8px">QUESTÃO ' + num + '</span>' +
+          '<span style="background:rgba(255,255,255,.2);color:white;font-size:11px;padding:3px 12px;border-radius:20px;font-weight:700">' + (acertou?'ACERTOU':'ERROU') + '</span></div>' +
+        '<div style="padding:16px 24px 14px;background:#fcfdf7">' +
+          '<div style="font-size:13px;font-weight:700;color:#232618;line-height:1.6;margin-bottom:12px">' + esc(enunc) + '</div>' +
+          altsHTML +
+          '<div style="margin-top:10px;background:#f6e6dc;border:1px solid #efcfbd;border-radius:6px;padding:10px 14px">' +
+            '<div style="font-size:12px;color:#5e2c14;line-height:1.6">' + esc(gabTxt) + '</div></div>' +
+        '</div>';
+      document.body.appendChild(qEl); await sleep(10); await addImg(qEl); document.body.removeChild(qEl);
+      oi++;
+    }
+
+    // RODAPÉ EM TODAS AS PÁGINAS
+    setP(92, 'Finalizando…'); await sleep(30);
+    const totalPages = pdf.getNumberOfPages();
+    for(let p=1; p<=totalPages; p++){
+      pdf.setPage(p);
+      const fEl = document.createElement('div');
+      fEl.style.cssText = 'width:' + Math.round(CW) + 'px;height:22px;background:#eeefe6;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:10px;color:#888;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      fEl.innerHTML = '<span>Direitos Fundamentais e Humanos · ' + esc(nome) + ' · Objetivas: ' + acertos + '/5</span><span>Página ' + p + ' de ' + totalPages + '</span>';
+      document.body.appendChild(fEl);
+      const fc = await html2canvas(fEl, {scale:2, logging:false, backgroundColor:'#eeefe6'});
+      document.body.removeChild(fEl);
+      const fUrl = fc.toDataURL('image/jpeg', .9), fH = (fc.height / fc.width) * CW;
+      pdf.setFillColor(245,241,234); pdf.rect(ML, PH-fH, CW, fH, 'F');
+      pdf.addImage(fUrl, 'JPEG', ML, PH-fH, CW, fH);
+    }
+
+    setP(100, 'Salvando…'); await sleep(200);
+    const safeName = nome.replace(/[^a-zA-Z0-9_\-]/g, '_');
+    pdf.save('Direitos_Fundamentais_Humanos_' + safeName + '.pdf');
+
+  } catch(err){
+    console.error(err);
+    alert('Erro ao gerar PDF: ' + err.message);
+  } finally {
+    const ov = document.getElementById('pdf-overlay');
+    if(ov) document.body.removeChild(ov);
+  }
+}
+
+/* ===== PROTEÇÃO ANTI-COLA ===== */
+(function () {
+  const CAMPOS_PROTEGIDOS = document.querySelectorAll('textarea.dissertativa, .campo-resposta');
+  const LIMITE_BLOCO = 25;
+
+  function bloquear(e) {
+    e.preventDefault();
+    mostrarToast('Colar não permitido nesta atividade.');
+  }
+
+  CAMPOS_PROTEGIDOS.forEach(function (campo) {
+    ['paste', 'copy', 'cut', 'drop', 'dragover', 'contextmenu'].forEach(function (evt) {
+      campo.addEventListener(evt, bloquear);
+    });
+
+    campo.addEventListener('beforeinput', function (e) {
+      if (e.inputType === 'insertFromPaste' || e.inputType === 'insertFromDrop') {
+        e.preventDefault();
+        mostrarToast('Colar não permitido nesta atividade.');
+      }
+    });
+
+    let valorAnterior = campo.value;
+    campo.addEventListener('input', function (e) {
+      const diferenca = campo.value.length - valorAnterior.length;
+      if (diferenca >= LIMITE_BLOCO && e.inputType !== 'insertReplacementText') {
+        campo.value = valorAnterior;
+        mostrarToast('Colar não permitido nesta atividade.');
+      } else {
+        valorAnterior = campo.value;
+      }
+    });
+  });
+
+  function mostrarToast(mensagem) {
+    let toast = document.getElementById('anti-cola-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'anti-cola-toast';
+      toast.style.cssText =
+        'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);' +
+        'background:#333;color:#fff;padding:10px 20px;border-radius:8px;' +
+        'font-size:14px;z-index:9999;opacity:0;transition:opacity .3s;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = mensagem;
+    toast.style.opacity = '1';
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(function () {
+      toast.style.opacity = '0';
+    }, 2500);
+  }
+})();
+</script>
+
+</body>
+</html>
