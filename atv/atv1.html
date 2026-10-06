@@ -639,6 +639,26 @@ function esc(str){
 }
 
 async function exportarPDF(){
+  /* Bloqueia a exportação enquanto houver questões sem resposta */
+  let pendentes = [];
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length < min){
+      const q = t.closest('.questao');
+      pendentes.push(q ? q.dataset.questao : t.id);
+    }
+  });
+  for(let i = 1; i <= TOTAL_OBJ; i++){
+    if(respMC[i] === undefined) pendentes.push('obj-' + i);
+  }
+  if(pendentes.length){
+    const rotulo = pendentes.filter(function(v,i,a){ return a.indexOf(v) === i; })
+      .map(function(v){ return String(v).replace('obj-','Objetiva '); }).join(', ');
+    alert('Responda todas as questões antes de exportar o PDF.\nPendentes: ' + rotulo + '.');
+    const primeira = document.querySelector('.questao[data-questao="' + pendentes[0] + '"]');
+    if(primeira) primeira.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
   const overlay = document.createElement('div');
   overlay.id = 'pdf-overlay';
   overlay.style.cssText = 'position:fixed;inset:0;background:rgba(20,30,24,.6);display:flex;align-items:center;justify-content:center;z-index:999;';
