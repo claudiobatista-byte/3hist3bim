@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Brasil Democrático — Atividade de História | CERO</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#fff0f6;
+    --bg-alt:#f9dbe9;
+    --paper:#fffafd;
+    --ink:#321b2a;
+    --ink-soft:#75536a;
+    --verde:#b62d75;
+    --verde-dark:#701c4b;
+    --verde-2:#d04c8e;
+    --gold:#db6c9f;
+    --gold-light:#f7c5dc;
+    --line:#edc5d9;
+    --shadow:0 10px 30px rgba(37,47,20,.16);
+    --radius:14px;
+    --font-title:'Playfair Display', serif;
+    --font-body:'Source Serif 4', serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.7;
+    -webkit-touch-callout:none;
+    user-select:none;
+  }
+  .selecionavel, main{user-select:text;}
+  .campo-resposta{user-select:text;}
+
+  /* ===== CAPA / GATE ===== */
+  #capa{
+    min-height:100vh;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(to bottom, #4b1534, #b62d75, #e69ac1);
+    padding:24px;
+  }
+  #capa .grade-centralizada{
+    position:absolute;
+    top:0; bottom:0; left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:896px;
+    pointer-events:none;
+    z-index:0;
+    opacity:.08;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px);
+    background-size:40px 40px;
+  }
+  .capa-card{
+    position:relative;
+    z-index:1;
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    max-width:480px;
+    width:100%;
+    padding:36px 32px;
+    text-align:center;
+  }
+  .capa-card .tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.7rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--verde-dark);
+    background:rgba(74,90,46,.12); padding:5px 12px; border-radius:999px; margin-bottom:14px;
+  }
+  .capa-card h1{font-family:var(--font-title); font-size:1.6rem; margin:0 0 10px; color:var(--verde-dark);}
+  .capa-card p.desc{color:var(--ink-soft); font-size:.94rem; margin:0 0 22px;}
+  .capa-card input{
+    width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    font-family:var(--font-body); font-size:1rem; margin-bottom:14px;
+  }
+  .capa-card button{
+    width:100%; padding:13px; border:none; border-radius:8px;
+    background:var(--verde); color:#fff; font-weight:600; font-size:1rem; cursor:pointer;
+    font-family:var(--font-body); transition:filter .15s ease;
+  }
+  .capa-card button:hover{filter:brightness(1.08);}
+  .capa-aviso{font-size:.78rem; color:#a33; margin-top:8px; display:none;}
+
+  /* ===== APP ===== */
+  #app{display:none;}
+  .sticky-header{
+    position:sticky; top:0; z-index:50;
+    background:var(--verde-dark); color:#e8f0f7;
+    padding:12px 20px; display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:8px;
+    font-family:var(--font-mono); font-size:.82rem;
+  }
+  .sticky-header .aluno{font-family:var(--font-body); font-weight:600; font-size:.92rem;}
+  .barra-progresso-trilho{
+    flex:1; min-width:120px; height:8px; background:rgba(255,255,255,.2); border-radius:6px; overflow:hidden; margin:0 14px;
+  }
+  .barra-progresso-fill{height:100%; background:var(--gold); width:0%; transition:width .3s ease;}
+
+  .wrap{max-width:800px; margin:0 auto; padding:32px 24px 60px;}
+
+  header.topo{margin-bottom:28px;}
+  header.topo .hero-tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.72rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--verde-dark);
+    background:rgba(74,90,46,.12); padding:5px 12px; border-radius:999px; margin-bottom:12px;
+  }
+  header.topo h1{font-family:var(--font-title); font-size:clamp(1.5rem,4vw,2rem); margin:0 0 8px; color:var(--ink);}
+  header.topo p.sub{color:var(--ink-soft); margin:0; font-size:.98rem;}
+  header.topo .aluno-info{
+    font-family:var(--font-mono); font-size:.82rem; color:var(--verde-dark);
+    background:var(--bg-alt); display:inline-block; padding:6px 12px; border-radius:8px; margin-top:12px;
+  }
+  .descritor-bar{
+    font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft);
+    background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:8px 14px; margin-bottom:14px; display:inline-block;
+  }
+  .ficha-id{
+    display:flex; flex-wrap:wrap; gap:10px 26px;
+    background:var(--paper); border:1px solid var(--line); border-radius:10px;
+    padding:12px 16px; margin-top:12px; font-family:var(--font-mono); font-size:.84rem; color:var(--ink);
+  }
+  .ficha-id span b{color:var(--verde-dark);}
+
+  /* ===== TEXTO DE APOIO ===== */
+  .texto-apoio{
+    background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:28px 30px; margin-bottom:30px;
+  }
+  .texto-apoio h2{font-family:var(--font-title); font-size:1.25rem; color:var(--verde-dark); margin:0 0 4px;}
+  .texto-apoio .fonte-tag{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-bottom:16px; display:block;}
+  .texto-apoio p{margin:0 0 14px; color:var(--ink);}
+  .texto-apoio p:last-of-type{margin-bottom:0;}
+
+  .referencia-box{
+    margin-top:20px; padding:14px 16px;
+    background:var(--bg-alt); border-left:3px solid var(--gold); border-radius:0 8px 8px 0;
+  }
+  .referencia-box .rot{
+    font-family:var(--font-mono); font-size:.7rem; text-transform:uppercase; letter-spacing:.08em;
+    color:var(--verde-dark); display:block; margin-bottom:6px;
+  }
+  .referencia-box p{margin:0 0 6px; font-size:.86rem; color:var(--ink-soft); font-family:var(--font-mono); line-height:1.6;}
+  .referencia-box p:last-child{margin-bottom:0;}
+
+  /* ===== IMAGEM / RECURSO VISUAL ===== */
+  .box-imagem-questao{
+    margin:14px 0 18px;
+    background:var(--bg-alt);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px;
+    text-align:center;
+  }
+  .box-imagem-questao img{
+    max-width:100%;
+    height:auto;
+    border-radius:6px;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+    display:block;
+    margin:0 auto;
+  }
+  .box-imagem-questao .legenda-img{
+    font-family:var(--font-mono);
+    font-size:.75rem;
+    color:var(--ink-soft);
+    margin-top:8px;
+    line-height:1.4;
+  }
+  .link-reportagem{
+    display:inline-flex; align-items:center; gap:6px;
+    margin-top:12px; padding:8px 14px;
+    background:var(--verde); color:#fff; text-decoration:none;
+    border-radius:8px; font-family:var(--font-mono); font-size:.76rem;
+    letter-spacing:.02em; transition:filter .15s ease;
+  }
+  .link-reportagem:hover{filter:brightness(1.1); text-decoration:underline;}
+
+  /* ===== SUBITENS (questões com múltiplos campos) ===== */
+  .subitem{margin-top:18px;}
+  .subitem:first-of-type{margin-top:16px;}
+  .subitem-label{display:block; font-weight:600; color:var(--ink); margin-bottom:8px; font-size:.94rem;}
+
+  /* ===== QUESTOES ===== */
+  .questoes-titulo{
+    font-family:var(--font-title); font-size:1.2rem; color:var(--verde-dark);
+    margin:0 0 18px; display:flex; align-items:center; gap:10px;
+  }
+  .questao{
+    background:var(--paper); border:1px solid var(--line); border-radius:12px;
+    padding:20px 22px; margin-bottom:18px;
+  }
+  .questao .num-q{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:50%; background:var(--verde);
+    color:#fff; font-family:var(--font-mono); font-size:.78rem; margin-right:8px; flex-shrink:0;
+  }
+  .questao .enunciado{font-weight:600; color:var(--ink); margin-bottom:12px; display:flex; align-items:flex-start;}
+  .questao textarea{
+    width:100%; min-height:120px; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    font-family:var(--font-body); font-size:.96rem; resize:vertical; color:var(--ink);
+  }
+  .questao textarea:focus{outline:2px solid var(--verde-2); outline-offset:1px;}
+  .contador-chars{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-top:6px; text-align:right;}
+
+  /* ===== OPCOES (OBJETIVAS) ===== */
+  .opcao{
+    display:flex; gap:12px; align-items:flex-start;
+    padding:12px 14px; border:1.5px solid var(--line); border-radius:8px;
+    margin-bottom:8px; cursor:pointer; transition:all .15s ease; background:var(--paper);
+  }
+  .opcao:hover{border-color:var(--verde); background:var(--bg-alt);}
+  .opcao.sel{border-color:var(--verde); background:var(--bg-alt);}
+  .opcao.correta{border-color:var(--verde-2); background:#fce4f0;}
+  .opcao.errada{border-color:#c0392b; background:#fdeeee;}
+  .opcao.travada{cursor:default;}
+  .opcao-letra{
+    flex:0 0 auto; width:26px; height:26px; border-radius:50%;
+    background:var(--bg-alt); color:var(--ink-soft);
+    font-family:var(--font-mono); font-weight:700; font-size:.78rem;
+    display:flex; align-items:center; justify-content:center; transition:all .15s ease;
+  }
+  .opcao.sel .opcao-letra{background:var(--verde); color:#fff;}
+  .opcao.correta .opcao-letra{background:var(--verde-2); color:#fff;}
+  .opcao.errada .opcao-letra{background:#c0392b; color:#fff;}
+  .opcao-txt{font-size:.94rem; color:var(--ink); line-height:1.6; padding-top:2px;}
+  .opcao-marca{margin-left:auto; font-size:1rem; align-self:center; display:none; flex:0 0 auto;}
+  .gabarito-info{
+    display:none; margin-top:12px; padding:12px 16px;
+    background:#fff0f6; border:1px solid var(--gold-light); border-radius:8px;
+    font-size:.88rem; color:#6d244c;
+  }
+  .gabarito-info.show{display:block;}
+  .gabarito-info b{color:#9d2d67;}
+  .questao .badge-resultado{
+    display:none; font-family:var(--font-mono); font-size:.68rem; font-weight:700;
+    padding:2px 10px; border-radius:20px; margin-left:8px; color:#fff;
+  }
+  .questao .badge-resultado.ok{display:inline-block; background:var(--verde-2);}
+  .questao .badge-resultado.no{display:inline-block; background:#c0392b;}
+
+  .comentario-prof{
+    display:none; margin-top:14px; padding:14px 16px;
+    background:#fde5f0; border:1px solid #f2bfd6; border-radius:8px; font-size:.9rem; color:var(--verde-dark);
+  }
+  .comentario-prof.show{display:block;}
+  .comentario-prof b{display:block; margin-bottom:4px; font-family:var(--font-title); font-size:.92rem;}
+
+  /* ===== ALERTA / FINALIZAR ===== */
+  .alerta-incompleto{
+    display:none; background:#f5eddb; border:1px solid #d9c48a; color:#8a6a1a;
+    padding:12px 16px; border-radius:8px; font-size:.9rem; margin-bottom:16px;
+  }
+  .alerta-incompleto.show{display:block;}
+
+  .acoes-finais{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;}
+  .btn{
+    font-family:var(--font-body); font-weight:600; font-size:.94rem; padding:12px 22px;
+    border-radius:8px; border:none; cursor:pointer; transition:filter .15s ease;
+  }
+  .btn:hover{filter:brightness(1.08);}
+  .btn-primario{background:var(--verde); color:#fff;}
+  .btn-secundario{background:transparent; color:var(--ink); border:1px solid var(--line);}
+  .btn-pdf{background:var(--gold); color:#fff;}
+  .btn[disabled]{opacity:.5; cursor:not-allowed;}
+
+  /* ===== POPUP ===== */
+  .popup-overlay{
+    display:none; position:fixed; inset:0; background:rgba(20,30,24,.6);
+    align-items:center; justify-content:center; z-index:200; padding:20px;
+  }
+  .popup-overlay.show{display:flex;}
+  .popup-card{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    max-width:420px; width:100%; padding:32px 28px; text-align:center;
+  }
+  .popup-card .emoji{font-size:2.4rem; margin-bottom:10px;}
+  .popup-card h3{font-family:var(--font-title); margin:0 0 8px; color:var(--verde-dark);}
+  .popup-card p{color:var(--ink-soft); font-size:.94rem; margin:0 0 20px;}
+
+  footer.rodape{text-align:center; padding:24px; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;}
+
+  @media (max-width:600px){
+    .wrap{padding:24px 16px 50px;}
+    .texto-apoio, .questao{padding:18px 18px;}
+  }
+</style>
+</head>
+<body>
+<!-- ===== CAPA ===== -->
+<div id="capa">
+<div class="grade-centralizada"></div>
+<div class="capa-card">
+<span class="tag">3ª Série · Ensino Médio · História · CERO</span>
+<h1>Brasil Democrático: governos e participação popular</h1>
+<p class="desc">Atividade de História: 9 questões dissertativas e 4 objetivas. Preencha seus dados para começar.</p>
+<input id="nome-aluno" placeholder="Seu nome completo" type="text"/>
+<input id="turma-aluno" placeholder="Turma (ex.: 3º A)" type="text"/>
+<button onclick="iniciarAtividade()">Iniciar atividade</button>
+<div class="capa-aviso" id="capa-aviso">Por favor, digite seu nome para continuar.</div>
+</div>
+</div>
+<!-- ===== APP ===== -->
+<div id="app">
+<div class="sticky-header">
+<span class="aluno" id="header-nome"></span>
+<div class="barra-progresso-trilho"><div class="barra-progresso-fill" id="barra-fill"></div></div>
+<span id="contador-geral">Respondidas: 0/13</span>
+</div>
+<div class="wrap">
+<header class="topo selecionavel">
+<span class="descritor-bar">História / 3ª Série do Ensino Médio | Brasil republicano e democracia</span>
+<span class="hero-tag" style="display:block; margin-top:10px;">Leitura e Interpretação de Texto</span>
+<h1>Brasil Democrático: da Nova República à atualidade</h1>
+<p class="sub">Responda às 9 questões dissertativas e às 4 objetivas. Leia os textos de apoio antes das questões 10 e 11.</p>
+<div class="ficha-id" id="ficha-id">
+<span><b>NOME:</b> <span id="ficha-nome"></span></span>
+<span><b>DATA:</b> <span id="ficha-data"></span></span>
+<span><b>TURMA:</b> <span id="ficha-turma"></span></span>
+</div>
+</header>
+<main><h2 class="questoes-titulo">✍️ Questões Dissertativas</h2><div class="questao" data-questao="1"><div class="enunciado"><span class="num-q">1</span> Quais foram os principais desafios políticos enfrentados por Itamar Franco ao assumir a presidência em 1992, e de que forma ele buscou superá-los?</div><textarea class="campo-resposta dissertativa" data-min="60" id="resp-1" placeholder="Escreva sua resposta aqui..."></textarea><div class="contador-chars">0 caracteres (mínimo 60)</div><div class="comentario-prof"><b>Comentário do professor</b>Itamar assumiu após o impeachment de Collor, enfrentou a crise de confiança nas instituições, dificuldades econômicas e inflação elevada. Buscou formar uma coalizão política e estabilizar a economia, sobretudo com a equipe responsável pelo Plano Real.</div></div><div class="questao" data-questao="2"><div class="enunciado"><span class="num-q">2</span> Explique qual era o contexto político quando José Sarney chegou à presidência.</div><textarea class="campo-resposta dissertativa" data-min="60" id="resp-2" placeholder="Escreva sua resposta aqui..."></textarea><div class="contador-chars">0 caracteres (mínimo 60)</div><div class="comentario-prof"><b>Comentário do professor</b>Sarney assumiu em 1985 após a morte de Tancredo Neves, eleito indiretamente. O Brasil saía da ditadura militar e iniciava a Nova República, com demandas por democratização e uma nova Constituição.</div></div><div class="questao" data-questao="3"><div class="enunciado"><span class="num-q">3</span> Analise a importância do movimento dos Caras-pintadas para o fortalecimento da democracia no país.</div><textarea class="campo-resposta dissertativa" data-min="60" id="resp-3" placeholder="Escreva sua resposta aqui..."></textarea><div class="contador-chars">0 caracteres (mínimo 60)</div><div class="comentario-prof"><b>Comentário do professor</b>O movimento mobilizou principalmente estudantes em manifestações pelo impeachment de Collor em 1992, mostrando a importância da participação popular, da fiscalização dos governantes e das instituições democráticas.</div></div><div class="questao" data-questao="4"><div class="enunciado"><span class="num-q">4</span> Quais foram as principais medidas econômicas adotadas por Fernando Collor de Mello e como elas afetaram a população brasileira?</div><textarea class="campo-resposta dissertativa" data-min="60" id="resp-4" placeholder="Escreva sua resposta aqui..."></textarea><div class="contador-chars">0 caracteres (mínimo 60)</div><div class="comentario-prof"><b>Comentário do professor</b>O Plano Collor bloqueou temporariamente parte dos depósitos e aplicações financeiras, mudou a moeda e adotou medidas de abertura comercial e privatização. O bloqueio provocou perdas de acesso à poupança e insegurança; a inflação persistiu.</div></div><div class="questao" data-questao="5"><div class="enunciado"><span class="num-q">5</span> Quais foram os principais programas sociais implementados no governo Lula e de que forma eles contribuíram para a redução da pobreza e das desigualdades no Brasil?</div><textarea class="campo-resposta dissertativa" data-min="60" id="resp-5" placeholder="Escreva sua resposta aqui..."></textarea><div class="contador-chars">0 caracteres (mínimo 60)</div><div class="comentario-prof"><b>Comentário do professor</b>Destacam-se o Bolsa Família, o Fome Zero e políticas de ampliação do acesso ao ensino superior, como o ProUni. As transferências de renda e o acesso a serviços e oportunidades ajudaram a reduzir a pobreza e a desigualdade, junto a outros fatores econômicos.</div></div><div class="questao" data-questao="6"><div class="enunciado"><span class="num-q">6</span> De que maneira o processo de impeachment de Dilma Rousseff contribuiu para aprofundar a polarização ideológica entre os defensores de projetos políticos de esquerda e direita no país?</div><textarea class="campo-resposta dissertativa" data-min="60" id="resp-6" placeholder="Escreva sua resposta aqui..."></textarea><div class="contador-chars">0 caracteres (mínimo 60)</div><div class="comentario-prof"><b>Comentário do professor</b>O impeachment de 2016 provocou divergências sobre sua fundamentação e legitimidade. Parte da sociedade o considerou um processo constitucional; outra parte o interpretou como ruptura política, acirrando a disputa entre projetos e grupos políticos.</div></div><div class="questao" data-questao="7"><div class="enunciado"><span class="num-q">7</span> Como as manifestações populares, os movimentos sociais e o uso das redes sociais durante o impeachment de Dilma reforçaram a polarização e influenciaram a vida política do Brasil depois de 2016?</div><textarea class="campo-resposta dissertativa" data-min="60" id="resp-7" placeholder="Escreva sua resposta aqui..."></textarea><div class="contador-chars">0 caracteres (mínimo 60)</div><div class="comentario-prof"><b>Comentário do professor</b>Manifestações favoráveis e contrárias ao impeachment mobilizaram diferentes grupos. Nas redes sociais, a circulação de informações e desinformação, o confronto de narrativas e a organização política ampliaram tensões que continuaram nos anos seguintes.</div></div><div class="questao" data-questao="8"><div class="enunciado"><span class="num-q">8</span> O texto apresenta diferentes políticas sociais implementadas ou retomadas durante o terceiro governo Lula. Explique de que maneira elas procuram enfrentar problemas sociais existentes no Brasil.</div><textarea class="campo-resposta dissertativa" data-min="60" id="resp-8" placeholder="Escreva sua resposta aqui..."></textarea><div class="contador-chars">0 caracteres (mínimo 60)</div><div class="comentario-prof"><b>Comentário do professor</b>A resposta depende do texto de apoio sobre o terceiro governo Lula, não incluído no material fornecido. Espera-se relacionar cada política citada no texto ao problema social que pretende enfrentar.</div></div><div class="questao" data-questao="9"><div class="enunciado"><span class="num-q">9</span> O texto apresenta diversos indicadores econômicos positivos (PIB, desemprego e inflação). Apesar desses avanços, quais são as principais contradições e desafios fiscais que o governo ainda enfrenta?</div><textarea class="campo-resposta dissertativa" data-min="60" id="resp-9" placeholder="Escreva sua resposta aqui..."></textarea><div class="contador-chars">0 caracteres (mínimo 60)</div><div class="comentario-prof"><b>Comentário do professor</b>A resposta depende do texto de apoio econômico, não incluído no material fornecido. Espera-se distinguir indicadores positivos dos desafios fiscais efetivamente mencionados na leitura.</div></div><h2 class="questoes-titulo">📖 Textos de apoio para as questões 10 e 11</h2><h2 class="questoes-titulo">📝 Questões Objetivas</h2><div class="questao objetiva" data-correta="3" data-questao="obj-1"><div class="enunciado"><span class="num-q">10</span> Os pronunciamentos de Getúlio Vargas e Fernando Henrique Cardoso foram proferidos em momentos históricos diferentes. Contudo, os dois governantes têm em comum o fato de: <span class="badge-resultado" id="badge-obj-1"></span></div><div class="opcao" data-idx="0" onclick="marcarOpcao(1,0)"><div class="opcao-letra">A</div><div class="opcao-txt">sentirem-se pressionados pelas forças democráticas que adotaram um modelo político capaz de assegurar a estabilidade das instituições políticas.</div><div class="opcao-marca" id="marca-1-0"></div></div><div class="opcao" data-idx="1" onclick="marcarOpcao(1,1)"><div class="opcao-letra">B</div><div class="opcao-txt">obterem o apoio em massa dos trabalhadores para a implementação de suas respectivas políticas estatais.</div><div class="opcao-marca" id="marca-1-1"></div></div><div class="opcao" data-idx="2" onclick="marcarOpcao(1,2)"><div class="opcao-letra">C</div><div class="opcao-txt">sofrerem campanhas contrárias às suas ações políticas, lideradas por movimentos nacionais com o apoio clandestino de grupos internacionais.</div><div class="opcao-marca" id="marca-1-2"></div></div><div class="opcao" data-idx="3" onclick="marcarOpcao(1,3)"><div class="opcao-letra">D</div><div class="opcao-txt">referirem-se ao apoio popular para legitimar suas ações, uma vez que chegaram ao poder através do voto direto.</div><div class="opcao-marca" id="marca-1-3"></div></div><div class="opcao" data-idx="4" onclick="marcarOpcao(1,4)"><div class="opcao-letra">E</div><div class="opcao-txt">adotarem a mesma política de privatizações de empresas estatais, que teria o apoio total da população.</div><div class="opcao-marca" id="marca-1-4"></div></div><div class="gabarito-info" id="gab-1"><b>Gabarito: D.</b> Ambos invocam a legitimidade popular. Vargas foi eleito pelo voto direto em 1950 e FHC em 1994 e 1998.</div></div><div class="questao objetiva" data-correta="0" data-questao="obj-2"><div class="enunciado"><span class="num-q">11</span> A forma de atuação do Estado no Brasil apresentou diferenças significativas entre os governos de Getúlio Vargas e de Fernando Henrique Cardoso (FHC), uma vez que: <span class="badge-resultado" id="badge-obj-2"></span></div><div class="opcao" data-idx="0" onclick="marcarOpcao(2,0)"><div class="opcao-letra">A</div><div class="opcao-txt">para o governo Vargas, ao Estado cabia explorar as riquezas nacionais, base para a construção de uma nação forte; já no governo de FHC, ao Estado cabia estimular os investimentos privados, que inserem o país na economia internacional.</div><div class="opcao-marca" id="marca-2-0"></div></div><div class="opcao" data-idx="1" onclick="marcarOpcao(2,1)"><div class="opcao-letra">B</div><div class="opcao-txt">para Vargas, o Estado tinha a função de organizar os trabalhadores em sindicatos internacionais; para FHC, o Estado situava-se acima das classes sociais, estando impossibilitado de intervir nas questões trabalhistas.</div><div class="opcao-marca" id="marca-2-1"></div></div><div class="opcao" data-idx="2" onclick="marcarOpcao(2,2)"><div class="opcao-letra">C</div><div class="opcao-txt">Vargas concebia um Estado capaz de promover a aliança entre a burguesia nacional e a burguesia internacional; FHC concebia um Estado independente em relação aos diferentes grupos econômicos.</div><div class="opcao-marca" id="marca-2-2"></div></div><div class="opcao" data-idx="3" onclick="marcarOpcao(2,3)"><div class="opcao-letra">D</div><div class="opcao-txt">Vargas estimulou a criação de empresas privadas com capital nacional em substituição às empresas públicas; FHC defendia a privatização das empresas estatais como meio de manter a estabilidade da economia.</div><div class="opcao-marca" id="marca-2-3"></div></div><div class="opcao" data-idx="4" onclick="marcarOpcao(2,4)"><div class="opcao-letra">E</div><div class="opcao-txt">Vargas entendia o Estado como um meio de ligação para a exploração da iniciativa privada; FHC defendia a autonomia total do Estado.</div><div class="opcao-marca" id="marca-2-4"></div></div><div class="gabarito-info" id="gab-2"><b>Gabarito: A.</b> Vargas valorizava a ação estatal em setores estratégicos, enquanto FHC enfatizava privatizações e abertura econômica.</div></div><div class="questao objetiva" data-correta="1" data-questao="obj-3"><div class="enunciado"><span class="num-q">12</span> Na década de 1990, durante seu mandato como ministro da Fazenda e, posteriormente, como presidente da República (1995–2002), Fernando Henrique Cardoso implantou uma política que buscava a estabilidade econômica e maior aproximação com o comércio internacional. Uma das estratégias associadas ao neoliberalismo no Brasil foi: <span class="badge-resultado" id="badge-obj-3"></span></div><div class="opcao" data-idx="0" onclick="marcarOpcao(3,0)"><div class="opcao-letra">A</div><div class="opcao-txt">a ampliação da participação do Estado no setor terciário.</div><div class="opcao-marca" id="marca-3-0"></div></div><div class="opcao" data-idx="1" onclick="marcarOpcao(3,1)"><div class="opcao-letra">B</div><div class="opcao-txt">a privatização de empresas estatais pelo governo.</div><div class="opcao-marca" id="marca-3-1"></div></div><div class="opcao" data-idx="2" onclick="marcarOpcao(3,2)"><div class="opcao-letra">C</div><div class="opcao-txt">o investimento maciço em infraestrutura de produção como única política econômica.</div><div class="opcao-marca" id="marca-3-2"></div></div><div class="opcao" data-idx="3" onclick="marcarOpcao(3,3)"><div class="opcao-letra">D</div><div class="opcao-txt">a recuperação salarial da classe trabalhadora como principal eixo das privatizações.</div><div class="opcao-marca" id="marca-3-3"></div></div><div class="opcao" data-idx="4" onclick="marcarOpcao(3,4)"><div class="opcao-letra">E</div><div class="opcao-txt">o aumento do controle estatal sobre a indústria nacional.</div><div class="opcao-marca" id="marca-3-4"></div></div><div class="gabarito-info" id="gab-3"><b>Gabarito: B.</b> A privatização de empresas estatais foi uma das medidas centrais das reformas econômicas desse período.</div></div><div class="questao objetiva" data-correta="3" data-questao="obj-4"><div class="enunciado"><span class="num-q">13</span> Uma das marcas do governo Lula foi a adoção de políticas externas voltadas para: <span class="badge-resultado" id="badge-obj-4"></span></div><div class="opcao" data-idx="0" onclick="marcarOpcao(4,0)"><div class="opcao-letra">A</div><div class="opcao-txt">a exclusiva aproximação com os Estados Unidos.</div><div class="opcao-marca" id="marca-4-0"></div></div><div class="opcao" data-idx="1" onclick="marcarOpcao(4,1)"><div class="opcao-letra">B</div><div class="opcao-txt">o isolamento econômico em relação a países emergentes.</div><div class="opcao-marca" id="marca-4-1"></div></div><div class="opcao" data-idx="2" onclick="marcarOpcao(4,2)"><div class="opcao-letra">C</div><div class="opcao-txt">a redução da participação brasileira em organismos internacionais.</div><div class="opcao-marca" id="marca-4-2"></div></div><div class="opcao" data-idx="3" onclick="marcarOpcao(4,3)"><div class="opcao-letra">D</div><div class="opcao-txt">o fortalecimento das relações com a América Latina, a África e países emergentes, incluindo os parceiros do BRICS.</div><div class="opcao-marca" id="marca-4-3"></div></div><div class="opcao" data-idx="4" onclick="marcarOpcao(4,4)"><div class="opcao-letra">E</div><div class="opcao-txt">a parceria apenas com países europeus, priorizando o comércio com a União Europeia.</div><div class="opcao-marca" id="marca-4-4"></div></div><div class="gabarito-info" id="gab-4"><b>Gabarito: D.</b> A política externa buscou diversificar parceiros, com ênfase na cooperação Sul–Sul. O BRICS foi formalizado durante o segundo mandato de Lula.</div></div><div class="alerta-incompleto" id="alerta-incompleto">⚠️ Ainda há questões incompletas. Responda às 9 dissertativas e marque as 4 objetivas antes de finalizar.</div>
+<div class="acoes-finais">
+<button class="btn btn-primario" onclick="finalizarAtividade()">Finalizar e corrigir</button>
+<button class="btn btn-secundario" onclick="refazerAtividade()">Refazer</button>
+<button class="btn btn-pdf" onclick="exportarPDF()">Exportar em PDF</button>
+</div>
+</main>
+</div>
+<footer class="rodape">Colégio Estadual Rodolfo de Oliveira · CERO · 2026</footer>
+</div>
+<!-- ===== POPUP ===== -->
+<div class="popup-overlay" id="popup-overlay">
+<div class="popup-card">
+<div class="emoji">🎉</div>
+<h3>Atividade concluída!</h3>
+<p id="popup-nota" style="font-family:var(--font-mono); font-weight:700; color:var(--verde-dark); font-size:1rem; margin:0 0 12px;"></p>
+<p>Suas respostas foram registradas. Os comentários do professor e o gabarito comentado já estão disponíveis abaixo de cada questão para você comparar com o que escreveu.</p>
+<button class="btn btn-primario" onclick="fecharPopup()">Continuar</button>
+</div>
+</div>
+<script>
+/* ===== GATE DE NOME ===== */
+function iniciarAtividade(){
+  const nome = document.getElementById('nome-aluno').value.trim();
+  const turma = document.getElementById('turma-aluno').value.trim();
+  const aviso = document.getElementById('capa-aviso');
+  if(!nome){
+    aviso.style.display = 'block';
+    return;
+  }
+  aviso.style.display = 'none';
+  const hoje = new Date();
+  const dataFormatada = String(hoje.getDate()).padStart(2,'0') + '/' + String(hoje.getMonth()+1).padStart(2,'0') + '/' + hoje.getFullYear();
+  document.getElementById('header-nome').textContent = nome;
+  document.getElementById('ficha-nome').textContent = nome;
+  document.getElementById('ficha-data').textContent = dataFormatada;
+  document.getElementById('ficha-turma').textContent = turma || '—';
+  document.getElementById('capa').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+/* ===== CONTADOR DE CARACTERES E PROGRESSO ===== */
+const textareas = document.querySelectorAll('textarea.dissertativa');
+const TOTAL_OBJ = 4;
+let respMC = {};
+let corrigido = false;
+
+function marcarOpcao(num, idx){
+  if (corrigido) return;
+  respMC[num] = idx;
+  const questaoEl = document.querySelector('.questao[data-questao="obj-' + num + '"]');
+  questaoEl.querySelectorAll('.opcao').forEach(function(op){
+    op.classList.toggle('sel', parseInt(op.dataset.idx,10) === idx);
+  });
+  atualizarProgresso();
+}
+
+function atualizarProgresso(){
+  let respondidas = 0;
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length >= min) respondidas++;
+  });
+  respondidas += Object.keys(respMC).length;
+  const total = textareas.length + TOTAL_OBJ;
+  document.getElementById('contador-geral').textContent = 'Respondidas: ' + respondidas + '/' + total;
+  document.getElementById('barra-fill').style.width = (respondidas / total * 100) + '%';
+}
+
+textareas.forEach(function(t){
+  const contadorEl = t.parentElement.querySelector('.contador-chars');
+  const min = parseInt(t.dataset.min, 10);
+  t.addEventListener('input', function(){
+    contadorEl.textContent = t.value.length + ' caracteres (mínimo ' + min + ')';
+    atualizarProgresso();
+  });
+});
+
+/* ===== FINALIZAR ===== */
+function finalizarAtividade(){
+  let completo = true;
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length < min) completo = false;
+  });
+  for(let n=1; n<=TOTAL_OBJ; n++){
+    if(respMC[n] === undefined) completo = false;
+  }
+
+  const alerta = document.getElementById('alerta-incompleto');
+  if(!completo){
+    alerta.classList.add('show');
+    alerta.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  alerta.classList.remove('show');
+
+  document.querySelectorAll('.comentario-prof').forEach(function(c){
+    c.classList.add('show');
+  });
+
+  corrigido = true;
+  let acertos = 0;
+  document.querySelectorAll('.questao.objetiva').forEach(function(qEl){
+    const num = qEl.dataset.questao.replace('obj-','');
+    const correta = parseInt(qEl.dataset.correta, 10);
+    const escolha = respMC[num];
+    const acertou = escolha === correta;
+    if(acertou) acertos++;
+    qEl.querySelectorAll('.opcao').forEach(function(op){
+      const idx = parseInt(op.dataset.idx, 10);
+      op.classList.add('travada');
+      if(idx === correta){ op.classList.add('correta'); document.getElementById('marca-'+num+'-'+idx).textContent='✓'; document.getElementById('marca-'+num+'-'+idx).style.display='block'; }
+      if(idx === escolha && !acertou){ op.classList.add('errada'); document.getElementById('marca-'+num+'-'+idx).textContent='✗'; document.getElementById('marca-'+num+'-'+idx).style.display='block'; }
+    });
+    document.getElementById('gab-'+num).classList.add('show');
+    const badge = document.getElementById('badge-obj-'+num);
+    badge.textContent = acertou ? '✓ Acertou' : '✗ Errou';
+    badge.className = 'badge-resultado ' + (acertou ? 'ok' : 'no');
+  });
+  window.__acertos = acertos;
+
+  const pct = Math.round(acertos/TOTAL_OBJ*100);
+  document.getElementById('popup-nota').textContent = acertos + '/' + TOTAL_OBJ + ' nas objetivas (' + pct + '%)';
+  document.getElementById('popup-overlay').classList.add('show');
+}
+
+function fecharPopup(){
+  document.getElementById('popup-overlay').classList.remove('show');
+}
+
+function refazerAtividade(){
+  textareas.forEach(function(t){
+    t.value = '';
+    t.parentElement.querySelector('.contador-chars').textContent = '0 caracteres (mínimo ' + t.dataset.min + ')';
+  });
+  document.querySelectorAll('.comentario-prof').forEach(function(c){
+    c.classList.remove('show');
+  });
+  document.querySelectorAll('.opcao').forEach(function(op){
+    op.classList.remove('sel','correta','errada','travada');
+  });
+  document.querySelectorAll('.opcao-marca').forEach(function(m){ m.style.display='none'; m.textContent=''; });
+  document.querySelectorAll('.gabarito-info').forEach(function(g){ g.classList.remove('show'); });
+  document.querySelectorAll('.badge-resultado').forEach(function(b){ b.textContent=''; b.className='badge-resultado'; });
+  respMC = {};
+  corrigido = false;
+  document.getElementById('alerta-incompleto').classList.remove('show');
+  atualizarProgresso();
+  window.scrollTo(0,0);
+}
+
+/* ===== EXPORTAR PDF ===== */
+function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+function esc(str){
+  const d = document.createElement('div');
+  d.textContent = str || '';
+  return d.innerHTML.replace(/\n/g, '<br>');
+}
+
+async function exportarPDF(){
+  /* Bloqueia a exportação enquanto houver questões sem resposta */
+  let pendentes = [];
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length < min){
+      const q = t.closest('.questao');
+      pendentes.push(q ? q.dataset.questao : t.id);
+    }
+  });
+  for(let i = 1; i <= TOTAL_OBJ; i++){
+    if(respMC[i] === undefined) pendentes.push('obj-' + i);
+  }
+  if(pendentes.length){
+    const rotulo = pendentes.filter(function(v,i,a){ return a.indexOf(v) === i; })
+      .map(function(v){ return String(v).replace('obj-','Objetiva '); }).join(', ');
+    alert('Responda todas as questões antes de exportar o PDF.\nPendentes: ' + rotulo + '.');
+    const primeira = document.querySelector('.questao[data-questao="' + pendentes[0] + '"]');
+    if(primeira) primeira.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  const overlay = document.createElement('div');
+  overlay.id = 'pdf-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(20,30,24,.6);display:flex;align-items:center;justify-content:center;z-index:999;';
+  overlay.innerHTML =
+    '<div style="background:#fff;border-radius:14px;padding:32px 36px;text-align:center;max-width:300px;box-shadow:0 10px 30px rgba(37,47,20,.3);font-family:\'Source Serif 4\',serif;">' +
+      '<div style="font-size:2rem;margin-bottom:8px;">📄</div>' +
+      '<h4 style="margin:0 0 4px;color:#701c4b;font-family:\'Playfair Display\',serif;">Gerando PDF…</h4>' +
+      '<p style="margin:0 0 14px;color:#75536a;font-size:.86rem;">Aguarde alguns instantes.</p>' +
+      '<div style="background:#f9dbe9;border-radius:6px;overflow:hidden;height:8px;">' +
+        '<div id="pdf-prog" style="height:100%;width:0%;background:#b62d75;transition:width .2s ease;"></div>' +
+      '</div>' +
+      '<div id="pdf-prog-txt" style="margin-top:8px;font-family:\'JetBrains Mono\',monospace;font-size:.74rem;color:#75536a;">0%</div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+  await sleep(80);
+  function setP(pct, msg){
+    const pp = document.getElementById('pdf-prog'), pt = document.getElementById('pdf-prog-txt');
+    if(pp) pp.style.width = pct + '%';
+    if(pt) pt.textContent = msg || (pct + '%');
+  }
+
+  try{
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({orientation:'portrait', unit:'px', format:'a4', hotfixes:['px_scaling']});
+    const PW = pdf.internal.pageSize.getWidth(), PH = pdf.internal.pageSize.getHeight();
+    const ML = 28, CW = PW - ML*2;
+    let y = ML;
+
+    async function addImg(el){
+      const canvas = await html2canvas(el, {scale:2, useCORS:true, logging:false, backgroundColor:'#ffffff', scrollX:0, scrollY:0, windowWidth:860});
+      const imgW = CW, imgH = (canvas.height / canvas.width) * imgW;
+      const dataUrl = canvas.toDataURL('image/jpeg', .92), avail = PH - ML*2;
+      if(imgH <= avail){
+        if(y + imgH > PH - ML){ pdf.addPage(); y = ML; }
+        pdf.addImage(dataUrl, 'JPEG', ML, y, imgW, imgH);
+        y += imgH + 8;
+      } else {
+        if(y > ML + 4){ pdf.addPage(); y = ML; }
+        const pxPerPdfPt = canvas.width / imgW;
+        const cx = canvas.getContext('2d');
+        const x0 = Math.round(canvas.width * 0.04), wRow = canvas.width - 2*x0;
+        function linhaVazia(row){
+          const d = cx.getImageData(x0, row, wRow, 1).data; let mn = 255, mx = 0;
+          for(let i=0; i<d.length; i+=4){ const l = (d[i]+d[i+1]+d[i+2])/3; if(l<mn) mn=l; if(l>mx) mx=l; }
+          return (mx - mn) < 14;
+        }
+        let srcY = 0;
+        while(srcY < canvas.height){
+          const availPt = PH - y - ML;
+          let sliceH_px = Math.min(Math.round(availPt * pxPerPdfPt), canvas.height - srcY);
+          if(srcY + sliceH_px < canvas.height){
+            let cut = srcY + sliceH_px; const lim = Math.max(srcY + 40, cut - 200);
+            for(let r = cut; r > lim; r--){ if(linhaVazia(r)){ cut = r; break; } }
+            sliceH_px = cut - srcY;
+          }
+          const actualH_px = sliceH_px;
+          const tmp = document.createElement('canvas');
+          tmp.width = canvas.width; tmp.height = actualH_px;
+          tmp.getContext('2d').drawImage(canvas, 0, srcY, canvas.width, actualH_px, 0, 0, canvas.width, actualH_px);
+          const sliceUrl = tmp.toDataURL('image/jpeg', .92), slicePt = (actualH_px / canvas.width) * imgW;
+          pdf.addImage(sliceUrl, 'JPEG', ML, y, imgW, slicePt);
+          srcY += actualH_px; y += slicePt;
+          if(srcY < canvas.height){ pdf.addPage(); y = ML; }
+        }
+        y += 8;
+      }
+    }
+
+    async function band(tag, txt){
+      if(y > PH - ML - 300){ pdf.addPage(); y = ML; }
+      const b = document.createElement('div');
+      b.style.cssText = 'width:860px;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      b.innerHTML = '<div style="background:linear-gradient(90deg,#b62d75,#701c4b);border-radius:8px;padding:12px 22px;display:flex;align-items:center;gap:12px">' +
+        '<span style="background:rgba(255,255,255,.2);color:#fff;font-weight:700;font-size:12px;letter-spacing:1px;border-radius:20px;padding:3px 12px">' + tag + '</span>' +
+        '<span style="color:#fff;font-size:15px;font-weight:700">' + txt + '</span></div>';
+      document.body.appendChild(b);
+      await sleep(20);
+      await addImg(b);
+      document.body.removeChild(b);
+    }
+
+    const nome = document.getElementById('header-nome').textContent || 'Aluno(a)';
+    const turma = document.getElementById('ficha-turma').textContent || '—';
+    const acertos = window.__acertos !== undefined ? window.__acertos : '—';
+    const pct = window.__acertos !== undefined ? Math.round(window.__acertos/TOTAL_OBJ*100)+'%' : '—';
+    const now = new Date();
+    const dtStr = now.toLocaleDateString('pt-BR') + ' às ' + now.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+
+    setP(5, 'Preparando capa…'); await sleep(40);
+    const coverEl = document.createElement('div');
+    coverEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;overflow:hidden;position:absolute;left:-9999px;top:0';
+    coverEl.innerHTML =
+      '<div style="background:linear-gradient(135deg,#4b1534 0%,#b62d75 60%,#e69ac1 100%);padding:32px 48px 28px;color:white">' +
+        '<div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;opacity:.7;font-weight:700;margin-bottom:6px">História · 3ª Série do Ensino Médio · EM13CHS605</div>' +
+        '<div style="font-size:26px;font-weight:900;line-height:1.2;margin-bottom:5px">Direitos Fundamentais e Humanos</div>' +
+        '<div style="font-size:13px;opacity:.8;font-style:italic">Constituição de 1988 · 5 dissertativas + 5 objetivas</div>' +
+      '</div>' +
+      '<div style="background:#fff0f6;padding:22px 48px 26px;border-bottom:3px solid #f7c5dc">' +
+        '<div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#b62d75;font-weight:700;margin-bottom:5px">Aluno(a)</div>' +
+        '<div style="font-size:20px;font-weight:700;color:#321b2a;border-bottom:2.5px solid #b62d75;padding-bottom:6px;display:inline-block;margin-bottom:16px">' + esc(nome) + '</div>' +
+        '<div style="display:flex;gap:12px;flex-wrap:wrap">' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#b62d75">' + esc(turma) + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Turma</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#db6c9f">5</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Dissertativas</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#b62d75">' + acertos + '/5</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Objetivas (' + pct + ')</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:140px">' +
+            '<div style="font-size:13px;font-weight:700;color:#333">' + dtStr + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Gerado em</div></div>' +
+        '</div>' +
+        '<div style="font-size:9px;color:#bbb;margin-top:14px">Colégio Estadual Rodolfo de Oliveira · Goiás · 2026</div>' +
+      '</div>';
+    document.body.appendChild(coverEl); await sleep(60); await addImg(coverEl); document.body.removeChild(coverEl);
+
+    // QUESTÕES DISSERTATIVAS
+    setP(15, 'Preparando questões…'); await sleep(20);
+    await band('DISSERTATIVAS', 'Questões Dissertativas — Respostas e Orientações');
+
+    const QUESTOES = [
+      { num:'1', enunc:'De acordo com o texto, quais os principais valores destacados na Constituição de 1988 e como eles se relacionam com a dignidade da pessoa humana?', id:'resp-1',
+        coment:'Cidadania, dignidade da pessoa humana e valores sociais do trabalho (art. 1º), além dos direitos civis, políticos, econômicos, sociais e culturais. Esses valores se relacionam à dignidade da pessoa humana porque garantias fundamentais e direitos humanos compõem um conjunto de normas inerentes a ela, assegurando vida, trabalho, educação e liberdade de opinião e expressão a todos, sem distinção.' },
+      { num:'2', enunc:'Qual é a importância dos direitos humanos e fundamentais para a consolidação da democracia em uma sociedade, segundo Cristiano Paixão?', id:'resp-2',
+        coment:'Para Paixão, os direitos garantem a democracia ao permitir que igualdade, liberdade, reconhecimento e justiça ganhem concretude; sem a capacidade de garanti-los de forma recíproca, individual e coletiva, nenhuma sociedade pode se considerar democrática.' },
+      { num:'3', enunc:'Explique, com base no texto, de que forma o desrespeito aos direitos humanos no período militar e a participação popular na Constituinte ajudam a entender o conteúdo da Constituição de 1988.', id:'resp-3',
+        coment:'O desrespeito aos direitos no período militar foi determinante para a inclusão das garantias individuais e sociais ("recuperação de direitos"); a participação do povo, que ocupou o parlamento junto com os constituintes, fez com que os direitos fossem construídos pela própria sociedade.' },
+      { num:'4', enunc:'Explique em que consiste cada um dos direitos (humanos e fundamentais), o que têm em comum e por que, segundo Cristiano Paixão, possuem o mesmo status e a mesma força normativa.', id:'resp-4',
+        coment:'Direitos humanos: universais, nascidos de lutas contra injustiças e garantidos por tratados internacionais. Direitos fundamentais: reconhecidos e assegurados pela Constituição de 1988. Ambos têm a mesma essência e finalidade (dignidade da pessoa humana) e, para Paixão, estão previstos em documentos internacionais e constituições, protegendo o ser humano em diversas áreas, sem hierarquia entre si.' },
+      { num:'5a', enunc:'Escolha um dos direitos citados no texto (vida, trabalho, educação ou liberdade de opinião e expressão) e descreva uma situação do seu cotidiano em que ele se manifesta ou poderia ser ameaçado.', id:'resp-5a',
+        coment:'Resposta pessoal: o aluno deve escolher corretamente um dos direitos citados e apresentar uma situação concreta e plausível, mostrando que compreende o que o direito garante ou como poderia ser violado.' },
+      { num:'5b', enunc:'Explique que atitude você pode adotar, como cidadão(ã), para que o direito escolhido seja respeitado também para as outras pessoas, considerando a ideia de direitos garantidos de forma recíproca, individual e coletiva.', id:'resp-5b',
+        coment:'Espera-se uma atitude que reconheça que o direito reivindicado para si vale igualmente para os outros (respeitar opinião divergente, cobrar educação de qualidade para todos, denunciar violações), articulando as dimensões individual e coletiva a que Paixão se refere.' }
+    ];
+
+    for(let i=0; i<QUESTOES.length; i++){
+      const q = QUESTOES[i];
+      setP(15 + Math.round(i/QUESTOES.length*38), 'Dissertativa ' + q.num + '/' + QUESTOES.length + '…'); await sleep(10);
+
+      const valor = document.getElementById(q.id) ? document.getElementById(q.id).value : '';
+      const respostaHTML =
+        '<div style="background:#eef0e4;border:1.5px solid #cbd0b6;border-radius:8px;padding:12px 15px;min-height:40px;box-sizing:border-box;max-width:100%;overflow:hidden">' +
+          '<div style="font-size:12px;color:#321b2a;line-height:1.75;white-space:normal;word-break:break-word;overflow-wrap:anywhere">' + (esc(valor) || '<span style="color:#aaa">(sem resposta)</span>') + '</div>' +
+        '</div>';
+
+      const qEl = document.createElement('div');
+      qEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #edc5d9;border-radius:10px;position:absolute;left:-9999px;top:0;box-sizing:border-box;word-break:break-word;overflow-wrap:anywhere;';
+      qEl.innerHTML =
+        '<div style="background:linear-gradient(90deg,#b62d75,#701c4b);padding:10px 22px;display:flex;justify-content:space-between;align-items:center">' +
+          '<span style="color:white;font-weight:700;font-size:13px;letter-spacing:.8px">QUESTÃO ' + q.num + '</span>' +
+          '<span style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);font-size:11px;padding:3px 12px;border-radius:20px;font-weight:600">Dissertativa</span></div>' +
+        '<div style="padding:18px 24px 16px;background:#fcfdf7">' +
+          '<div style="font-size:13px;font-weight:700;color:#321b2a;line-height:1.6;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #eee">' + esc(q.enunc) + '</div>' +
+          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">' +
+            '<div style="width:4px;height:15px;background:#b62d75;border-radius:2px"></div>' +
+            '<div style="font-size:10px;font-weight:700;color:#b62d75;text-transform:uppercase;letter-spacing:1.5px">Resposta do Aluno(a)</div></div>' +
+          respostaHTML +
+          '<div style="display:flex;align-items:center;gap:8px;margin:12px 0 7px">' +
+            '<div style="width:4px;height:15px;background:#db6c9f;border-radius:2px"></div>' +
+            '<div style="font-size:10px;font-weight:700;color:#9d2d67;text-transform:uppercase;letter-spacing:1.5px">Comentário do Professor</div></div>' +
+          '<div style="background:#fff0f6;border:1.5px solid #f7c5dc;border-radius:8px;padding:13px 16px">' +
+            '<div style="font-size:12px;color:#6d244c;line-height:1.8">' + esc(q.coment) + '</div></div>' +
+        '</div>';
+      document.body.appendChild(qEl); await sleep(10); await addImg(qEl); document.body.removeChild(qEl);
+    }
+
+    // QUESTÕES OBJETIVAS
+    setP(55, 'Preparando objetivas…'); await sleep(20);
+    await band('OBJETIVAS', 'Questões Objetivas — Gabarito Comentado');
+
+    const LETRAS_PDF = ['A','B','C','D','E'];
+    const objetivasEls = document.querySelectorAll('.questao.objetiva');
+    let oi = 0;
+    for(const qEl0 of objetivasEls){
+      const num = qEl0.dataset.questao.replace('obj-','');
+      const correta = parseInt(qEl0.dataset.correta, 10);
+      const escolha = respMC[num];
+      const acertou = escolha === correta;
+      const enuncClone = qEl0.querySelector('.enunciado').cloneNode(true);
+      const badgeInClone = enuncClone.querySelector('.badge-resultado');
+      if(badgeInClone) badgeInClone.remove();
+      const numQInClone = enuncClone.querySelector('.num-q');
+      if(numQInClone) numQInClone.remove();
+      const enunc = enuncClone.textContent.trim();
+      setP(55 + Math.round(oi/objetivasEls.length*35), 'Objetiva ' + num + '/5…'); await sleep(10);
+
+      let altsHTML = '';
+      qEl0.querySelectorAll('.opcao').forEach(function(op){
+        const idx = parseInt(op.dataset.idx, 10);
+        const txt = op.querySelector('.opcao-txt').textContent;
+        let bg='#fcfdf7', bd='#d9ddc8', cor='#2d2d20', tag='';
+        if(idx===correta){ bg='#fce4f0'; bd='#9fc7ac'; cor='#16301f'; tag='<span style="color:#3a7350;font-weight:700"> ✓ correta</span>'; }
+        if(idx===escolha && !acertou){ bg='#fdeeee'; bd='#e3a3a3'; cor='#7a1f1f'; tag='<span style="color:#a83232;font-weight:700"> ✗ sua resposta</span>'; }
+        else if(idx===escolha && acertou){ tag='<span style="color:#3a7350;font-weight:700"> ← sua resposta</span>'; }
+        altsHTML += '<div style="display:flex;gap:9px;align-items:flex-start;background:'+bg+';border:1px solid '+bd+';border-radius:6px;padding:8px 12px;margin-bottom:6px"><div style="flex:0 0 auto;font-weight:700;color:#b62d75;font-size:12px">'+LETRAS_PDF[idx]+')</div><div style="min-width:0;font-size:12px;color:'+cor+';line-height:1.55">'+esc(txt)+tag+'</div></div>';
+      });
+
+      const headBg = acertou ? 'linear-gradient(90deg,#3a7350,#234a30)' : 'linear-gradient(90deg,#a83232,#7a1f1f)';
+      const gabTxt = qEl0.querySelector('.gabarito-info').textContent.trim();
+      const qEl = document.createElement('div');
+      qEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #edc5d9;border-radius:10px;position:absolute;left:-9999px;top:0;box-sizing:border-box;word-break:break-word;overflow-wrap:anywhere;';
+      qEl.innerHTML =
+        '<div style="background:'+headBg+';padding:10px 22px;display:flex;justify-content:space-between;align-items:center">' +
+          '<span style="color:white;font-weight:700;font-size:13px;letter-spacing:.8px">QUESTÃO ' + num + '</span>' +
+          '<span style="background:rgba(255,255,255,.2);color:white;font-size:11px;padding:3px 12px;border-radius:20px;font-weight:700">' + (acertou?'ACERTOU':'ERROU') + '</span></div>' +
+        '<div style="padding:16px 24px 14px;background:#fcfdf7">' +
+          '<div style="font-size:13px;font-weight:700;color:#321b2a;line-height:1.6;margin-bottom:12px">' + esc(enunc) + '</div>' +
+          altsHTML +
+          '<div style="margin-top:10px;background:#fff0f6;border:1px solid #f7c5dc;border-radius:6px;padding:10px 14px">' +
+            '<div style="font-size:12px;color:#6d244c;line-height:1.6">' + esc(gabTxt) + '</div></div>' +
+        '</div>';
+      document.body.appendChild(qEl); await sleep(10); await addImg(qEl); document.body.removeChild(qEl);
+      oi++;
+    }
+
+    // RODAPÉ EM TODAS AS PÁGINAS
+    setP(92, 'Finalizando…'); await sleep(30);
+    const totalPages = pdf.getNumberOfPages();
+    for(let p=1; p<=totalPages; p++){
+      pdf.setPage(p);
+      const fEl = document.createElement('div');
+      fEl.style.cssText = 'width:' + Math.round(CW) + 'px;height:22px;background:#fff0f6;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:10px;color:#888;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      fEl.innerHTML = '<span>Direitos Fundamentais e Humanos · ' + esc(nome) + ' · Objetivas: ' + acertos + '/5</span><span>Página ' + p + ' de ' + totalPages + '</span>';
+      document.body.appendChild(fEl);
+      const fc = await html2canvas(fEl, {scale:2, logging:false, backgroundColor:'#fff0f6'});
+      document.body.removeChild(fEl);
+      const fUrl = fc.toDataURL('image/jpeg', .9), fH = (fc.height / fc.width) * CW;
+      pdf.setFillColor(245,241,234); pdf.rect(ML, PH-fH, CW, fH, 'F');
+      pdf.addImage(fUrl, 'JPEG', ML, PH-fH, CW, fH);
+    }
+
+    setP(100, 'Salvando…'); await sleep(200);
+    const safeName = nome.replace(/[^a-zA-Z0-9_\-]/g, '_');
+    pdf.save('Direitos_Fundamentais_Humanos_' + safeName + '.pdf');
+
+  } catch(err){
+    console.error(err);
+    alert('Erro ao gerar PDF: ' + err.message);
+  } finally {
+    const ov = document.getElementById('pdf-overlay');
+    if(ov) document.body.removeChild(ov);
+  }
+}
+
+/* ===== PROTEÇÃO ANTI-COLA ===== */
+(function () {
+  const CAMPOS_PROTEGIDOS = document.querySelectorAll('textarea.dissertativa, .campo-resposta');
+  const LIMITE_BLOCO = 25;
+
+  function bloquear(e) {
+    e.preventDefault();
+    mostrarToast('Colar não permitido nesta atividade.');
+  }
+
+  CAMPOS_PROTEGIDOS.forEach(function (campo) {
+    ['paste', 'copy', 'cut', 'drop', 'dragover', 'contextmenu'].forEach(function (evt) {
+      campo.addEventListener(evt, bloquear);
+    });
+
+    campo.addEventListener('beforeinput', function (e) {
+      if (e.inputType === 'insertFromPaste' || e.inputType === 'insertFromDrop') {
+        e.preventDefault();
+        mostrarToast('Colar não permitido nesta atividade.');
+      }
+    });
+
+    let valorAnterior = campo.value;
+    campo.addEventListener('input', function (e) {
+      const diferenca = campo.value.length - valorAnterior.length;
+      if (diferenca >= LIMITE_BLOCO && e.inputType !== 'insertReplacementText') {
+        campo.value = valorAnterior;
+        mostrarToast('Colar não permitido nesta atividade.');
+      } else {
+        valorAnterior = campo.value;
+      }
+    });
+  });
+
+  function mostrarToast(mensagem) {
+    let toast = document.getElementById('anti-cola-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'anti-cola-toast';
+      toast.style.cssText =
+        'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);' +
+        'background:#333;color:#fff;padding:10px 20px;border-radius:8px;' +
+        'font-size:14px;z-index:9999;opacity:0;transition:opacity .3s;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = mensagem;
+    toast.style.opacity = '1';
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(function () {
+      toast.style.opacity = '0';
+    }, 2500);
+  }
+})();
+</script>
+</body>
+</html>
