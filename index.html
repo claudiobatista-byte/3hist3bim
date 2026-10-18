@@ -134,6 +134,82 @@ body.modal-open{overflow:hidden}
 .caras-dot{width:10px;height:10px;border-radius:50%;border:0;background:#bdc9d0;cursor:pointer;padding:0}
 .caras-dot.active{background:var(--gold);transform:scale(1.2)}
 @media print{.caras-arrow,.caras-controls{display:none}.caras-slide{display:none!important}.caras-slide:first-child{display:block!important}}
+
+/* Plano Real: destaque e retrato lateral */
+.plano-real-highlight{background:#c8f5bc;box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:0 .13em;border-radius:3px;font-weight:700;color:#163e23}
+.plano-real-portrait{float:right;width:clamp(145px,31%,230px);margin:3px 0 16px 22px;text-align:center;font:600 12px/1.45 var(--sans)}
+.plano-real-portrait a img{border-radius:12px;box-shadow:8px 10px 20px #12304a30}
+
+.plano-real-portrait img{display:block;width:100%;height:auto;border-radius:12px;box-shadow:8px 10px 20px #12304a30;transition:transform .2s ease}.plano-real-portrait a:hover img{transform:translateY(-3px)}
+.plano-real-portrait figcaption{margin-top:8px;color:var(--muted)}
+.plano-real-gallery-link{display:inline-flex;vertical-align:middle;align-items:center;justify-content:center;margin:0 0 0 5px;width:22px;height:22px;border-radius:5px;background:var(--navy);color:#e3b45a;text-decoration:none;font:800 15px/1 var(--sans);box-shadow:0 2px 5px #12304a25;text-indent:0}
+.plano-real-gallery-link:hover{background:var(--navy2)}
+.plano-real-paragraph{display:flow-root}.plano-real-paragraph .par{display:block;margin-top:0;text-align:justify;text-indent:0;line-height:1.7}.plano-real-portrait{margin-top:4px;margin-bottom:12px}
+@media(max-width:480px){.plano-real-portrait{width:42%;margin-left:13px}}
+@media print{.plano-real-gallery-link{display:none}}
+
+/* Mensalão: imagem lateral e texto contínuo contornando a figura */
+.mensalao-wrap{display:flow-root}
+.mensalao-figure{float:right;width:clamp(175px,34%,280px);margin:4px 0 12px 22px}
+.mensalao-figure a{display:block}
+.mensalao-figure img{display:block;width:100%;height:auto;border-radius:12px;box-shadow:8px 10px 22px #12304a30;transition:transform .2s ease}
+.mensalao-figure a:hover img{transform:translateY(-3px)}
+.mensalao-wrap p.par{margin:0 0 .5em;line-height:1.7}
+@media(max-width:480px){.mensalao-figure{width:43%;margin-left:12px}}
+
+/* Carrossel lateral do Mensalão */
+.mensalao-carousel{position:relative;border-radius:12px;overflow:hidden;background:#e9edf0;box-shadow:8px 10px 22px #12304a30}
+.mensalao-slide{display:none}.mensalao-slide.is-active{display:block}
+.mensalao-slide a{display:block}.mensalao-slide img{display:block;width:100%;height:auto;border-radius:0;box-shadow:none;transition:none}
+.mensalao-slide a:hover img{transform:none}
+.mensalao-slide img{height:350px!important;object-fit:contain;background:#f5f7f8}
+@media(max-width:480px){.mensalao-slide img{height:270px!important}}
+.mensalao-arrow{position:absolute;top:50%;transform:translateY(-50%);width:33px;height:39px;border:0;border-radius:8px;background:#fffffff0;color:#12304a;font:700 29px/1 Arial,sans-serif;cursor:pointer;z-index:2}
+.mensalao-prev{left:5px}.mensalao-next{right:5px}.mensalao-arrow:hover{background:#e3b45a}
+.mensalao-status{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:8px;font:700 12px Arial,sans-serif;color:#12304a}
+.mensalao-count{margin-right:5px}.mensalao-dot{width:10px;height:10px;border:0;border-radius:50%;background:#aab8c3;cursor:pointer;padding:0}.mensalao-dot.is-active{background:#b8842b}
+.mensalao-caption{font:700 12px/1.5 Arial,sans-serif;text-align:center;margin-top:8px}.mensalao-caption a{color:#12304a;text-decoration:underline}
+@media print{.mensalao-arrow,.mensalao-status{display:none}}
+</style><style>
+/* Modelo de cartões de atividades da página p1 */
+.atv-box{display:flex;align-items:center;gap:18px;margin:0 0 26px;padding:18px 24px;border-radius:14px;background:linear-gradient(100deg,#0f3d26,#2e7d4f);color:#fff;text-decoration:none;box-shadow:0 12px 28px -16px #0f3d26cc;transition:transform .15s,box-shadow .15s;font-family:var(--sans)}
+.atv-box:hover,.atv-box:focus-visible{transform:translateY(-2px);box-shadow:0 16px 32px -14px #0f3d26}
+.atv-box:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.atv-ic{flex:none;width:52px;height:52px;border-radius:14px;background:#ffffff1c;border:1px solid #ffffff40;display:grid;place-items:center;font-size:24px;color:#e3b45a}
+.atv-tx{flex:1;display:block;min-width:0}
+.atv-k{display:block;font:800 10.5px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:#e3b45a}
+.atv-tx b{display:block;font:700 21px/1.25 var(--display);margin:3px 0 4px}
+.atv-d{display:block;font-size:13.5px;line-height:1.5;color:#d3dee7}
+.atv-go{flex:none;background:#ffffff;color:#0f3d26;font:800 13px var(--sans);padding:11px 18px;border-radius:99px;white-space:nowrap}
+.atv-box:hover .atv-go{background:#e3f2e8}
+@media(max-width:640px){.atv-box{flex-wrap:wrap;padding:16px}.atv-go{width:100%;text-align:center}}
+
+.atv-box.atv-selic{background:linear-gradient(100deg,#2c1a4d,#5b3a8c);box-shadow:0 12px 28px -16px #2c1a4dcc}
+.atv-box.atv-selic .atv-go{color:#2c1a4d}
+.atv-box.atv-selic:hover .atv-go{background:#f0ecf6}
+.atv-box.atv-plano{background:linear-gradient(100deg,#174b55,#1f6f78)}
+.atv-box.atv-plano .atv-go{color:#174b55}
+.atv-box.atv-plano:hover .atv-go{background:#e6f1f1}
+.atv-box.atv-default{background:linear-gradient(100deg,#12304a,#1c4a6b)}
+.atv-box.atv-default .atv-go{color:#12304a}
+.atv-box.atv-default:hover .atv-go{background:#e6f1f1}
+.atv-box.atv-default,.atv-box.atv-plano,.atv-box.atv-selic{margin:18px 0 26px}
+</style><style id="cores-individuais-atividades">
+/* Cores dos boxes conforme a identidade visual de cada atividade */
+.atv-box.atv-verde{background:linear-gradient(105deg,#252f14,#4a5a2e);box-shadow:0 12px 28px -16px #252f14cc}
+.atv-box.atv-verde .atv-go{color:#252f14}
+.atv-box.atv-verde:hover .atv-go{background:#eeefe6}
+.atv-box.atv-saego{background:linear-gradient(105deg,#0f2a4a,#2563eb);box-shadow:0 12px 28px -16px #0f2a4acc}
+.atv-box.atv-saego .atv-go{color:#0f2a4a}
+.atv-box.atv-saego:hover .atv-go{background:#e8f0fe}
+.atv-box.atv-enem{background:linear-gradient(105deg,#075a58,#0d9488);box-shadow:0 12px 28px -16px #075a58cc}
+.atv-box.atv-enem .atv-go{color:#075a58}
+.atv-box.atv-enem:hover .atv-go{background:#e6f7f5}
+.atv-box.atv-plano{background:linear-gradient(105deg,#174b55,#1f6f78)}
+.atv-box.atv-texto2{background:linear-gradient(105deg,#71371d,#a8472a);box-shadow:0 12px 28px -16px #71371dcc}
+.atv-box.atv-texto2 .atv-go{color:#71371d}
+.atv-box.atv-texto2:hover .atv-go{background:#f7e8e2}
+.atv-box.atv-verde,.atv-box.atv-saego,.atv-box.atv-enem,.atv-box.atv-texto2{margin:18px 0 26px}
 </style></head><body><div id="progress"></div>
 <button aria-expanded="false" aria-label="Abrir sumário" class="toc-tab" id="tocTab" type="button"><b>☰</b> Sumário</button>
 <div class="toc-ov" id="tocOv"></div>
@@ -160,25 +236,8 @@ body.modal-open{overflow:hidden}
 <p>• Constituição de 1988</p><p><strong>Leia o texto.</strong></p>
 <div class="text-i-heading-row"><h3>Texto I</h3><div class="text-i-actions"><a aria-label="Abrir Texto I como imagem" class="t1-view-btn" href="#" onclick="openTextoIImagem(event)" rel="noopener noreferrer" title="Abrir imagem"><span aria-hidden="true" class="ico">↗</span></a><a aria-label="Abrir Slides em PDF" class="t1-view-btn slides-pdf-btn" href="https://drive.google.com/file/d/1BnXvhbVmD1-v6BMzD_zKuti1VxLR1pTP/view?usp=drive_link" rel="noopener noreferrer" target="_blank" title="Abrir Slides (PDF)"><span aria-hidden="true" class="ico">▣</span></a></div></div>
 <h3 class="text-title">Direitos fundamentais e humanos marcam o texto constitucional de 1988</h3><p class="par">No Brasil, o período militar foi conturbado para os direitos humanos. O desrespeito a eles foi determinante para a inclusão das garantias individuais e sociais presentes na Constituição federal de 1988. O ex-ministro chefe da Controladoria-Geral da União (CGU) Jorge Hage, que participou da Assembleia Nacional Constituinte, recorda que o momento de elaboração da Carta “foi a de recuperação de direitos, sobretudo.”</p><p class="par">Hager diz que não houve na história do país momento de maior entrosamento entre o parlamento e a sociedade. Estabeleceu-se uma relação direta importantíssima e inédita. Desconheço outro momento histórico em que isso tenha funcionado igual”, afirmou o ex-ministro-chefe da CGU, que também ressaltou que os direitos humanos e fundamentais inseridos no texto constitucional foram construídos pelo próprio povo, que ocupavam o parlamento, junto com os constituintes.</p><figure class="pdf-photo"><img alt="Populares acompanham votação da Constituição Federal no plenário da Câmara, em 1988." loading="lazy" src="img/01.webp"/><figcaption>Populares acompanham votação da Constituição Federal no plenário da Câmara, em 1988. Foto: Arquivo/Agência Câmara</figcaption></figure><p class="par">Pela Constituição de 1988, o homem se sobrepõe ao Estado. As garantias e os direitos fundamentais do cidadão aparecem logo nos primeiros artigos. No primeiro, por exemplo, é estabelecido o princípio da cidadania, da dignidade da pessoa humana e os valores sociais do trabalho. Direitos civis, políticos, econômicos, sociais e culturais dos cidadãos estão no texto constitucional. Resguardado pela Carta Magna, os direitos fundamentais colocam o Brasil como um dos países com o mais completo ordenamento jurídico em relação aos direitos humanos.</p><p class="par">Além das garantias fundamentais expostas na Constituição, que asseguram direitos aos cidadãos, as prerrogativas também são resguardadas pelos direitos humanos. Ambos possuem a mesma essência e finalidade, que é compor um conjunto de leis inerentes à dignidade da pessoa humana. Juntas, as legislações proporcionam, aos cidadãos, o direito à vida, ao trabalho, à educação e à liberdade de opinião e expressão. Todos, sem distinção, merecem as proteções.</p><p class="par">Os direitos humanos são universais e resultam de lutas contra injustiças, sendo garantidos por tratados internacionais. Já os direitos fundamentais são aqueles reconhecidos e assegurados pela Constituição Federal de 1988.</p><p class="par">O constitucionalista Cristiano Paixão, professor de Direito da Universidade de Brasília (UnB), explica que os direitos humanos e fundamentais possuem o mesmo status, a mesma hierarquia e a mesma força normativa. “São previstos em documentos internacionais e constituições e protegem o ser humano em diversas áreas”. Afirma. Paixão ressalta ainda que os direitos garantem a democracia no país ao permitir que ideias de igualdade, liberdade, reconhecimento e justiça ganhem concretude. “Sem essa capacidade de garantir direitos de forma recíproca, individual e coletiva, nenhuma sociedade poderá se considerar democrática”.</p><p class="source">Fonte: Governo do Brasil, com informações da ONU. Disponível em: <a href="https://abre.ai/nxKF" rel="noopener noreferrer" target="_blank">https://abre.ai/nxKF</a>. Acesso em: 11 set. 2025.</p>
-<div class="activity-box" style="margin:30px 0;padding:22px 24px;border:1px solid #dcd6c8;border-left:6px solid #b8842b;border-radius:12px;background:#fffdf6;box-shadow:0 8px 22px rgba(29,39,49,.08);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;">
-<div>
-<span style="font:800 10px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--teal);">Atividade · Texto I</span>
-<h3 style="margin:4px 0 5px;color:var(--navy);">Direitos Fundamentais e Humanos</h3>
-<p style="margin:0;color:var(--muted);font:15px/1.5 var(--sans);">Responda à atividade de leitura e interpretação sobre a Constituição de 1988.</p>
-</div>
-<a href="atv/atv1.html" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:9px;background:var(--navy);color:#fff;text-decoration:none;font:700 13px var(--sans);white-space:nowrap;" target="_blank">Fazer atividade ↗</a>
-</div>
-<div class="activity-box" style="margin:18px 0 30px;padding:22px 24px;border:1px solid #c4dede;border-left:6px solid var(--teal);border-radius:12px;background:var(--teal-bg);box-shadow:0 8px 22px rgba(29,39,49,.08);">
-<div style="margin-bottom:16px;">
-<span style="font:800 10px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--teal);">Atividades complementares · Texto I</span>
-<h3 style="margin:4px 0 5px;color:var(--navy);">SAEGO e ENEM</h3>
-<p style="margin:0;color:var(--muted);font:15px/1.5 var(--sans);">Aprofunde o estudo do Texto I com as duas atividades abaixo.</p>
-</div>
-<div style="display:flex;gap:12px;flex-wrap:wrap;">
-<a href="atv/atvsaego1.html" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:9px;background:var(--navy);color:#fff;text-decoration:none;font:700 13px var(--sans);white-space:nowrap;" target="_blank">Atividade SAEGO ↗</a>
-<a href="atv/atvenem1.html" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:9px;background:var(--gold);color:#fff;text-decoration:none;font:700 13px var(--sans);white-space:nowrap;" target="_blank">Atividade ENEM ↗</a>
-</div>
-</div>
+<div><a class="atv-box atv-verde" href="atv/atv1.html" rel="noopener noreferrer" target="_blank"><span aria-hidden="true" class="atv-ic">✎</span><span class="atv-tx"><span class="atv-k">Atividade · Texto I</span><b>Direitos Fundamentais e Humanos</b><span class="atv-d">Responda à atividade de leitura e interpretação sobre a Constituição de 1988.</span></span><span class="atv-go">Abrir atividade →</span></a></div>
+<div><a class="atv-box atv-saego" href="atv/atvsaego1.html" rel="noopener noreferrer" target="_blank"><span aria-hidden="true" class="atv-ic">✎</span><span class="atv-tx"><span class="atv-k">Atividades complementares · Texto I</span><b>Atividade SAEGO</b><span class="atv-d">Aprofunde o estudo do Texto I com as duas atividades abaixo.</span></span><span class="atv-go">Abrir atividade →</span></a><a class="atv-box atv-enem" href="atv/atvenem1.html" rel="noopener noreferrer" target="_blank"><span aria-hidden="true" class="atv-ic">✎</span><span class="atv-tx"><span class="atv-k">Atividades complementares · Texto I</span><b>Atividade ENEM</b><span class="atv-d">Aprofunde o estudo do Texto I com as duas atividades abaixo.</span></span><span class="atv-go">Abrir atividade →</span></a></div>
 <p class="stem"><b>Leia o texto.</b></p>
 <div class="text-i-heading-row"><h3>Texto II</h3><div class="text-i-actions"><a aria-label="Abrir guia visual da Nova República em carrossel" class="t1-view-btn" href="img/gv1.webp" onclick="openGuiaVisual(event)" title="Abrir guia visual (2 imagens) em nova aba"><span aria-hidden="true" class="ico">↗</span></a><a aria-label="Abrir slides da Nova República em PDF" class="t1-view-btn slides-pdf-btn" href="https://drive.google.com/file/d/1nctxI3yRU4gK39yeZOhi92zdvSEMG52F/view?usp=sharing" rel="noopener noreferrer" target="_blank" title="Abrir slides (PDF) em nova aba"><span aria-hidden="true" class="ico">▣</span></a></div></div>
 <h3 class="text-title">A Nova República</h3>
@@ -205,31 +264,44 @@ body.modal-open{overflow:hidden}
 <ul class="tlist"><li>Código de Defesa do Comsumidor (CDC) – Criado em 1990, estabeleceu direitos básicos aos consumidores e regulamentou relações de consumo.</li><li>Estatuto da Criança e do Adolescente (ECA) – Também de 1990, é a principal lei que assegura os direitos das crianças e adolescentes no Brasil.</li><li>Lei do Sistema Único de Saúde (SUS) – Em 1990, foi a lei que regulamentou o SUS, garantindo o acesso universal e integral à Saúde.</li><li>Lei Rouanet – Sancionada em 1991, instituiu mecanismos para o incentive à produção e ao consumo de bens culturais, como espetáculos e exposições.</li><li>Lei de Improbidade Administrativa – Promulgada em 1992, estabeleceu normas para combater a corrupção e a má conduta de agentes públicos.</li></ul>
 <h4 class="tsub">Governo Itamar Franco e Fernando Henrique Cardoso</h4>
 <p class="par">Itamar Franco assume a presidência após o impeachment de Fernando Collor de Mello em 1992, num contexto de forte crise política. Esse cenário exigiu de Itamar grande habilidade para restabelecer a estabilidade política e a confiança da sociedade nas instituições democráticas. Itamar adotou um modelo de governo conciliador, buscou dialogar com diferentes partidos e compor um governo de unidade nacional, o que ajudou a reduzir as tensões após o período turbulento que levou à queda de Collor. Essa postura foi fundamental para garantir a governabilidade e preservar a jovem democracia brasileira.</p>
-<p class="par">Na área econômica, Itamar enfrentou o grande desafio da hiperinflação, que corroía o poder de compra da população. Sua principal medida foi a criação do Plano Real (1994), elaborado por sua equipe econômica liderada por Fernando Henrique Cardoso, então ministro da Fazenda. O plano introduziu uma nova moeda, o Real, e estabeleceu mecanismos de controle da inflação. Foi um marco na história econômica do país, garantindo estabilidade monetária e abrindo caminho para um novo ciclo de desenvolvimento.</p>
+<div class="plano-real-paragraph">
+<figure class="plano-real-portrait">
+<a aria-label="Abrir página de Fernando Henrique Cardoso na USP em nova aba" href="https://ppgsociologia.fflch.usp.br/node/158" rel="noopener noreferrer" target="_blank" title="Conheça a página de Fernando Henrique Cardoso na USP">
+<img alt="Fernando Henrique Cardoso" loading="lazy" src="img/fch.webp"/>
+</a>
+<figcaption>Fernando Henrique Cardoso</figcaption>
+</figure>
+<p class="par">Na área econômica, Itamar enfrentou o grande desafio da hiperinflação, que corroía o poder de compra da população. Sua principal medida foi a criação do <mark class="plano-real-highlight">Plano Real (1994)</mark><a aria-label="Abrir imagens planoreal1 e planoreal2 em nova aba" class="plano-real-gallery-link" href="img/planoreal1.webp" onclick="abrirGaleriaPlanoReal(event)" rel="noopener noreferrer" target="_blank" title="Abrir imagens do Plano Real">↗</a>, elaborado por sua equipe econômica liderada por Fernando Henrique Cardoso, então ministro da Fazenda. O plano introduziu uma nova moeda, o Real, e estabeleceu mecanismos de controle da inflação. Foi um marco na história econômica do país, garantindo estabilidade monetária e abrindo caminho para um novo ciclo de desenvolvimento.</p>
 <p class="par">No campo social, o governo de Itamar buscou fortalecer políticas públicas voltadas à redução das desigualdades. Houve avanços em programas de combate à fome e à pobreza, bem como investimentos em áreas como educação e saúde, ainda que de forma limitada devido à prioridade dada ao controle da inflação.</p>
+</div>
 <p class="par">O governo de Itamar Franco, foi sucedido por Fernando Henrique Cardoso, que marcou um dos períodos mais importantes da Nova República, especialmente pela consolidação da estabilidade econômica alcançada com o Plano Real.</p>
 <p class="par">No campo político, seu governo aprovou uma emenda constitucional que permitiu a reeleição para cargos executivos, fazendo seu governo se estender por dois mandatos (1995 – 2002). Essa articulação, só foi possível a partir das alianças construídas no seu governo, que garantiram governabilidade.</p>
 <p class="par">Na economia, a manutenção do Plano real, conseguiu controlar a hiperinflação e trazer estabilidade monetária. Além disso, FHC promoveu uma política de privatizações, vendendo empresas estatais em setores como telecomunicações, energia e mineração, com o objetivo de reduzir gastos públicos e atrair investimentos.</p>
 <p class="par">Sua gestão também buscou alinhar o Brasil às práticas do mercado internacional, adotando políticas de abertura econômica e incentivo à globalização. No entanto, essas políticas enfrentou fortes críticas da população e de setores políticos, principalmente pelo aumento da dívida pública e pela dependência de empréstimos internacionais. Essas políticas contribuíram para acentuar ainda mais as desigualdades sociais.</p>
 <p class="par">FHC criou alguns programas de combate à pobreza, que serviu de base para políticas nos governos posteriores. Entre eles, destacam-se o Bolsa Escola, o Bolsa Alimentação e o Auxílio Gás, que mais tarde seriam unificados no Bolsa Família. Na educação, implementou o Fundo de Manutenção e Desenvolvimento do Ensino Fundamental (Fundef), que ampliou o financiamento da educação básica e contribuiu para o aumento da escolarização no país.</p>
 <p class="par">O governo de Fernando Henrique marcou um período importante de estabilidade política e econômica. Sua gestão foi fundamental para a consolidação da democracia. Porém, houve também um aprofundamento das desigualdades e o aumento da dívida, esses pontos forma temas centrais dos governos posteriores.</p>
-<div class="activity-box" style="margin:22px 0 30px;padding:22px 24px;border:1px solid #c4dede;border-left:6px solid var(--teal);border-radius:12px;background:var(--teal-bg);box-shadow:0 8px 22px rgba(29,39,49,.08);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;">
-<div>
-<span style="font:800 10px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--teal);">Para saber mais · Atividade</span>
-<h3 style="margin:4px 0 5px;color:var(--navy);">O Plano Real</h3>
-<p style="margin:0;color:var(--muted);font:15px/1.5 var(--sans);">Aprofunde o estudo do governo Itamar Franco e FHC com textos e questões sobre o Plano Real e a estabilização da economia.</p>
-</div>
-<a href="atv/aprofundamento1.html" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:9px;background:var(--navy);color:#fff;text-decoration:none;font:700 13px var(--sans);white-space:nowrap;" target="_blank">Fazer atividade ↗</a>
-</div>
+<div><a class="atv-box atv-plano" href="atv/aprofundamento1.html" rel="noopener noreferrer" target="_blank"><span aria-hidden="true" class="atv-ic">✎</span><span class="atv-tx"><span class="atv-k">Para saber mais · Atividade</span><b>O Plano Real</b><span class="atv-d">Aprofunde o estudo do governo Itamar Franco e FHC com textos e questões sobre o Plano Real e a estabilização da economia.</span></span><span class="atv-go">Abrir atividade →</span></a></div>
+<!-- Atividade Selic: cores originais da atividade (roxo e lilás) -->
+<div><a class="atv-box atv-selic" href="atv/atv-selic.html" rel="noopener noreferrer" target="_blank"><span aria-hidden="true" class="atv-ic">✎</span><span class="atv-tx"><span class="atv-k">Para saber mais · Atividade</span><b>Taxa Selic: quem decide o preço do dinheiro no Brasil?</b><span class="atv-d">Entenda como a taxa básica de juros influencia a inflação, o crédito, o consumo e os investimentos. Responda às questões de interpretação.</span></span><span class="atv-go">Abrir atividade →</span></a></div>
 <h4 class="tsub">Governo Lula e Dilma</h4>
 <p class="par">O primero mandato do governo Lula (2003-2006) marcou uma nova fase a política brasileira, caracterizada pelo equilíbrio entre crescimento econômico, inclusão social e responsabilidade fiscal.</p>
 <p class="par">No campo econômico, Lula manteve a estabilidade herdada do governo anterior, preservando o tripé macroeconômico baseado no câmbio flutuante, no superávit primário e no controle da inflação por meio da taxa de juros. Essa postura transmitiu confiança ao mercado e atraiu investimentos. Ao mesmo tempo, o governo apostou em políticas de desenvolvimento, como o fortalecimento da agricultura familiar, o incentivo às exportações e o programa de aceleração da infraestrutura.</p>
 <p class="par">Na área social, as políticas de combate à pobreza e à fome ganharam destaque. O Bolsa Família, criado em 2003, unificou programas de transferência de renda já existentes, garantindo auxílio financeiro a famílias de baixa renda, desde que cumprissem compromissos como manter os filhos na escola e com a vacinação em dia. Outro destaque foi o Fome Zero, iniciativa voltada a enfrentar a insegurança alimentar, além de programas de valorização do salário mínimo, que aumentaram o poder de compra das camadas mais pobres.</p>
 <p class="par">Lula adotou políticas na educação, como o ProUNi (Programa Universidade para Todos) e a ampliação do FIES (Fundo de Financiamento Estudantil), aumentou o acesso da população mais pobre ao ensino superior. Na saúde com a ampliação do SUS e o acesso a medicamentos, o que resultou em avanços significativos onde milhões de brasileiros saíram da linha da pobreza. Muitas dessa política só foram possíveis a partir do perfil político conciliatórios com alianças com diversos partidos de centro. Assim, o primeiro governo Lula consolidou a imagem do Brasil como um país em processo de crescimento econômico com maior justiça social.</p>
-<p class="par">Porém, seu governo também foi palco em um dos maiores escândalos de corrupção, o Mensalão. O esquema consistia no pagamento regular de mesadas a parlamentares de diferentes partidos em troca de apoio político no Congresso Nacional. O escândalo gerou uma forte crise política, abalou a imagem do governo e colocou em xeque a confiança da população dos representantes eleitos. Em 2012, o Supremo Tribunal Federal (STF) julgou o caso condenando dirigentes políticos, empresários e figuras importantes do PT. Esse julgamento marcou a história política e jurídica do país por ser um dos primeiros a responsabilizar e punir autoridades de alto escalão por corrupção.</p>
+<div class="mensalao-wrap"><figure aria-label="Carrossel de infográficos sobre o Mensalão" class="mensalao-figure">
+<div aria-roledescription="carrossel" class="mensalao-carousel" tabindex="0">
+<div class="mensalao-slide is-active"><a href="img/mensalao.webp" rel="noopener noreferrer" target="_blank" title="Ampliar primeiro infográfico"><img alt="O Mensalão segundo Roberto Jefferson — infográfico 1" loading="lazy" src="img/mensalao.webp"/></a></div>
+<div class="mensalao-slide"><a href="img/mensalao2.webp" rel="noopener noreferrer" target="_blank" title="Ampliar segundo infográfico"><img alt="Como funcionaria o esquema do Mensalão — infográfico 2" loading="lazy" src="img/mensalao2.webp"/></a></div>
+<button aria-label="Imagem anterior" class="mensalao-arrow mensalao-prev" type="button">‹</button>
+<button aria-label="Próxima imagem" class="mensalao-arrow mensalao-next" type="button">›</button>
+</div>
+<div class="mensalao-status"><span aria-live="polite" class="mensalao-count">1 / 2</span><button aria-current="true" aria-label="Ver imagem 1" class="mensalao-dot is-active" type="button"></button><button aria-label="Ver imagem 2" class="mensalao-dot" type="button"></button></div>
+<figcaption class="mensalao-caption"><a href="https://www1.folha.uol.com.br/folha/brasil/ult96u69467.shtml" rel="noopener noreferrer" target="_blank">Abrir reportagem da Folha ↗</a></figcaption>
+</figure><p class="par">Porém, seu governo também foi palco em um dos maiores escândalos de corrupção, o Mensalão. O esquema consistia no pagamento regular de mesadas a parlamentares de diferentes partidos em troca de apoio político no Congresso Nacional. O escândalo gerou uma forte crise política, abalou a imagem do governo e colocou em xeque a confiança da população dos representantes eleitos. Em 2012, o Supremo Tribunal Federal (STF) julgou o caso condenando dirigentes políticos, empresários e figuras importantes do PT. Esse julgamento marcou a história política e jurídica do país por ser um dos primeiros a responsabilizar e punir autoridades de alto escalão por corrupção.</p>
 <p class="par">Mesmo com o escândalo envolvendo seu governo, o presidente Lula conseguiu se manter no cargo e foi reeleito em 2006 e elegeu a sua candidata Dilma Rousseff.</p>
 <p class="par">Primeira mulher a ser eleita presidenta da República do Brasil, governo de Dilma Rousseff representou continuidade do projeto político de Lula. Se primeiro mandato iniciou em 2011 com a promessa de manter os avanços sociais e econômicos obtidos nos anos anteriores, mas enfrentou um cenário mais instável, tanto interno quanto externo.</p>
 <p class="par">No campo econômico, Dilma deu continuidade ao Programa Bolsa Família e ao Programa de Aceleração do Crescimento (PAC), além de lançar programas de destaque, como o Minha Casa Minha Vida, voltado para habitação popular, e o Ciência sem Fronteiras, que ofereceu bolsas de estudo no exterior para estudantes brasileiros. Outro ponto importante foi o Programa Mais Médicos, criado em 2013 para ampliar o atendimento de saúde em regiões carentes, muitas vezes com a participação de médicos estrangeiros.</p>
+</div>
 <p class="par">Apesar desses avanços, a economia começou a apresentar sinais de enfraquecimento a partir de 2012, agravados pela crise internacional e por dificuldades estruturais do país. A partir de 2014, o Brasil entrou em uma profunda recessão econômica, com queda do PIB, aumento do desemprego e inflação em alta.</p>
 <p class="par">Em 2013, grandes manifestações populares tomaram as ruas do país, inicialmente contra o aumento das tarifas de transporte, mas que rapidamente se ampliaram para críticas à corrupção, aos serviços públicos precários e aos altos gastos com a Copa do Mundo e a Operação Lava Jato, que revelou um amplo esquema de corrupção envolvendo a Petrobras, partidos políticos e grandes empreiteiras. Embora Dilma não tenha sido acusada diretamente de envolvimento, sua imagem e a de seu governo foram profundamente atingidas pelas denúncias. Essas manifestações revelaram um clima de insatisfação que se intensificou nos anos seguintes.</p>
 <p class="par">Reeleita em 2014 em uma disputa acirrada, Dilma enfrentou um Congresso hostil e crescentes pressões políticas. Em 2016, após acusações de crime de responsabilidade por manobras fiscais conhecidas como “pedaladas fiscais”, ela sofreu um processo de impeachment, sendo afastada do cargo. Seu vice, Michel Temer, assumiu a Presidência.</p>
@@ -242,9 +314,9 @@ body.modal-open{overflow:hidden}
 <p class="source">Texto elaborado para fins didáticos. NUREDI.</p>
 <h4 class="tsub">O Terceiro governo Lula (2023-2026)</h4>
 <figure class="lula-posse-figure" style="max-width:800px;margin:24px auto 14px;text-align:center;">
-<img src="img/lula3.webp" alt="Cerimônia de posse presidencial de 1º de janeiro de 2023" loading="lazy" style="display:block;width:100%;height:auto;border-radius:12px;box-shadow:0 10px 28px rgba(0,0,0,.15);" />
-<figcaption style="margin-top:12px;text-align:center;"><a href="https://g1.globo.com/politica/noticia/2023/01/01/fotos-veja-imagens-da-posse-de-lula-em-brasilia.ghtml" target="_blank" rel="noopener noreferrer" style="display:inline-block;padding:7px 15px;border-radius:8px;background:#12304a;color:white;text-decoration:none;font:700 12px/1.5 Arial,sans-serif;">Veja mais fotos ↗</a></figcaption>
-</figure>
+<img alt="Cerimônia de posse presidencial de 1º de janeiro de 2023" loading="lazy" src="img/lula3.webp" style="display:block;width:100%;height:auto;border-radius:12px;box-shadow:0 10px 28px rgba(0,0,0,.15);">
+<figcaption style="margin-top:12px;text-align:center;"><a href="https://g1.globo.com/politica/noticia/2023/01/01/fotos-veja-imagens-da-posse-de-lula-em-brasilia.ghtml" rel="noopener noreferrer" style="display:inline-block;padding:7px 15px;border-radius:8px;background:#12304a;color:white;text-decoration:none;font:700 12px/1.5 Arial,sans-serif;" target="_blank">Veja mais fotos ↗</a></figcaption>
+</img></figure>
 <p class="par">Luiz Inácio Lula da Silva iniciou seu terceiro mandato como presidente da República em 1º de janeiro de 2023, após vencer as eleições de 2022 em uma disputa marcada por forte polarização política. Sua eleição ocorreu em um contexto de profundas divisões na sociedade brasileira, intensificadas durante os anos anteriores, especialmente em torno de diferentes concepções sobre democracia, economia, políticas sociais e papel do Estado. O novo governo assumiu também após os acontecimentos de 8 de janeiro de 2023, quando grupos que contestavam o resultado eleitoral invadiram e depredaram as sedes dos Três Poderes, em Brasília.</p>
 <p class="par">No campo político, o terceiro governo Lula teve como uma de suas principais características a tentativa de reconstruir o diálogo entre o governo federal, o Congresso Nacional, os governos estaduais, os municípios e diferentes setores da sociedade.</p>
 <p class="par">Diferentemente dos dois primeiros mandatos de Lula, realizados em um período de maior predominância política do Partido dos Trabalhadores, o terceiro mandato ocorre em um cenário de maior fragmentação partidária e forte presença de forças políticas de oposição no Congresso. A necessidade de construir uma ampla base de apoio levou o governo a estabelecer alianças com diferentes partidos e grupos políticos. Essa composição ampliou a capacidade de negociação do Executivo, mas também tornou a relação com o Congresso um dos principais desafios do mandato. A aprovação de projetos e reformas passou a depender de negociações constantes entre o governo e diferentes forças políticas.</p>
@@ -254,7 +326,7 @@ body.modal-open{overflow:hidden}
 <p class="par">Na área social, o governo reestruturou e ampliou programas para combate à pobreza e inclusão, destacando-se a recriação do Bolsa Família e a retomada do Minha Casa, Minha Vida, além de novas iniciativas em educação e saúde. A despeito dos avanços apontados pela gestão pública, pesquisas como a Ipsos-Ipec (setembro/2026) revelam que a avaliação popular ainda é predominantemente crítica em setores como gastos públicos, inflação, saúde e segurança.</p>
 <p class="par">Em setembro de 2026, o Brasil vive um novo período de intensa disputa política em razão das eleições gerais previstas para outubro. O cenário permanece marcado pela polarização entre diferentes projetos políticos para o país.</p>
 <p class="source">Texto elaborado para fins didáticos. NUREDI.</p>
-<div class="activity-box" style="margin:30px 0;padding:22px 24px;border:1px solid #dcd6c8;border-left:6px solid #b8842b;border-radius:12px;background:#fffdf6;box-shadow:0 8px 22px rgba(29,39,49,.08);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;"><div><span style="font:800 10px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--teal);">Atividade · Texto II</span><h3 style="margin:4px 0 5px;color:var(--navy);">Brasil Democrático: governos e participação popular</h3><p style="margin:0;color:var(--muted);font:15px/1.5 var(--sans);">Responda à atividade de leitura e interpretação sobre a Nova República e os governos democráticos brasileiros.</p></div><a href="atv/atv2.html" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:9px;background:var(--navy);color:#fff;text-decoration:none;font:700 13px var(--sans);white-space:nowrap;" target="_blank">Fazer atividade ↗</a></div>
+<div><a class="atv-box atv-texto2" href="atv/atv2.html" rel="noopener noreferrer" target="_blank"><span aria-hidden="true" class="atv-ic">✎</span><span class="atv-tx"><span class="atv-k">Atividade · Texto II</span><b>Brasil Democrático: governos e participação popular</b><span class="atv-d">Responda à atividade de leitura e interpretação sobre a Nova República e os governos democráticos brasileiros.</span></span><span class="atv-go">Abrir atividade →</span></a></div>
 </div><div class="ch-end"><span>Revisa Goiás · CHSA · 3ª Série</span><span>4º bimestre</span></div></section><section class="chapter" id="direitos"><div class="ch-head"><div class="ch-num">02</div><div><div class="eyebrow">Sequência didática · História</div><h2>Direitos Humanos</h2><p class="deck">Direitos Humanos</p></div></div><div class="body"><div class="theme">TEMÁTICA: Direitos Humanos</div>
 <h4>Matriz de Habilidades Essenciais DC-GOEM:</h4>
 <p>(GO-EMCH605D) Avaliar como o conjunto de valores dos Direitos Humanos (direito à vida e à liberdade, à liberdade de opinião e de expressão, o direito ao trabalho e à educação, entre outros) se manifestam concretamente para o indivíduo, através do estudo do cotidiano, de documentários sobre violação de direitos fundamentais em guerras e da filosofia humanista sobre os valores éticos universais para perceber que a defesa de tais direitos faz parte indispensável de uma sociedade justa e inclusiva.</p>
@@ -589,4 +661,36 @@ document.querySelectorAll('.caras-gallery').forEach(gallery => {
  dots.forEach((dot,i)=>dot.addEventListener('click',()=>show(i)));
  gallery.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();show(current-1)}if(e.key==='ArrowRight'){e.preventDefault();show(current+1)}});
 });
-</script></body></html>
+</script><script>
+function abrirGaleriaPlanoReal(event){
+  const tab=window.open('','_blank');
+  if(!tab) return; // link normal fallback
+  event.preventDefault();
+  const urls=['img/planoreal1.webp','img/planoreal2.webp'].map(p=>new URL(p,document.baseURI).href);
+  const html=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Plano Real — imagens históricas</title><style>body{margin:0;background:#101e2c;color:white;font:16px Arial,sans-serif;text-align:center}header{padding:16px;background:#12304a;position:sticky;top:0}h1{font-size:22px;margin:0}main{max-width:1300px;margin:auto;padding:18px}figure{margin:0 0 28px}img{display:block;max-width:100%;height:auto;margin:auto;border-radius:10px;box-shadow:0 8px 30px #0008}figcaption{margin:12px;color:#f0c36c;font-weight:bold}</style></head><body><header><h1>Plano Real (1994) — materiais visuais</h1></header><main><figure><img src="${urls[0]}" alt="Infográfico Plano Real 1"><figcaption>Imagem 1 — Da crise inflacionária à estabilização</figcaption></figure><figure><img src="${urls[1]}" alt="Infográfico Plano Real 2"><figcaption>Imagem 2 — Plano Real e seus impactos</figcaption></figure></main></body></html>`;
+  tab.document.open();tab.document.write(html);tab.document.close();
+}
+</script>
+<script>
+(function(){
+ const gallery=document.querySelector('.mensalao-carousel');
+ if(!gallery)return;
+ const figure=gallery.closest('.mensalao-figure');
+ const slides=[...gallery.querySelectorAll('.mensalao-slide')];
+ const dots=[...figure.querySelectorAll('.mensalao-dot')];
+ const count=figure.querySelector('.mensalao-count');
+ let current=0;
+ function show(index){
+  current=(index+slides.length)%slides.length;
+  slides.forEach((slide,i)=>{slide.classList.toggle('is-active',i===current);slide.setAttribute('aria-hidden',String(i!==current));slide.querySelector('a').tabIndex=i===current?0:-1;});
+  dots.forEach((dot,i)=>{dot.classList.toggle('is-active',i===current);if(i===current)dot.setAttribute('aria-current','true');else dot.removeAttribute('aria-current');});
+  count.textContent=(current+1)+' / '+slides.length;
+ }
+ gallery.querySelector('.mensalao-prev').addEventListener('click',()=>show(current-1));
+ gallery.querySelector('.mensalao-next').addEventListener('click',()=>show(current+1));
+ dots.forEach((dot,i)=>dot.addEventListener('click',()=>show(i)));
+ gallery.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();show(current+(e.key==='ArrowRight'?1:-1));}});
+ show(0);
+})();
+</script>
+</body></html>
